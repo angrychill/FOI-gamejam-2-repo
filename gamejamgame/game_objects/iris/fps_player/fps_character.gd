@@ -33,8 +33,21 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("primary_click"):
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+		shoot()
 	
 	if event.is_action("scroll_up"):
 		print_debug("Scrolling up!")
 	if event.is_action("scroll_down"):
 		print_debug("Scrolling down!")
+
+func shoot() -> void:
+	var space = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
+		camera.global_position - $Camera3D.global_transform.basis.z * 100)
+	var collision = space.intersect_ray(query)
+	if collision:
+		print_debug("hit collider ", collision.collider.name, collision.position)
+	else:
+		print_debug("hit nothing")
+	
