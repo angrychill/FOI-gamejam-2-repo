@@ -22,7 +22,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	current_health = max_health
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
 	var move_dir = transform.basis * Vector3(input.x, 0, input.y)
 	velocity.x = move_dir.x * speed

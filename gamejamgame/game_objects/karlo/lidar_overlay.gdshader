@@ -1,12 +1,9 @@
 shader_type spatial;
-render_mode unshaded, cull_back, depth_draw_never;
+render_mode unshaded, cull_back, depth_draw_never, blend_mix;
 
 const int MAX_SHAPES = 256;
 
-/*
-We render ONLY the lidar overlay in this pass.
-Base material remains the main pass; this is next_pass.
-*/
+uniform bool lidar_enabled = true;
 
 uniform int lidar_shape_count = 0;
 
@@ -15,11 +12,23 @@ uniform vec4 lidar_t1[MAX_SHAPES];
 uniform vec4 lidar_t2[MAX_SHAPES];
 uniform vec4 lidar_t3[MAX_SHAPES];      // origin.xyz + type in w
 uniform vec4 lidar_params[MAX_SHAPES];  // per-type params
-uniform vec4 lidar_colors[MAX_SHAPES];  // rgb + intensity in a
-uniform float lidar_fade[MAX_SHAPES];   // 0..1 fade multiplier already computed in script
+uniform vec4 lidar_colors[MAX_SHAPES];  // rgb + intensity in a (ignored here)
+uniform float lidar_fade[MAX_SHAPES];   // 0..1 fade multiplier
 
 uniform float edge_softness = 0.06;
-uniform float glow_strength = 2.0;
+
+/* Darkness overlay:
+   - dark_color is the tint applied everywhere (in the overlay pass)
+   - dark_alpha is how strong that tint is (1 = fully override, 0 = no effect)
+*/
+uniform vec3  dark_color:source_color = vec3(0.02, 0.02, 0.02);
+uniform float dark_alpha = 0.85;
+
+/* How strongly lidar "cuts out" darkness
+   1.0 = full reveal (recommended)
+   <1  = leaves some darkness even where lit
+*/
+uniform float reveal_strength = 1.0;
 
 varying vec3 wpos;
 
@@ -45,7 +54,11 @@ void vertex() {
 }
 
 void fragment() {
-	vec3 accum = vec3(0.0);
+	if (!lidar_enabled) {
+		discard; // no darkness, no lidar effect at all
+	}
+
+	// Compute lidar coverage mask (amax: 0..1)
 	float amax = 0.0;
 
 	for (int i = 0; i < MAX_SHAPES; i++) {
@@ -62,7 +75,6 @@ void fragment() {
 		float type = lidar_t3[i].w;
 
 		vec3 p = transpose(B) * (wpos - O);
-
 		vec4 prm = lidar_params[i];
 
 		float d = 1e20;
@@ -80,22 +92,24 @@ void fragment() {
 			continue;
 		}
 
-		// fill inside with soft edge
+		// Soft fill mask
 		float a = 1.0 - smoothstep(0.0, edge_softness, max(d, 0.0));
 		a *= fade;
 
-		accum += c.rgb * a * c.a;
 		amax = max(amax, a * c.a);
 	}
 
-	// Overlay pass: output ONLY where lidar is
-	if (amax <= 0.001) {
+	// Darkness alpha is reduced by lidar coverage:
+	// - where amax == 0 -> alpha = dark_alpha (dark)
+	// - where amax == 1 -> alpha = dark_alpha * (1 - reveal_strength) (transparent if reveal_strength=1)
+	float cut = clamp(amax * reveal_strength, 0.0, 1.0);
+	float out_a = clamp(dark_alpha * (1.0 - cut), 0.0, 1.0);
+
+	// If fully transparent (fully revealed), skip drawing so base shows untouched
+	if (out_a <= 0.001) {
 		discard;
 	}
 
-	ALBEDO = accum;
-	ALPHA = amax;
-
-	// Make it look like "light" on top
-	EMISSION = accum * glow_strength;
+	ALBEDO = dark_color;
+	ALPHA = out_a;
 }

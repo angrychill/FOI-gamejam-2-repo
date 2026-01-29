@@ -28,6 +28,14 @@ var _dirty := true
 var _receivers: Array[GeometryInstance3D] = []
 
 func _ready() -> void:
+	_ensure_buffers()
+	set_process(true)
+
+func _ensure_buffers() -> void:
+	# If already initialized, do nothing
+	if _t0.size() == MAX_SHAPES:
+		return
+
 	_t0.resize(MAX_SHAPES)
 	_t1.resize(MAX_SHAPES)
 	_t2.resize(MAX_SHAPES)
@@ -49,7 +57,6 @@ func _ready() -> void:
 		_birth_ms[i] = 0
 		_lifetime_s[i] = 0.0
 
-	set_process(true)
 
 # ✅ Accept any GeometryInstance3D (MeshInstance3D, CSGMesh3D, MultiMeshInstance3D, etc.)
 func register_receiver(geo: GeometryInstance3D) -> void:
@@ -73,6 +80,8 @@ func clear() -> void:
 #  - <= 0 => infinite
 #  - > 0  => fades from 1 -> 0 over that duration
 func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Color, lifetime_s: float = 0.0) -> void:
+	_ensure_buffers() # <-- IMPORTANT
+
 	var idx := _count % MAX_SHAPES
 	_count += 1
 

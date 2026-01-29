@@ -24,6 +24,13 @@ extends Camera3D
 @export var cylinder_radius_range := Vector2(0.10, 0.45)
 @export var cylinder_half_height_range := Vector2(0.15, 0.90)
 
+@export var lidar_registrar_path: NodePath = NodePath("/root/LidarRegistrar")
+@onready var registrar: LidarRegistrar = get_node(lidar_registrar_path)
+
+@export var toggle_key := KEY_T
+var _lidar_overlay_on := true
+
+
 # --- NEW: HUD label ---
 var _hud_layer: CanvasLayer
 var _percent_label: Label
@@ -53,6 +60,17 @@ func _update_percent_label() -> void:
 
 
 func _unhandled_input(event) -> void:
+	# --- Toggle lidar overlay on/off for everything marked "lidar"
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == toggle_key:
+		_lidar_overlay_on = not _lidar_overlay_on
+
+		# Toggle everything in the lidar group (fast + simple demo)
+		for n in get_tree().get_nodes_in_group("lidar"):
+			registrar.set_overlay_enabled_for(n, _lidar_overlay_on)
+
+		print("Lidar overlay enabled: ", _lidar_overlay_on)
+		return
+
 	# Mouse wheel adjusts spawn_percent
 	if event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -61,6 +79,7 @@ func _unhandled_input(event) -> void:
 			spawn_percent = clamp(spawn_percent - scroll_step_percent, 0.0, 100.0)
 		_update_percent_label()
 		return
+
 
 	# Left click = original lidar hit + optional collider volume
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -123,13 +142,13 @@ func spawn_random_volume_between_hit_and_camera(screen_pos: Vector2) -> void:
 
 	# Orient the volume so its +Z faces toward the camera (purely aesthetic)
 	var look_dir := (cam_pos - spawn_pos).normalized()
-	var basis := Basis()
+	var new_basis := Basis()
 	if look_dir.length() > 0.0001:
-		basis = Basis.looking_at(look_dir, Vector3.UP)
+		new_basis = Basis.looking_at(look_dir, Vector3.UP)
 	else:
-		basis = Basis.IDENTITY
+		new_basis = Basis.IDENTITY
 
-	var xf := Transform3D(basis, spawn_pos)
+	var xf := Transform3D(new_basis, spawn_pos)
 
 	_add_random_shape_volume(xf)
 
