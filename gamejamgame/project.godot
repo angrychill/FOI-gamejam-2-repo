@@ -30,6 +30,10 @@ ProjectUISoundController="*uid://cc37235kj4384"
 
 enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
+[gui]
+
+theme/custom="res://maack_example_scenes/resources/themes/lab.tres"
+
 [input]
 
 move_up={
@@ -75,5 +79,3 @@ copy_path="res://maack_example_scenes/"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
