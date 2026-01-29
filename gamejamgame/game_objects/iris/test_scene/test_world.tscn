@@ -34,6 +34,8 @@ albedo_texture = SubResource("NoiseTexture2D_ljjh0")
 material = SubResource("StandardMaterial3D_4ordb")
 size = Vector2(10, 10)
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_0io8h"]
+
 [node name="TestWorld" type="Node3D" unique_id=68666111]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=427039732]
@@ -53,7 +55,11 @@ shape = SubResource("BoxShape3D_0io8h")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("PlaneMesh_2mtng")
 
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=945001060]
+navigation_mesh = SubResource("NavigationMesh_0io8h")
+
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("1_qio7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
 
 [node name="Enemy" parent="." unique_id=778402213 instance=ExtResource("2_0io8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8372726, 0, 0)

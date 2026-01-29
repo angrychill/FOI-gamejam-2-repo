@@ -14,6 +14,7 @@ noise = SubResource("FastNoiseLite_cmpv4")
 [sub_resource type="Resource" id="Resource_ooti1"]
 script = ExtResource("2_ohikj")
 health = 100
+move_speed = 1.0
 sprite = SubResource("NoiseTexture2D_vqfed")
 metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
@@ -39,3 +40,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 billboard = 1
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=116007381]
+path_desired_distance = 0.1
+target_desired_distance = 0.1
+
+[node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=1372472093]
+autostart = true

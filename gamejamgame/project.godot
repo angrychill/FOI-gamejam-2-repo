@@ -37,6 +37,10 @@ window/size/viewport_height=980
 
 enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
+[global_group]
+
+player="fps player in world"
+
 [gui]
 
 theme/custom="res://maack_example_scenes/resources/themes/lab.tres"
