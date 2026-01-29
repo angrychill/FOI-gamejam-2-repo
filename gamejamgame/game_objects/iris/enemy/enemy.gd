@@ -3,6 +3,7 @@ class_name Enemy
 @onready var enemy_debug_label: Label3D = $EnemyDebugLabel
 @onready var player_refresh_timer: Timer = $PlayerRefreshTimer
 
+@onready var shooting_component: ShootingComponent = $ShootingComponent
 
 @export var enemy_data : EnemyData
 @export var sprite_3d : Sprite3D
@@ -13,6 +14,8 @@ var current_enemy_health : int
 var max_enemy_health : int
 
 var is_dead : bool = false
+
+var shoot_timer: Timer
 
 func _ready() -> void:
 	if not sprite_3d:
@@ -27,6 +30,13 @@ func _ready() -> void:
 	enemy_speed = enemy_data.move_speed
 	nav_agent.target_position = GlobalData.get_player_position()
 	player_refresh_timer.timeout.connect(_on_player_refresh_timeout)
+	
+	if not shoot_timer:
+		shoot_timer = Timer.new()
+		add_child(shoot_timer)
+		shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+		shoot_timer.wait_time = 2.0
+		shoot_timer.start()
 
 
 
@@ -68,3 +78,7 @@ func die() -> void:
 	queue_free()
 	
 	
+
+func _on_shoot_timer_timeout() -> void:
+	if not is_dead and shooting_component:
+		shooting_component.shoot_at_player()

@@ -21,6 +21,7 @@ var current_health : int:
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	current_health = max_health
+	add_to_group("player")
 
 func _physics_process(delta: float) -> void:
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
@@ -64,6 +65,7 @@ func shoot() -> void:
 
 func take_damage(damage : int) -> void:
 	current_health -= damage
+	print("Player took ", damage, " damage!")
 
 
 func shoot_enemy(enemy : Enemy) -> void:

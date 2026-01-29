@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://lqnhpifsi7a" path="res://icon.svg" id="1_rnnvq"]
 [ext_resource type="Script" uid="uid://bm81grx7kf22x" path="res://game_objects/iris/enemy/enemy.gd" id="1_ru4oe"]
 [ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ohikj"]
+[ext_resource type="Script" uid="uid://yno5r2r54yue" path="res://game_objects/iris/enemy/shooting_component.gd" id="4_cmpv4"]
+[ext_resource type="PackedScene" uid="uid://ma3kckekukyf" path="res://game_objects/iris/enemy/projectile.tscn" id="5_vqfed"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cmpv4"]
 
@@ -45,3 +47,8 @@ target_desired_distance = 0.1
 
 [node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=1372472093]
 autostart = true
+
+[node name="ShootingComponent" type="Node" parent="." unique_id=648031059]
+script = ExtResource("4_cmpv4")
+projectile_scene = ExtResource("5_vqfed")
+shoot_interval = 1.0
