@@ -2,6 +2,19 @@
 
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4m0mg"]
+albedo_color = Color(1, 0.8117647, 0.5137255, 1)
+emission_enabled = true
+emission = Color(1, 0.79733336, 0.36, 1)
+emission_energy_multiplier = 2.36
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ma5o"]
+material = SubResource("StandardMaterial3D_4m0mg")
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
+radius = 2.0
+
 [node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_decay_timer")]
 script = ExtResource("1_4m0mg")
 shooting_decay_timer = NodePath("ShootingDecay")
@@ -12,3 +25,13 @@ autostart = true
 [node name="LanternDebugLabel" type="Label" parent="." unique_id=526355081]
 offset_right = 40.0
 offset_bottom = 29.0
+
+[node name="LanternMesh" type="MeshInstance3D" parent="." unique_id=1967330328]
+mesh = SubResource("BoxMesh_6ma5o")
+
+[node name="LanternArea" type="Area3D" parent="." unique_id=911193770]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="LanternArea" unique_id=983500537]
+shape = SubResource("SphereShape3D_4m0mg")

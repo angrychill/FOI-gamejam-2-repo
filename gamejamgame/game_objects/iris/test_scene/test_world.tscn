@@ -14,6 +14,7 @@ sky_material = SubResource("ProceduralSkyMaterial_0io8h")
 background_mode = 2
 sky = SubResource("Sky_4uu8m")
 tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_0io8h"]
 vertices = PackedVector3Array(-4.5, 0.5, -4.5, -4.5, 0.5, 4.5, 4.5, 0.5, 4.5, 4.5, 0.5, -4.5)

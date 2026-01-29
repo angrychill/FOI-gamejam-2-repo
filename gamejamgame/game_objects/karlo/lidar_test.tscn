@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://cxjobkdfcoivc"]
 
 [ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://game_objects/karlo/lidar_test.gd" id="1_skjmp"]
-[ext_resource type="Shader" uid="uid://lb6m8647pv34" path="res://game_objects/karlo/lidar_overlay.gdshader" id="2_oebh7"]
+[ext_resource type="Shader" path="res://game_objects/karlo/lidar_overlay.gdshader" id="2_oebh7"]
 [ext_resource type="Script" uid="uid://defed628bt3hy" path="res://game_objects/karlo/lidar_manager.gd" id="4_gndwi"]
-[ext_resource type="Script" uid="uid://c1qi8tl1b6by" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
+[ext_resource type="Script" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

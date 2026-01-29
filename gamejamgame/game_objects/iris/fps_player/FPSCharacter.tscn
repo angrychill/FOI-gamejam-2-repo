@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bilwrabhxf4ot"]
 
 [ext_resource type="Script" uid="uid://iugimtq7nk70" path="res://game_objects/iris/fps_player/fps_character.gd" id="1_5jr3e"]
+[ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="2_res4l"]
 [ext_resource type="PackedScene" uid="uid://djr26x4ros1jy" path="res://game_objects/iris/player_ui/player_ui.tscn" id="2_w52vm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peoph"]
@@ -8,9 +9,6 @@
 [sub_resource type="SphereMesh" id="SphereMesh_w52vm"]
 radius = 0.2
 height = 0.4
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_5jr3e"]
-radius = 2.0
 
 [node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera") groups=["player"]]
 script = ExtResource("1_5jr3e")
@@ -24,17 +22,13 @@ shape = SubResource("CapsuleShape3D_peoph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="HandPosition" type="Node3D" parent="Camera3D" unique_id=448133706]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.35, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
 
 [node name="HandPlaceholder" type="MeshInstance3D" parent="Camera3D/HandPosition" unique_id=462521949]
 mesh = SubResource("SphereMesh_w52vm")
 
-[node name="LanternArea" type="Area3D" parent="Camera3D/HandPosition" unique_id=1245649904]
-collision_layer = 16
-collision_mask = 0
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Camera3D/HandPosition/LanternArea" unique_id=1555113931]
-shape = SubResource("SphereShape3D_5jr3e")
+[node name="Lantern" parent="Camera3D/HandPosition" unique_id=385217723 instance=ExtResource("2_res4l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=732711742]
 
