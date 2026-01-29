@@ -4,6 +4,7 @@ class_name FPSPlayer
 signal player_health_changed(new_val : int)
 
 @export var camera : Camera3D
+@export var hand : Node3D
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var speed : float = 5.0
@@ -13,6 +14,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export var max_health : int = 100
 
+@export var current_carryable : Node3D
+
 var current_health : int:
 	set(value):
 		current_health = value
@@ -21,6 +24,7 @@ var current_health : int:
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	current_health = max_health
+	add_to_group("player")
 
 func _physics_process(_delta: float) -> void:
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
@@ -29,6 +33,25 @@ func _physics_process(_delta: float) -> void:
 	velocity.z = move_dir.z * speed
 	
 	move_and_slide()
+
+func set_carryable(node : Node3D) -> void:
+	
+	if node == null:
+		remove_carryable()
+		print_debug("carryable is null")
+		return
+	
+	if hand.get_child_count() > 0:
+		remove_carryable()
+	
+	hand.add_child(node)
+	current_carryable = node
+	print_debug("Set new carryable")
+
+func remove_carryable() ->void:
+	if hand.get_child_count() > 0:
+		for c in hand.get_children():
+			c.queue_free()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -43,7 +66,8 @@ func _input(event: InputEvent) -> void:
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
-		shoot()
+		check_for_item()
+
 	
 	if event.is_action("scroll_up"):
 		print_debug("Scrolling up!")
@@ -59,11 +83,13 @@ func shoot() -> void:
 		print_debug("hit collider ", collision.collider.name, collision.position)
 		if collision.collider is Enemy:
 			shoot_enemy(collision.collider)
+	
 	else:
 		print_debug("hit nothing")
 
 func take_damage(damage : int) -> void:
 	current_health -= damage
+	print("Player took ", damage, " damage!")
 
 
 func shoot_enemy(enemy : Enemy) -> void:
@@ -72,4 +98,29 @@ func shoot_enemy(enemy : Enemy) -> void:
 	enemy.take_damage(10)
 	pass
 
+
+func check_for_item():
 	
+	print("checking for item")
+	
+	var space = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
+		camera.global_position - camera.global_transform.basis.z * 100)
+	
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	query.collision_mask = 1 << 3
+	
+	var collision = space.intersect_ray(query)
+	
+	if collision and collision.collider.get_parent() is Carryable:
+		# pick item up
+		var carryable : Carryable = collision.collider.get_parent()
+		var item := carryable.pickup_item
+		var inst := item.instantiate()
+		set_carryable(inst)
+		carryable.queue_free()
+	else:
+		# if no item, shoot
+		print("no item")
+		shoot()

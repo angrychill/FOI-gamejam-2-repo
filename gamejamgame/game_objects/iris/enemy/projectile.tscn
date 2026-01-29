@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://c72h4wflkp788"]
+[gd_scene format=3 uid="uid://ma3kckekukyf"]
 
-[ext_resource type="Script" path="res://game_objects/iris/enemy/projectile.gd" id="1_uu6ke"]
+[ext_resource type="Script" uid="uid://dfoppwkwpqtg6" path="res://game_objects/iris/enemy/projectile.gd" id="1_uu6ke"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pa4uy"]
 radius = 0.1

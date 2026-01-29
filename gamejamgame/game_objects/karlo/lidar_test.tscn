@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bo7v8nf88dw6o" path="res://game_objects/karlo/mover.gd" id="3_7nxfo"]
 [ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="4_b22td"]
 [ext_resource type="Script" uid="uid://defed628bt3hy" path="res://game_objects/karlo/lidar_manager.gd" id="4_gndwi"]
-[ext_resource type="Script" uid="uid://c1qi8tl1b6by" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
+[ext_resource type="Script" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
