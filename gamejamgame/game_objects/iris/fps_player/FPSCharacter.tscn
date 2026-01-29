@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://iugimtq7nk70" path="res://game_objects/iris/fps_player/fps_character.gd" id="1_5jr3e"]
 [ext_resource type="PackedScene" uid="uid://djr26x4ros1jy" path="res://game_objects/iris/player_ui/player_ui.tscn" id="2_w52vm"]
+[ext_resource type="Script" uid="uid://c2ah7l2b3ejty" path="res://game_objects/iris/fps_player/dodge_component.gd" id="3_res4l"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peoph"]
 
@@ -33,3 +34,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
 [node name="PlayerUI" parent="CanvasLayer" unique_id=1576458718 instance=ExtResource("2_w52vm")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=782727456]
+
+[node name="DodgeComponent" type="Node" parent="." unique_id=1774681359]
+script = ExtResource("3_res4l")
