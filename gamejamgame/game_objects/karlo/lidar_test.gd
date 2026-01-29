@@ -1,87 +1,76 @@
 extends Camera3D
 
-@export var target_mesh: MeshInstance3D
-@export var material_slot := 0
+@export var lidar_manager_path: NodePath
+@export var max_distance := 1000.0
 
-@export var max_points: int = 256 # must match shader MAX_POINTS
+@export var add_point := true
+@export var point_radius := 0.10
+@export var point_color := Color(1.0, 0.2, 0.4, 0.9)
 
-@export var use_distance_gradient := true
-@export var near_color: Color = Color(0.1, 1.0, 0.2, 1.0)
-@export var far_color: Color  = Color(1.0, 0.2, 0.1, 1.0)
-@export var max_color_distance: float = 50.0
+@export var add_collider_volume := true
+@export var volume_color := Color(0.2, 0.9, 1.0, 0.9)
 
-@export var random_color_min: Color = Color(0.2, 0.4, 1.0, 1.0)
-@export var random_color_max: Color = Color(1.0, 0.3, 0.9, 1.0)
-
-var _points: PackedVector3Array = PackedVector3Array()
-var _colors: PackedColorArray = PackedColorArray()
-var _count: int = 0
+@onready var mgr: LidarManager = get_node(lidar_manager_path)
 
 func _ready() -> void:
-	_points.resize(max_points)
-	_colors.resize(max_points)
-
-	for i in range(max_points):
-		_points[i] = Vector3.ZERO
-		_colors[i] = Color(0, 0, 0, 0) # alpha=0 means unused
-
-	_push_to_shader()
+	make_current()
 
 func _unhandled_input(event) -> void:
-	if event is InputEventMouseButton \
-	and event.button_index == MOUSE_BUTTON_LEFT \
-	and event.pressed:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		shoot_lidar(event.position)
 
 func shoot_lidar(screen_pos: Vector2) -> void:
 	var space := get_world_3d().direct_space_state
-
 	var from := project_ray_origin(screen_pos)
-	var dir  := project_ray_normal(screen_pos)
-	var to   := from + dir * 1000.0
+	var dir := project_ray_normal(screen_pos)
+	var to := from + dir * max_distance
 
-	var query := PhysicsRayQueryParameters3D.create(from, to)
-	query.collide_with_areas = false
-	query.collide_with_bodies = true
+	var q := PhysicsRayQueryParameters3D.create(from, to)
+	q.collide_with_areas = false
+	q.collide_with_bodies = true
 
-	var result := space.intersect_ray(query)
-	if result.is_empty():
+	var hit := space.intersect_ray(q)
+	if hit.is_empty():
 		return
 
-	var hit_pos: Vector3 = result.position
-	_add_lidar_point(hit_pos)
+	var hit_pos: Vector3 = hit.position
 
-func _add_lidar_point(world_pos: Vector3) -> void:
-	if not target_mesh:
+	if add_point:
+		mgr.add_volume(Transform3D(Basis.IDENTITY, hit_pos), LidarManager.TYPE_POINT, Vector4(point_radius, 0, 0, 0), point_color)
+
+	if add_collider_volume:
+		_try_add_collision_shape_volume(hit.collider, int(hit.shape))
+
+func _try_add_collision_shape_volume(collider: Object, shape_idx: int) -> void:
+	if collider == null or not (collider is CollisionObject3D):
 		return
 
-	var c: Color
-	if use_distance_gradient:
-		var d := global_position.distance_to(world_pos)
-		var t : float= clamp(d / max_color_distance, 0.0, 1.0)
-		c = near_color.lerp(far_color, t)
-	else:
-		c = Color(
-			randf_range(random_color_min.r, random_color_max.r),
-			randf_range(random_color_min.g, random_color_max.g),
-			randf_range(random_color_min.b, random_color_max.b),
-			1.0
-		)
+	var co := collider as CollisionObject3D
+	var owner_id := co.shape_find_owner(shape_idx)
+	if owner_id == 0:
+		return
 
-	var idx := _count % max_points
-	_points[idx] = world_pos
-	_colors[idx] = c
-	_count += 1
+	if co.shape_owner_get_shape_count(owner_id) <= 0:
+		return
 
-	print("LIDAR HIT:", world_pos, "  count:", min(_count, max_points))
+	var shape: Shape3D = co.shape_owner_get_shape(owner_id, 0)
+	if shape == null:
+		return
 
-	_push_to_shader()
+	var local_owner_xf: Transform3D = co.shape_owner_get_transform(owner_id)
+	var global_xf: Transform3D = co.global_transform * local_owner_xf
 
-func _push_to_shader() -> void:
-	var mat := target_mesh.get_active_material(material_slot)
-	if mat is ShaderMaterial:
-		mat.set_shader_parameter("lidar_point_count", min(_count, max_points))
-		mat.set_shader_parameter("lidar_points", _points)
-		mat.set_shader_parameter("lidar_colors", _colors)
-	else:
-		push_warning("Target material is not a ShaderMaterial on surface material_slot=%d" % material_slot)
+	if shape is SphereShape3D:
+		mgr.add_volume(global_xf, LidarManager.TYPE_SPHERE, Vector4(shape.radius, 0, 0, 0), volume_color)
+
+	elif shape is BoxShape3D:
+		var he := (shape as BoxShape3D).size * 0.5
+		mgr.add_volume(global_xf, LidarManager.TYPE_BOX, Vector4(he.x, he.y, he.z, 0), volume_color)
+
+	elif shape is CapsuleShape3D:
+		var c := shape as CapsuleShape3D
+		mgr.add_volume(global_xf, LidarManager.TYPE_CAPSULE, Vector4(c.radius, c.height * 0.5, 0, 0), volume_color)
+
+	elif shape is CylinderShape3D:
+		var cy := shape as CylinderShape3D
+		mgr.add_volume(global_xf, LidarManager.TYPE_CYLINDER, Vector4(cy.radius, cy.height * 0.5, 0, 0), volume_color)
