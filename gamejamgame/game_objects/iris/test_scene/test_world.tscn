@@ -15,6 +15,10 @@ background_mode = 2
 sky = SubResource("Sky_4uu8m")
 tonemap_mode = 2
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_0io8h"]
+vertices = PackedVector3Array(-4.5, 0.5, -4.5, -4.5, 0.5, 4.5, 4.5, 0.5, 4.5, 4.5, 0.5, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_0io8h"]
 size = Vector3(10, 1, 10)
 
@@ -34,8 +38,6 @@ albedo_texture = SubResource("NoiseTexture2D_ljjh0")
 material = SubResource("StandardMaterial3D_4ordb")
 size = Vector2(10, 10)
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_0io8h"]
-
 [node name="TestWorld" type="Node3D" unique_id=68666111]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=427039732]
@@ -45,18 +47,18 @@ environment = SubResource("Environment_fisvw")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Floor" type="StaticBody3D" parent="." unique_id=1055116212]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=945001060]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+navigation_mesh = SubResource("NavigationMesh_0io8h")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=2039648559]
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1055116212]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" unique_id=2039648559]
 shape = SubResource("BoxShape3D_0io8h")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=79124086]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" unique_id=79124086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("PlaneMesh_2mtng")
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=945001060]
-navigation_mesh = SubResource("NavigationMesh_0io8h")
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("1_qio7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)

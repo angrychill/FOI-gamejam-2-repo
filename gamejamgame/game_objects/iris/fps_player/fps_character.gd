@@ -9,8 +9,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var mouse_sensitivity = 0.002
 @export var camera_clamp : float = 70
 
+@export var max_health : int = 100
+
+var current_health : int
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	current_health = max_health
 
 func _physics_process(delta: float) -> void:
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
@@ -47,6 +52,19 @@ func shoot() -> void:
 	var collision = space.intersect_ray(query)
 	if collision:
 		print_debug("hit collider ", collision.collider.name, collision.position)
+		if collision.collider is Enemy:
+			shoot_enemy(collision.collider)
 	else:
 		print_debug("hit nothing")
+
+func take_damage(damage : int) -> void:
+	current_health -= damage
+
+
+func shoot_enemy(enemy : Enemy) -> void:
+	print_debug("shooting enemy: ", enemy)
+	# hard coded for now
+	enemy.take_damage(10)
+	pass
+
 	

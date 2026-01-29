@@ -12,6 +12,8 @@ var enemy_speed : float
 var current_enemy_health : int
 var max_enemy_health : int
 
+var is_dead : bool = false
+
 func _ready() -> void:
 	if not sprite_3d:
 		push_error("Enemy needs a sprite3D!")
@@ -28,26 +30,41 @@ func _ready() -> void:
 
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	enemy_debug_label.text = str(current_enemy_health)
-	if nav_agent.is_navigation_finished():
-		print_debug("Nav finished!")
-		velocity = Vector3.ZERO
-		nav_agent.velocity = Vector3.ZERO
-		return
-	
-	var next_pos : Vector3 = nav_agent.get_next_path_position()
-	var move_dir = (next_pos - global_position).normalized()
-	print_debug("next pos: ", next_pos)
-	print_debug("move dir ", move_dir)
-	velocity = move_dir * enemy_speed
-	nav_agent.velocity = velocity
+	if not is_dead:
+		if nav_agent.is_navigation_finished():
+			print_debug("Nav finished!")
+			velocity = Vector3.ZERO
+			nav_agent.velocity = Vector3.ZERO
+			return
 		
-	print_debug("velocity: ", velocity)
-	
+		var next_pos : Vector3 = nav_agent.get_next_path_position()
+		var move_dir = (next_pos - global_position).normalized()
+
+		velocity = move_dir * enemy_speed
+		nav_agent.velocity = velocity
+		
+	else:
+		velocity = Vector3.ZERO
+		
 	move_and_slide()
 		
 		
 
 func _on_player_refresh_timeout() -> void:
 	nav_agent.target_position = GlobalData.get_player_position()
+
+func take_damage(damage : int) ->void:
+	if not is_dead:
+		current_enemy_health -= damage
+		if current_enemy_health <= 0:
+			die()
+
+func die() -> void:
+	is_dead = true
+	
+	# dodaj kasnije
+	queue_free()
+	
+	

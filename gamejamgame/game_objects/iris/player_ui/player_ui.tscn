@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://djr26x4ros1jy"]
+
+[sub_resource type="Gradient" id="Gradient_5jr3e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w52vm"]
+gradient = SubResource("Gradient_5jr3e")
+width = 1
+height = 1
+use_hdr = true
+
+[node name="PlayerUI" type="Control" unique_id=1576458718]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cursor" type="TextureRect" parent="." unique_id=1105321131]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_w52vm")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1965491669]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer" unique_id=468969174]
+layout_mode = 2
