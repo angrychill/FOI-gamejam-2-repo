@@ -14,7 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export var max_health : int = 100
 
-@export var current_carryable : Carryable
+@export var current_carryable : Node3D
 
 var current_health : int:
 	set(value):
@@ -34,9 +34,9 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-func set_carryable(carryable : Carryable) -> void:
+func set_carryable(node : Node3D) -> void:
 	
-	if carryable == null:
+	if node == null:
 		remove_carryable()
 		print_debug("carryable is null")
 		return
@@ -44,8 +44,8 @@ func set_carryable(carryable : Carryable) -> void:
 	if hand.get_child_count() > 0:
 		remove_carryable()
 	
-	hand.add_child(carryable)
-	current_carryable = carryable
+	hand.add_child(node)
+	current_carryable = node
 	print_debug("Set new carryable")
 
 func remove_carryable() ->void:
@@ -83,9 +83,7 @@ func shoot() -> void:
 		print_debug("hit collider ", collision.collider.name, collision.position)
 		if collision.collider is Enemy:
 			shoot_enemy(collision.collider)
-		
-		if collision.collider is Carryable:
-			set_carryable(collision.collider)
+	
 	else:
 		print_debug("hit nothing")
 
@@ -117,7 +115,11 @@ func check_for_item():
 	
 	if collision and collision.collider.get_parent() is Carryable:
 		# pick item up
-		set_carryable(collision.collider.get_parent())
+		var carryable : Carryable = collision.collider.get_parent()
+		var item := carryable.pickup_item
+		var inst := item.instantiate()
+		set_carryable(inst)
+		carryable.queue_free()
 	else:
 		# if no item, shoot
 		print("no item")

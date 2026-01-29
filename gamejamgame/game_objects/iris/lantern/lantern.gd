@@ -1,4 +1,4 @@
-extends Carryable
+extends Node3D
 class_name Lantern
 @onready var lantern_debug_label: Label = $LanternDebugLabel
 

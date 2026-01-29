@@ -1,16 +1,31 @@
 [gd_scene format=3 uid="uid://cafvnl8c6l373"]
 
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="1_uo3sq"]
+[ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="2_lsfwl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uo3sq"]
 
-[node name="Carryable" type="Node3D" unique_id=1286907608 node_paths=PackedStringArray("pickup_area")]
+[sub_resource type="BoxMesh" id="BoxMesh_6ggbl"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="Carryable" type="Node3D" unique_id=1286907608 node_paths=PackedStringArray("pickup_area", "pickup_mesh")]
 script = ExtResource("1_uo3sq")
 pickup_area = NodePath("Area3D")
+pickup_item = ExtResource("2_lsfwl")
+pickup_mesh = NodePath("MeshInstance3D")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1182007538]
-collision_layer = 2
+collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1730086849]
 shape = SubResource("SphereShape3D_uo3sq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1282598624]
+mesh = SubResource("BoxMesh_6ggbl")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1443860670]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+billboard = 1
+text = "Pick up"
