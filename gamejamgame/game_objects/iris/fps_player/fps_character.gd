@@ -44,7 +44,7 @@ func _input(event: InputEvent) -> void:
 func shoot() -> void:
 	var space = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
-		camera.global_position - $Camera3D.global_transform.basis.z * 100)
+		camera.global_position - camera.global_transform.basis.z * 100)
 	var collision = space.intersect_ray(query)
 	if collision:
 		print_debug("hit collider ", collision.collider.name, collision.position)
