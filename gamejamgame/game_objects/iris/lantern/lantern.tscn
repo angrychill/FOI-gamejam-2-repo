@@ -15,8 +15,9 @@ size = Vector3(0.3, 0.3, 0.3)
 [sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
 radius = 2.0
 
-[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_decay_timer")]
+[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("lantern_area", "shooting_decay_timer")]
 script = ExtResource("1_4m0mg")
+lantern_area = NodePath("LanternArea")
 shooting_decay_timer = NodePath("ShootingDecay")
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
@@ -31,7 +32,6 @@ mesh = SubResource("BoxMesh_6ma5o")
 
 [node name="LanternArea" type="Area3D" parent="." unique_id=911193770]
 collision_layer = 16
-collision_mask = 0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="LanternArea" unique_id=983500537]
 shape = SubResource("SphereShape3D_4m0mg")

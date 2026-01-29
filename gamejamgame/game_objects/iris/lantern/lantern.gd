@@ -2,14 +2,16 @@ extends Node3D
 class_name Lantern
 @onready var lantern_debug_label: Label = $LanternDebugLabel
 
+@export var lantern_area : Area3D
+
 @export var shooting_decay_timer : Timer
-@export var max_shooting_rate : float = 100
+@export var max_shooting_rate : float = 10
 @export var shooting_rate_increment : float = 0.1
 @export var shooting_decay_rate : float = 0.25
 
 var _current_shooting_rate := 0.0
 
-var current_shooting_rate : float:
+var current_shooting_rate : float: # = strength
 	get:
 		return _current_shooting_rate
 	set(value):
@@ -50,7 +52,11 @@ func _on_shooting_decay_timer_timeout() -> void:
 
 func fire_pulse() -> void:
 	print("firing a pulse")
-
+	# scan
+	var overlaps := lantern_area.get_overlapping_bodies()
+	for node : Node3D in overlaps:
+		if node is Enemy:
+			node.take_damage(current_shooting_rate)
 
 		
 		
