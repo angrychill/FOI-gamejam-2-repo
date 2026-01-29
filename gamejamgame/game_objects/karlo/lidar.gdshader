@@ -1,70 +1,55 @@
 shader_type spatial;
+render_mode unshaded, cull_back;
 
-// ---- LiDAR controls ----
-uniform vec3  lidar_origin = vec3(0.0);
-uniform float scan_radius  = 5.0;
-uniform float band_width   = 0.15;
+const int MAX_POINTS = 256;
 
-// ---- Point look ----
-uniform float point_density = 25.0;
-uniform float point_size    = 0.25;
-uniform float point_boost   = 3.0;
+uniform vec4 base_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
-// ---- Dimming ----
-uniform float dim_strength  = 0.6;
-uniform vec3  lidar_color   = vec3(0.9, 1.0, 0.9);
+uniform int lidar_point_count = 0;
+uniform vec3 lidar_points[MAX_POINTS];
+uniform vec4 lidar_colors[MAX_POINTS];
 
-// ---- Varying ----
+uniform float point_radius = 0.08; // try bigger first
+uniform float soft_edge   = 0.06;  // try bigger first
+uniform float glow_strength = 1.5; // makes points pop
+
 varying vec3 world_pos;
 
-// ---------- hash helpers ----------
-float hash12(vec2 p) {
-	vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-	p3 += dot(p3, p3.yzx + 33.33);
-	return fract((p3.x + p3.y) * p3.z);
-}
-
-vec2 hash22(vec2 p) {
-	float n = hash12(p);
-	return vec2(n, hash12(p + n + 19.19));
-}
-
 void vertex() {
-	// Convert local vertex position to world space
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 }
 
 void fragment() {
-	vec3 base_albedo = ALBEDO;
+	// Base mesh always visible:
+	vec3 base_rgb = base_color.rgb;
 
-	// Distance from LiDAR origin
-	float d = distance(world_pos, lidar_origin);
-	float ring = 1.0 - smoothstep(
-		band_width,
-		band_width * 1.5,
-		abs(d - scan_radius)
-	);
+	// Find closest lidar point
+	float best_d = 1e20;
+	vec4 best_col = vec4(0.0);
 
-	// Surface-stable coordinates (XZ projection)
-	vec2 p = world_pos.xz;
+	for (int i = 0; i < MAX_POINTS; i++) {
+		if (i >= lidar_point_count) break;
 
-	vec2 grid = p * point_density;
-	vec2 cell = floor(grid);
-	vec2 f    = fract(grid);
+		vec4 c = lidar_colors[i];
+		if (c.a <= 0.0) continue;
 
-	vec2 rnd_center = hash22(cell) * 0.8 + 0.1;
+		float d = distance(world_pos, lidar_points[i]);
+		if (d < best_d) {
+			best_d = d;
+			best_col = c;
+		}
+	}
 
-	float r = length(f - rnd_center);
-	float dot_mask = 1.0 - smoothstep(point_size, point_size * 1.2, r);
+	float inner = point_radius;
+	float outer = point_radius + soft_edge;
+	float a = 1.0 - smoothstep(inner, outer, best_d); // 0..1
 
-	float keep = step(0.35, hash12(cell + 7.7));
+	// Overlay points onto base color (no transparency needed)
+	vec3 out_rgb = mix(base_rgb, best_col.rgb, a);
 
-	float lidar_pts = ring * dot_mask * keep;
+	ALBEDO = out_rgb;
+	ALPHA = 1.0;
 
-	// Dim base material under scan
-	float dim = mix(1.0, 1.0 - dim_strength, ring);
-	ALBEDO = base_albedo * dim;
-
-	// Bright LiDAR dots
-	EMISSION += lidar_color * (lidar_pts * point_boost);
+	// Optional “glow”
+	EMISSION = best_col.rgb * a * glow_strength;
 }
