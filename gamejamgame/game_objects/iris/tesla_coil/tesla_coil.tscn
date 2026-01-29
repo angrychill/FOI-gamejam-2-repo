@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cle07qd032bk4"]
+
+[ext_resource type="Script" uid="uid://bbpq5bhkgungh" path="res://game_objects/iris/tesla_coil/tesla_coil.gd" id="1_etei5"]
+
+[node name="TeslaCoil" type="Node3D" unique_id=1196484093]
+script = ExtResource("1_etei5")
