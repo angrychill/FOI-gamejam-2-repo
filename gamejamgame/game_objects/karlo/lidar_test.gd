@@ -32,6 +32,7 @@ func _apply_lidar_origin(world_pos: Vector3) -> void:
 		return
 
 	var mat := target_mesh.get_active_material(material_slot)
+	print(mat, world_pos)
 	if mat is ShaderMaterial:
 		mat.set_shader_parameter("lidar_origin", world_pos)
 	else:
