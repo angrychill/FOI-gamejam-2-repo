@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://game_objects/karlo/lidar_test.gd" id="1_skjmp"]
 [ext_resource type="Shader" uid="uid://lb6m8647pv34" path="res://game_objects/karlo/lidar_overlay.gdshader" id="2_oebh7"]
-[ext_resource type="Script" uid="uid://dq607vmaab3om" path="res://game_objects/karlo/lidar_receiver.gd" id="3_n2so6"]
 [ext_resource type="Script" uid="uid://defed628bt3hy" path="res://game_objects/karlo/lidar_manager.gd" id="4_gndwi"]
+[ext_resource type="Script" uid="uid://c1qi8tl1b6by" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -76,26 +76,26 @@ script = ExtResource("1_skjmp")
 lidar_manager_path = NodePath("../LidarManager")
 volume_lifetime_s = 1.5
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1436618615]
+[node name="Shapes" type="Node3D" parent="." unique_id=646119761]
 
-[node name="MeshLidar0" type="MeshInstance3D" parent="StaticBody3D" unique_id=675268299]
+[node name="StaticBody3D" type="StaticBody3D" parent="Shapes" unique_id=1436618615]
+
+[node name="MeshLidar0" type="MeshInstance3D" parent="Shapes/StaticBody3D" unique_id=675268299 groups=["lidar"]]
 transform = Transform3D(1, 0, 0, 0, -0.010262353, -0.99994737, 0, 0.99994737, -0.010262353, 0, 0, 0)
 mesh = SubResource("PlaneMesh_3l0x6")
-script = ExtResource("3_n2so6")
-lidar_manager_path = NodePath("../../LidarManager")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1242737070]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shapes/StaticBody3D" unique_id=1242737070]
 shape = SubResource("BoxShape3D_skjmp")
+
+[node name="MeshLidar1" type="CSGMesh3D" parent="Shapes" unique_id=41619560 groups=["lidar"]]
+transform = Transform3D(-0.259881, 0, -0.96564066, 0, 1, 0, 0.96564066, 0, -0.259881, 0.71053267, 0, 0.17576665)
+use_collision = true
+mesh = SubResource("PrismMesh_gndwi")
+material = SubResource("StandardMaterial3D_7nxfo")
 
 [node name="LidarManager" type="Node" parent="." unique_id=987480577]
 script = ExtResource("4_gndwi")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1033641405]
-transform = Transform3D(-0.259881, 0, -0.96564066, 0, 1, 0, 0.96564066, 0, -0.259881, 0.71053267, 0, 0.17576665)
-
-[node name="MeshLidar1" type="CSGMesh3D" parent="StaticBody3D2" unique_id=41619560]
-use_collision = true
-mesh = SubResource("PrismMesh_gndwi")
-material = SubResource("StandardMaterial3D_7nxfo")
-script = ExtResource("3_n2so6")
-lidar_manager_path = NodePath("../../LidarManager")
+[node name="LidarRegistrar" type="Node" parent="." unique_id=220218227]
+script = ExtResource("4_mhyuh")
+lidar_manager_path = NodePath("../LidarManager")

@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
 
-[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_rate_timer", "shooting_decay_timer")]
+[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_decay_timer")]
 script = ExtResource("1_4m0mg")
-shooting_rate_timer = NodePath("ShootingRate")
 shooting_decay_timer = NodePath("ShootingDecay")
-
-[node name="ShootingRate" type="Timer" parent="." unique_id=1317703909]
-autostart = true
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
 autostart = true
+
+[node name="LanternDebugLabel" type="Label" parent="." unique_id=526355081]
+offset_right = 40.0
+offset_bottom = 29.0
