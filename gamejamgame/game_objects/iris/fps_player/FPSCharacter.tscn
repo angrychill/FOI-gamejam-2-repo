@@ -50,3 +50,5 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_w52vm")
 stretch_mode = 5
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=782727456]
