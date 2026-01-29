@@ -103,6 +103,7 @@ locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/t
 
 [layer_names]
 
+3d_physics/layer_4="carryable"
 3d_physics/layer_5="lantern_sphere"
 
 [maaacks_game_template]

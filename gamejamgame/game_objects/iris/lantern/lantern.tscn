@@ -15,9 +15,13 @@ size = Vector3(0.3, 0.3, 0.3)
 [sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
 radius = 2.0
 
-[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_decay_timer")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_6ma5o"]
+radius = 0.3
+
+[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("shooting_decay_timer", "pickup_area")]
 script = ExtResource("1_4m0mg")
 shooting_decay_timer = NodePath("ShootingDecay")
+pickup_area = NodePath("PickUp")
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
 autostart = true
@@ -35,3 +39,10 @@ collision_mask = 0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="LanternArea" unique_id=983500537]
 shape = SubResource("SphereShape3D_4m0mg")
+
+[node name="PickUp" type="Area3D" parent="." unique_id=974350020]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUp" unique_id=852821180]
+shape = SubResource("SphereShape3D_6ma5o")

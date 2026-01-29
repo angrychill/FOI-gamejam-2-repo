@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bilwrabhxf4ot"]
 
 [ext_resource type="Script" uid="uid://iugimtq7nk70" path="res://game_objects/iris/fps_player/fps_character.gd" id="1_5jr3e"]
-[ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="2_res4l"]
 [ext_resource type="PackedScene" uid="uid://djr26x4ros1jy" path="res://game_objects/iris/player_ui/player_ui.tscn" id="2_w52vm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peoph"]
@@ -10,9 +9,10 @@
 radius = 0.2
 height = 0.4
 
-[node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera") groups=["player"]]
+[node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera", "hand") groups=["player"]]
 script = ExtResource("1_5jr3e")
 camera = NodePath("Camera3D")
+hand = NodePath("Camera3D/HandPosition")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1179155591]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -21,14 +21,12 @@ shape = SubResource("CapsuleShape3D_peoph")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=475998685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="HandPosition" type="Node3D" parent="Camera3D" unique_id=448133706]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
-
-[node name="HandPlaceholder" type="MeshInstance3D" parent="Camera3D/HandPosition" unique_id=462521949]
+[node name="HandPlaceholder" type="MeshInstance3D" parent="Camera3D" unique_id=462521949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.20000005, -1)
 mesh = SubResource("SphereMesh_w52vm")
 
-[node name="Lantern" parent="Camera3D/HandPosition" unique_id=385217723 instance=ExtResource("2_res4l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31, 0)
+[node name="HandPosition" type="Node3D" parent="Camera3D" unique_id=448133706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=732711742]
 
