@@ -37,3 +37,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
 
 [node name="DodgeComponent" type="Node" parent="." unique_id=1774681359]
 script = ExtResource("3_res4l")
+dodge_cooldown = 0.5
