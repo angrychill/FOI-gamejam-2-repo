@@ -19,10 +19,11 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ru4oe"]
 
-[node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d")]
+[node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
 script = ExtResource("1_ru4oe")
 enemy_data = SubResource("Resource_ooti1")
 sprite_3d = NodePath("Sprite3D")
+nav_agent = NodePath("NavigationAgent3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1180535895]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

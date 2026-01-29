@@ -5,6 +5,7 @@ class_name Enemy
 
 @export var enemy_data : EnemyData
 @export var sprite_3d : Sprite3D
+@export var nav_agent : NavigationAgent3D
 
 var enemy_speed : float
 var current_enemy_health : int
@@ -21,6 +22,7 @@ func _ready() -> void:
 	max_enemy_health = enemy_data.health
 	current_enemy_health = enemy_data.health
 	enemy_speed = enemy_data.move_speed
+	
 
 func _physics_process(delta: float) -> void:
 	enemy_debug_label.text = str(current_enemy_health)
