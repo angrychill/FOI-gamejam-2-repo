@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cxjobkdfcoivc"]
+
+[ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://karlo/lidar_test.gd" id="1_skjmp"]
+[ext_resource type="Shader" uid="uid://pp68hcocur4y" path="res://karlo/lidar.gdshader" id="2_lhbxc"]
+
+[sub_resource type="Environment" id="Environment_skjmp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3l0x6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vyxso"]
+render_priority = 0
+shader = ExtResource("2_lhbxc")
+shader_parameter/lidar_origin = Vector3(0, 0, 0)
+shader_parameter/scan_radius = 5.0
+shader_parameter/band_width = 0.15
+shader_parameter/point_density = 25.0
+shader_parameter/point_size = 0.25
+shader_parameter/point_boost = 3.0
+shader_parameter/dim_strength = 0.6
+shader_parameter/lidar_color = Vector3(0.9, 1, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_skjmp"]
+size = Vector3(1, 1, 0.034179688)
+
+[node name="LidarTest" type="Node3D" unique_id=601369198]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1171683026 node_paths=PackedStringArray("target_mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.355)
+script = ExtResource("1_skjmp")
+target_mesh = NodePath("../StaticBody3D/MeshInstance3D")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1378353128]
+environment = SubResource("Environment_skjmp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1436618615]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=675268299]
+mesh = SubResource("PlaneMesh_3l0x6")
+surface_material_override/0 = SubResource("ShaderMaterial_vyxso")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1242737070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0024414063)
+shape = SubResource("BoxShape3D_skjmp")
