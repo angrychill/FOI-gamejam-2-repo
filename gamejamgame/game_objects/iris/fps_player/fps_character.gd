@@ -13,7 +13,6 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
-	velocity.y += -gravity * delta
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
 	var move_dir = transform.basis * Vector3(input.x, 0, input.y)
 	velocity.x = move_dir.x * speed

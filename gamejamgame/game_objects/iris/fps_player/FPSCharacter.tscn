@@ -21,7 +21,7 @@ width = 1
 height = 1
 use_hdr = true
 
-[node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera")]
+[node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera") groups=["player"]]
 script = ExtResource("1_5jr3e")
 camera = NodePath("Camera3D")
 
