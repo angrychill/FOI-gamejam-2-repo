@@ -33,6 +33,10 @@ GlobalData="*uid://dldhfot6k3ujv"
 window/size/viewport_width=1720
 window/size/viewport_height=980
 
+[editor]
+
+movie_writer/movie_file="C:/Projekti/godot/projects/show.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/script-ide/plugin.cfg")

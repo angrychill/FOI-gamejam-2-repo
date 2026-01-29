@@ -1,6 +1,6 @@
-extends MeshInstance3D
+extends GeometryInstance3D
 
-@export var lidar_manager_path: NodePath 
+@export var lidar_manager_path: NodePath = NodePath("/root/LidarManager")
 
 func _ready() -> void:
 	var mgr := get_node_or_null(lidar_manager_path)

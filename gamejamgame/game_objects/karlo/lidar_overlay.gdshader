@@ -1,20 +1,25 @@
 shader_type spatial;
-render_mode unshaded, cull_back;
+render_mode unshaded, cull_back, depth_draw_never;
 
 const int MAX_SHAPES = 256;
 
-uniform vec4 base_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+/*
+We render ONLY the lidar overlay in this pass.
+Base material remains the main pass; this is next_pass.
+*/
 
 uniform int lidar_shape_count = 0;
+
 uniform vec4 lidar_t0[MAX_SHAPES];
 uniform vec4 lidar_t1[MAX_SHAPES];
 uniform vec4 lidar_t2[MAX_SHAPES];
 uniform vec4 lidar_t3[MAX_SHAPES];      // origin.xyz + type in w
 uniform vec4 lidar_params[MAX_SHAPES];  // per-type params
 uniform vec4 lidar_colors[MAX_SHAPES];  // rgb + intensity in a
+uniform float lidar_fade[MAX_SHAPES];   // 0..1 fade multiplier already computed in script
 
 uniform float edge_softness = 0.06;
-uniform float glow_strength = 1.3;
+uniform float glow_strength = 2.0;
 
 varying vec3 wpos;
 
@@ -40,13 +45,14 @@ void vertex() {
 }
 
 void fragment() {
-	vec3 base_rgb = base_color.rgb;
-
 	vec3 accum = vec3(0.0);
-	float accum_a = 0.0;
+	float amax = 0.0;
 
 	for (int i = 0; i < MAX_SHAPES; i++) {
 		if (i >= lidar_shape_count) break;
+
+		float fade = lidar_fade[i];
+		if (fade <= 0.0) continue;
 
 		vec4 c = lidar_colors[i];
 		if (c.a <= 0.0) continue;
@@ -55,7 +61,6 @@ void fragment() {
 		vec3 O = lidar_t3[i].xyz;
 		float type = lidar_t3[i].w;
 
-		// world -> local (assumes orthonormal basis)
 		vec3 p = transpose(B) * (wpos - O);
 
 		vec4 prm = lidar_params[i];
@@ -75,13 +80,22 @@ void fragment() {
 			continue;
 		}
 
+		// fill inside with soft edge
 		float a = 1.0 - smoothstep(0.0, edge_softness, max(d, 0.0));
+		a *= fade;
+
 		accum += c.rgb * a * c.a;
-		accum_a = max(accum_a, a * c.a);
+		amax = max(amax, a * c.a);
 	}
 
-	vec3 out_rgb = mix(base_rgb, accum, clamp(accum_a, 0.0, 1.0));
-	ALBEDO = out_rgb;
-	ALPHA = 1.0;
+	// Overlay pass: output ONLY where lidar is
+	if (amax <= 0.001) {
+		discard;
+	}
+
+	ALBEDO = accum;
+	ALPHA = amax;
+
+	// Make it look like "light" on top
 	EMISSION = accum * glow_strength;
 }
