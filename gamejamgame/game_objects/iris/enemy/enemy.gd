@@ -35,7 +35,12 @@ func _ready() -> void:
 		shoot_timer = Timer.new()
 		add_child(shoot_timer)
 		shoot_timer.timeout.connect(_on_shoot_timer_timeout)
-		shoot_timer.wait_time = 2.0
+		
+		if shooting_component:
+			shoot_timer.wait_time = shooting_component.get_current_interval()
+		else:
+			shoot_timer.wait_time = 2.0
+		
 		shoot_timer.start()
 
 
@@ -82,3 +87,6 @@ func die() -> void:
 func _on_shoot_timer_timeout() -> void:
 	if not is_dead and shooting_component:
 		shooting_component.shoot_at_player()
+		
+		if shooting_component:
+			shoot_timer.wait_time = shooting_component.get_current_interval()
