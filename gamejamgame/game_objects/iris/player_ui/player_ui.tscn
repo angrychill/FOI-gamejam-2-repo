@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://djr26x4ros1jy"]
 
+[ext_resource type="Script" uid="uid://5pyjq76262iu" path="res://game_objects/iris/player_ui/player_ui.gd" id="1_ox6gb"]
+
 [sub_resource type="Gradient" id="Gradient_5jr3e"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(1, 1, 1, 1)
@@ -10,6 +12,11 @@ width = 1
 height = 1
 use_hdr = true
 
+[sub_resource type="Gradient" id="Gradient_ahmlx"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ox6gb"]
+gradient = SubResource("Gradient_ahmlx")
+
 [node name="PlayerUI" type="Control" unique_id=1576458718]
 layout_mode = 3
 anchors_preset = 15
@@ -17,6 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ox6gb")
 
 [node name="Cursor" type="TextureRect" parent="." unique_id=1105321131]
 layout_mode = 1
@@ -41,6 +49,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer" unique_id=468969174]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=812099878]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer/HBoxContainer" unique_id=468969174]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 77.0
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture2D_ox6gb")
+
+[node name="HealthLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=2141590697]
+unique_name_in_owner = true
+layout_mode = 2
+text = "AAaaa"

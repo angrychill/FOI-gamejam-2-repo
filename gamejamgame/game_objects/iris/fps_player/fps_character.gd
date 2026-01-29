@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name FPSPlayer
 
+signal player_health_changed(new_val : int)
+
 @export var camera : Camera3D
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -11,7 +13,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export var max_health : int = 100
 
-var current_health : int
+var current_health : int:
+	set(value):
+		current_health = value
+		player_health_changed.emit(current_health)
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
