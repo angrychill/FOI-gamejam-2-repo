@@ -1,7 +1,7 @@
 extends Weapon
 class_name TeslaCoil
 
-const TESLA_COIL_RAY_SHAPE = preload("uid://cuc458ufw3sty")
+const TESLA_COIL_RAY_SHAPE = preload("res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres")
 
 func attack() -> void:
 	var camera : Camera3D = GlobalData.get_player().camera
@@ -10,22 +10,25 @@ func attack() -> void:
 		return
 	
 	var space = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
-		camera.global_position - camera.global_transform.basis.z * 100)
-	
+
 	var query_shape = PhysicsShapeQueryParameters3D.new()
 	query_shape.collide_with_bodies = true
-	query_shape.collide_with_areas = false
+	query_shape.collide_with_areas = true
 	query_shape.shape = TESLA_COIL_RAY_SHAPE
-	query_shape.motion = GlobalData.get_player().velocity
-	query_shape.transform = transform
-	var collision = space.intersect_shape(query_shape)
+	#query_shape.motion = GlobalData.get_player().velocity
+	query_shape.transform = global_transform
+	var collision: Array[Dictionary]= space.intersect_shape(query_shape)
 	
-	if collision:
-		for collider in collision.values():
-			print_debug("hit collider ", collision.collider.name, collision.position)
-			if collision.collider is Enemy:
-				shoot_enemy(collision.collider)
+	if collision.size() > 0:
+		for collider_res in collision:
+			var collider : Node3D = collider_res.get("collider")
+			var pos = collider.global_transform
+			print_debug("hit pos: ", pos)
+			print_debug("hit collider: ", collider.name)
+			if collider is Enemy:
+				print_debug("hit enemy ", collider)
+				
+				shoot_enemy(collider)
 	
 	else:
 		print_debug("hit nothing")
