@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://coteb0i3mdv6r"]
+
+[ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="1_qio7j"]
+[ext_resource type="PackedScene" uid="uid://b7r6h5pqcv6rb" path="res://game_objects/iris/enemy/enemy.tscn" id="2_0io8h"]
+[ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="3_4ordb"]
+[ext_resource type="PackedScene" uid="uid://cafvnl8c6l373" path="res://game_objects/iris/carryable/carryable.tscn" id="3_4uu8m"]
+[ext_resource type="PackedScene" uid="uid://cle07qd032bk4" path="res://game_objects/iris/tesla_coil/tesla_coil.tscn" id="4_fisvw"]
+[ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="5_ljjh0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0io8h"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_4uu8m"]
+sky_material = SubResource("ProceduralSkyMaterial_0io8h")
+
+[sub_resource type="Environment" id="Environment_fisvw"]
+background_mode = 2
+sky = SubResource("Sky_4uu8m")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_0io8h"]
+vertices = PackedVector3Array(-24.5, 1, -24.5, -24.5, 1, 24.5, 24.5, 1, 24.5, 24.5, 1, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0io8h"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="Gradient" id="Gradient_4uu8m"]
+colors = PackedColorArray(0, 0, 0, 1, 0.2915, 0.53, 0.32330003, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fisvw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ljjh0"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_fisvw")
+color_ramp = SubResource("Gradient_4uu8m")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ordb"]
+albedo_texture = SubResource("NoiseTexture2D_ljjh0")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2mtng"]
+material = SubResource("StandardMaterial3D_4ordb")
+size = Vector2(50, 50)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2mtng"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_543v3"]
+width = 64
+height = 64
+noise = SubResource("FastNoiseLite_2mtng")
+
+[sub_resource type="Resource" id="Resource_dg6sy"]
+script = ExtResource("3_4ordb")
+health = 100
+sprite = SubResource("NoiseTexture2D_543v3")
+metadata/_custom_type_script = "uid://bnm48nwrslv5i"
+
+[node name="TestWorld" type="Node3D" unique_id=68666111]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=427039732]
+environment = SubResource("Environment_fisvw")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=701330889]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=945001060]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, 0, -0.5, 0)
+navigation_mesh = SubResource("NavigationMesh_0io8h")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1055116212]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor" unique_id=2039648559]
+shape = SubResource("BoxShape3D_0io8h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor" unique_id=79124086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_2mtng")
+
+[node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("1_qio7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
+
+[node name="Enemy" parent="." unique_id=778402213 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, 0)
+
+[node name="Enemy2" parent="." unique_id=362387938 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -5.694751)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Enemy3" parent="." unique_id=1019870270 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -10.843231)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Enemy4" parent="." unique_id=449308096 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -15.8388)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Carryable" parent="." unique_id=1286907608 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, 2.8562279)
+debug_label = "Lantern"
+
+[node name="Carryable2" parent="." unique_id=1168108728 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, -1.7066875)
+pickup_item = ExtResource("4_fisvw")
+debug_label = "Tesla coil"
+
+[node name="Carryable3" parent="." unique_id=1051818204 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, -7.4510927)
+pickup_item = ExtResource("5_ljjh0")
+debug_label = "Sword"

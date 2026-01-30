@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://iugimtq7nk70" path="res://game_objects/iris/fps_player/fps_character.gd" id="1_5jr3e"]
 [ext_resource type="Script" uid="uid://b1r3wsdqd0xet" path="res://game_objects/iris/fps_player/head_bob.gd" id="2_l6ovs"]
+[ext_resource type="Shape3D" uid="uid://cuc458ufw3sty" path="res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres" id="2_mlmhm"]
 [ext_resource type="PackedScene" uid="uid://djr26x4ros1jy" path="res://game_objects/iris/player_ui/player_ui.tscn" id="2_w52vm"]
 [ext_resource type="Script" uid="uid://c2ah7l2b3ejty" path="res://game_objects/iris/fps_player/dodge_component.gd" id="3_res4l"]
 
@@ -30,6 +31,10 @@ mesh = SubResource("SphereMesh_w52vm")
 
 [node name="HandPosition" type="Node3D" parent="Camera3D" unique_id=448133706]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, -0.2, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/HandPosition" unique_id=76990949]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -5)
+shape = ExtResource("2_mlmhm")
 
 [node name="HeadBob" type="Node" parent="Camera3D" unique_id=432459960]
 script = ExtResource("2_l6ovs")

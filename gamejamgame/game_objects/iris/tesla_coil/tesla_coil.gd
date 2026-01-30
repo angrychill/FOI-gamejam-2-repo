@@ -1,41 +1,81 @@
 extends Weapon
 class_name TeslaCoil
 
-const TESLA_COIL_RAY_SHAPE = preload("res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres")
+const TESLA_COIL_RAY_SHAPE: CylinderShape3D = preload("res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres")
+
+@export var debug_draw_query_shape := true
+
+var _debug_mesh_instance: MeshInstance3D
+
+
+func _ready() -> void:
+	if debug_draw_query_shape:
+		_create_debug_shape()
+
+
+func _process(_delta: float) -> void:
+	if debug_draw_query_shape and _debug_mesh_instance:
+		_update_debug_shape_transform()
+
+
+func _get_query_transform() -> Transform3D:
+	# Single source of truth for both debug and physics query
+	var t := global_transform
+	t.basis *= Basis(Vector3.RIGHT, deg_to_rad(90.0)) # rotate X +90
+	t.origin += t.basis.y * -5.0                    # local z = -5
+	return t
+
+
+func _create_debug_shape() -> void:
+	_debug_mesh_instance = MeshInstance3D.new()
+	_debug_mesh_instance.name = "TeslaCoilQueryDebug"
+
+	var m := CylinderMesh.new()
+	m.height = TESLA_COIL_RAY_SHAPE.height
+	m.top_radius = TESLA_COIL_RAY_SHAPE.radius
+	m.bottom_radius = TESLA_COIL_RAY_SHAPE.radius
+	_debug_mesh_instance.mesh = m
+
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.albedo_color = Color(0.2, 1.0, 1.0, 0.25)
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	_debug_mesh_instance.material_override = mat
+
+	get_tree().current_scene.add_child(_debug_mesh_instance)
+	_update_debug_shape_transform()
+
+
+func _update_debug_shape_transform() -> void:
+	_debug_mesh_instance.global_transform = _get_query_transform()
+
 
 func attack() -> void:
-	var camera : Camera3D = GlobalData.get_player().camera
+	var camera: Camera3D = GlobalData.get_player().camera
 	if not camera:
 		push_warning("There's no camera!")
 		return
-	
-	var space = get_world_3d().direct_space_state
 
-	var query_shape = PhysicsShapeQueryParameters3D.new()
+	var space := get_world_3d().direct_space_state
+
+	var query_shape := PhysicsShapeQueryParameters3D.new()
 	query_shape.collide_with_bodies = true
 	query_shape.collide_with_areas = true
 	query_shape.shape = TESLA_COIL_RAY_SHAPE
-	#query_shape.motion = GlobalData.get_player().velocity
-	query_shape.transform = global_transform
-	var collision: Array[Dictionary]= space.intersect_shape(query_shape)
-	
+	query_shape.transform = _get_query_transform()
+
+	var collision: Array[Dictionary] = space.intersect_shape(query_shape)
+
 	if collision.size() > 0:
 		for collider_res in collision:
-			var collider : Node3D = collider_res.get("collider")
-			var pos = collider.global_transform
-			print_debug("hit pos: ", pos)
+			var collider: Node3D = collider_res.get("collider")
 			print_debug("hit collider: ", collider.name)
 			if collider is Enemy:
-				print_debug("hit enemy ", collider)
-				
 				shoot_enemy(collider)
-	
 	else:
 		print_debug("hit nothing")
 
 
-func shoot_enemy(enemy : Enemy) -> void:
-	print_debug("shooting enemy: ", enemy)
-	# hard coded for now
+func shoot_enemy(enemy: Enemy) -> void:
 	enemy.take_damage(damage)
-	pass

@@ -127,7 +127,7 @@ func _input(event: InputEvent) -> void:
 
 func take_damage(damage : int) -> void:
 	current_health -= damage
-	print("Player took ", damage, " damage!")
+	# print("Player took ", damage, " damage!")
 
 
 

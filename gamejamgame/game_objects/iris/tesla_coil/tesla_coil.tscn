@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cle07qd032bk4"]
 
 [ext_resource type="Script" uid="uid://bbpq5bhkgungh" path="res://game_objects/iris/tesla_coil/tesla_coil.gd" id="1_etei5"]
-[ext_resource type="Shape3D" uid="uid://cuc458ufw3sty" path="res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres" id="2_u20te"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_etei5"]
 top_radius = 0.01
@@ -11,12 +10,9 @@ radial_segments = 32
 
 [node name="TeslaCoil" type="Node3D" unique_id=1196484093]
 script = ExtResource("1_etei5")
+debug_draw_query_shape = null
+damage = null
 
 [node name="TeslaMesh" type="MeshInstance3D" parent="." unique_id=336740422]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.099999994, 0)
 mesh = SubResource("CylinderMesh_etei5")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1824975247]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -5)
-shape = ExtResource("2_u20te")
-disabled = true
