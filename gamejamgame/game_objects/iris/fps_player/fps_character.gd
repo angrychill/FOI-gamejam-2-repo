@@ -28,7 +28,6 @@ func _ready() -> void:
 	current_health = max_health
 	add_to_group("player")
 	
-	# Camera safety check from ALEKS version
 	if not camera:
 		camera = get_node_or_null("Camera3D")
 		if not camera:
@@ -37,19 +36,16 @@ func _ready() -> void:
 			push_error("No camera found!")
 
 func _physics_process(delta: float) -> void:
-	# Gravity and jump from ALEKS version
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = jump_speed
 	
-	# Dodge component integration from ALEKS version
 	if dodge_component and dodge_component.is_currently_dodging():
 		move_and_slide()
 		return
 	
-	# Movement from original
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
 	var move_dir = transform.basis * Vector3(input.x, 0, input.y)
 	velocity.x = move_dir.x * speed
@@ -63,7 +59,6 @@ func set_carryable(node : Node3D) -> void:
 		print_debug("carryable is null")
 		return
 	
-	# Add null check for hand
 	if hand == null:
 		push_error("Hand node is not assigned in the inspector!")
 		return
@@ -76,7 +71,6 @@ func set_carryable(node : Node3D) -> void:
 	print_debug("Set new carryable")
 
 func remove_carryable() -> void:
-	# Add null check here too
 	if hand == null:
 		return
 		
@@ -85,7 +79,6 @@ func remove_carryable() -> void:
 			c.queue_free()
 
 func _input(event: InputEvent) -> void:
-	# Camera safety check from ALEKS version
 	if not camera:
 		return
 	
@@ -101,17 +94,14 @@ func _input(event: InputEvent) -> void:
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
-		# Use check_for_item from original - it handles both items and shooting
 		check_for_item()
 
-	# Scroll handlers from original
 	if event.is_action("scroll_up"):
 		print_debug("Scrolling up!")
 	if event.is_action("scroll_down"):
 		print_debug("Scrolling down!")
 
 func shoot() -> void:
-	# Combined version - camera check from ALEKS + debug from original
 	if not camera:
 		return
 	

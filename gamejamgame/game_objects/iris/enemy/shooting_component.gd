@@ -3,9 +3,13 @@ class_name ShootingComponent
 
 @export var projectile_scene: PackedScene
 @export var shoot_interval: float = 2.0
-@export var shoot_offset: Vector3 = Vector3(0, 1, 0)
+@export var shoot_offset: Vector3 = Vector3(0, 1.5, 0.5)  ## Offset from enemy to spawn projectile (higher and forward)
 @export var projectile_speed: float = 15.0
 @export var projectile_damage: int = 10  ## Damage dealt by projectiles
+
+@export_group("Aiming")
+@export var aim_height_offset: float = 1.0  ## Height offset to aim at (player chest height)
+@export var horizontal_aim_only: bool = false  ## If true, ignores height difference (shoots straight)
 
 @export_group("Random Variability")
 @export var use_random_interval: bool = false
@@ -52,15 +56,26 @@ func shoot_at_player() -> void:
 func _perform_shoot() -> void:
 	var player_pos = GlobalData.get_player_position()
 	var spawn_pos = parent.global_position + shoot_offset
-	var direction = (player_pos - spawn_pos).normalized()
+	
+	# Calculate target position with aiming options
+	var target_pos = player_pos
+	
+	if horizontal_aim_only:
+		# Shoot horizontally - ignore height difference
+		target_pos.y = spawn_pos.y
+	else:
+		# Aim at player chest/center height
+		target_pos += Vector3(0, aim_height_offset, 0)
+	
+	var direction = (target_pos - spawn_pos).normalized()
 	
 	# Create projectile
 	var projectile = projectile_scene.instantiate()
 	get_tree().root.add_child(projectile)
 	
-	# Initialize it
+	# Initialize it with shooter reference
 	if projectile.has_method("initialize"):
-		projectile.initialize(spawn_pos, direction)
+		projectile.initialize(spawn_pos, direction, parent)  # Pass parent as shooter
 	
 	if "speed" in projectile:
 		projectile.speed = projectile_speed
@@ -79,7 +94,7 @@ func _perform_shoot() -> void:
 	else:
 		shoot_timer = shoot_interval
 	
-	print_debug("Enemy shot at player!")
+	print_debug("Enemy shot at player from ", spawn_pos, " towards ", target_pos)
 
 func get_current_interval() -> float:
 	if use_random_interval:
