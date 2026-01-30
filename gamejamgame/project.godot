@@ -28,6 +28,7 @@ ProjectMusicController="*uid://r5t485lr3p7t"
 ProjectUISoundController="*uid://cc37235kj4384"
 GlobalData="*uid://dldhfot6k3ujv"
 GlobalVFX="*uid://bjp2dfdh2amqn"
+DialogueManager="*uid://c3rodes2l3gxb"
 
 [display]
 
@@ -40,7 +41,7 @@ movie_writer/movie_file="C:/Projekti/godot/projects/show.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/maaacks_game_template/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [global_group]
 

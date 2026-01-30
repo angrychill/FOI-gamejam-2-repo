@@ -37,9 +37,10 @@ func _ready() -> void:
 		if not camera:
 			push_error("No camera found!")
 	
-	var level : Level = get_tree().get_first_node_in_group("level")
-	level.cutscene_ended.connect(_on_cutscene_ended)
-	level.cutscene_started.connect(_on_cutscene_started)
+	#var level : Level = get_tree().get_first_node_in_group("level")
+#
+	#level.cutscene_ended.connect(_on_cutscene_ended)
+	#level.cutscene_started.connect(_on_cutscene_started)
 
 func _on_cutscene_ended() -> void:
 	can_move = true
