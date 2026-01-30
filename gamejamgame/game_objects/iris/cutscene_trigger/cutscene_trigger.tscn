@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cl1jda5pt3hts"]
+
+[ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="1_ighb5"]
+[ext_resource type="Resource" uid="uid://ctxs5gbmx7uhp" path="res://assets/dialogues/danica_intro.dialogue" id="2_iyvv7"]
+[ext_resource type="Script" uid="uid://bll4wogrnrmfl" path="res://game_objects/iris/cutscene_trigger/cutscene_resource.gd" id="3_wgdkx"]
+
+[sub_resource type="Resource" id="Resource_gxecf"]
+script = ExtResource("3_wgdkx")
+dialogue_file = ExtResource("2_iyvv7")
+metadata/_custom_type_script = "uid://bll4wogrnrmfl"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ighb5"]
+size = Vector3(10, 10, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
+size = Vector3(10, 0.1, 10)
+
+[node name="CutsceneTrigger" type="Area3D" unique_id=341458773]
+monitorable = false
+script = ExtResource("1_ighb5")
+cutscene_to_trigger = SubResource("Resource_gxecf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=710499234]
+shape = SubResource("BoxShape3D_ighb5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=747779965]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_iyvv7")

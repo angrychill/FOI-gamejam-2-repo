@@ -36,18 +36,6 @@ func _ready() -> void:
 			camera = get_node_or_null("Head/Camera3D")
 		if not camera:
 			push_error("No camera found!")
-	
-	#var level : Level = get_tree().get_first_node_in_group("level")
-	#level.cutscene_ended.connect(_on_cutscene_ended)
-	#level.cutscene_started.connect(_on_cutscene_started)
-
-func _on_cutscene_ended() -> void:
-	can_move = true
-	pass
-
-func _on_cutscene_started() -> void:
-	can_move = false
-	pass
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -100,14 +88,19 @@ func _input(event: InputEvent) -> void:
 	if not camera:
 		return
 	
+	if event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+	
+	
+	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if not can_move:
+			return
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		camera.rotate_x(-event.relative.y * mouse_sensitivity)
 		camera.rotation.x = clampf(camera.rotation.x, -deg_to_rad(camera_clamp), deg_to_rad(camera_clamp))
 	
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		
 	if event.is_action_pressed("primary_click"):
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

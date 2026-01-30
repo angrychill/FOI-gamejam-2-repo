@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bjq30gv12ijel"
+path="res://.godot/imported/brat_jedan_encounter.dialogue-c84d4d7359c2765c8dc0994bf5648b28.tres"
+
+[deps]
+
+source_file="res://assets/dialogues/brat_jedan_encounter.dialogue"
+dest_files=["res://.godot/imported/brat_jedan_encounter.dialogue-c84d4d7359c2765c8dc0994bf5648b28.tres"]
+
+[params]
+
+defaults=true
