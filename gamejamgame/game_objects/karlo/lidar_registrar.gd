@@ -22,7 +22,7 @@ class_name LidarRegistrar
 # Overlay auto-apply
 @export var auto_apply_next_pass := true
 @export var overlay_shader: Shader
-@export var overlay_material_template: ShaderMaterial
+@export var overlay_material_template: BaseMaterial3D
 
 # Scan behavior
 @export var scan_on_ready := true

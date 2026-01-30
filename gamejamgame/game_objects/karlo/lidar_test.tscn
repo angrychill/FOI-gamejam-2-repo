@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="4_b22td"]
 [ext_resource type="Script" uid="uid://defed628bt3hy" path="res://game_objects/karlo/lidar_manager.gd" id="4_gndwi"]
 [ext_resource type="Script" uid="uid://c1qi8tl1b6by" path="res://game_objects/karlo/lidar_registrar.gd" id="4_mhyuh"]
+[ext_resource type="Material" uid="uid://bwbav7wl7c17u" path="res://game_objects/karlo/base_material.tres" id="7_b22td"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -74,6 +75,8 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1y8cc"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b22td"]
+
 [node name="LidarTest" type="Node3D" unique_id=601369198]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189220980]
@@ -124,3 +127,11 @@ script = ExtResource("4_gndwi")
 [node name="LidarRegistrar" type="Node" parent="." unique_id=220218227]
 script = ExtResource("4_mhyuh")
 lidar_manager_path = NodePath("../LidarManager")
+overlay_shader = ExtResource("2_oebh7")
+overlay_material_template = ExtResource("7_b22td")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=88726069 groups=["lidar"]]
+transform = Transform3D(0.11193723, -0.96843725, -0.22270915, 0, 0.22411767, -0.9745621, 0.9937153, 0.109089784, 0.02508711, -0.92248, 0, 0)
+use_collision = true
+mesh = SubResource("CapsuleMesh_b22td")
+material = ExtResource("7_b22td")

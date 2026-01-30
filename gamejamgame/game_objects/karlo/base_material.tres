@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bwbav7wl7c17u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qcmqc"]
+
+[resource]
+next_pass = SubResource("ShaderMaterial_qcmqc")
