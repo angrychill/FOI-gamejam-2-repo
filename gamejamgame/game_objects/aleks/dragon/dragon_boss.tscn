@@ -31,7 +31,7 @@ load_path = "res://.godot/imported/pozoj.png-d8528959236eb5d86a477943794141d4.s3
 [sub_resource type="Resource" id="Resource_v17i5"]
 script = ExtResource("5_0qfhw")
 default_burst_count = 6
-default_burst_delay = 1.0
+default_burst_delay = 0.35
 default_cooldown_after_burst = 4.0
 metadata/_custom_type_script = "uid://20sg03bimjte"
 
