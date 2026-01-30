@@ -18,8 +18,13 @@ func _ready() -> void:
 	add_to_group("level")
 	cutscene_ended.connect(_on_cutscene_ended)
 	cutscene_started.connect(_on_cutscene_started)
+	call_deferred("_defer_next_level")
 
+func on_level_complete():
+	SceneLoader.change_scene_to_resource()
 
+func _defer_next_level():
+	SceneLoader.load_scene(next_level.resource_path, true)
 
 func _on_cutscene_started() -> void:
 	var player : FPSPlayer = GlobalData.get_player()
