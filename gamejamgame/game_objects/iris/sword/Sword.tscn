@@ -2,5 +2,49 @@
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
 
-[node name="Sword" type="Node3D" unique_id=1003536756]
+[sub_resource type="PlaneMesh" id="PlaneMesh_7n2bh"]
+size = Vector2(0.15, 1)
+
+[sub_resource type="Curve" id="Curve_7n2bh"]
+_data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ntrel"]
+curve = SubResource("Curve_7n2bh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7n2bh"]
+spread = 180.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, -1, 0)
+damping_min = 2.0
+damping_max = 2.0
+scale_curve = SubResource("CurveTexture_ntrel")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hn66"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.5
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ntrel"]
+material = SubResource("StandardMaterial3D_6hn66")
+
+[node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles")]
+transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
 script = ExtResource("1_7n2bh")
+particles = NodePath("MeshInstance3D/GPUParticles3D")
+sword_range = 5
+damage = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1675329963]
+transform = Transform3D(0.96592605, 0, 0.2588191, 0, 1, 0, -0.2588191, 0, 0.96592605, -0.10000002, 0, -0.50000006)
+mesh = SubResource("PlaneMesh_7n2bh")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D" unique_id=523648935]
+transform = Transform3D(0.9999997, 0, 0, 0, 1, 0, 0, 0, 0.9999997, 0, 0, -0.29999995)
+amount = 16
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_7n2bh")
+draw_pass_1 = SubResource("QuadMesh_ntrel")

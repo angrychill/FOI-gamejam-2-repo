@@ -18,6 +18,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var dodge_component: DodgeComponent = $DodgeComponent
 
+@export var can_move : bool = true
+
 var current_health : int:
 	set(value):
 		current_health = value
@@ -34,22 +36,38 @@ func _ready() -> void:
 			camera = get_node_or_null("Head/Camera3D")
 		if not camera:
 			push_error("No camera found!")
+	
+	var level : Level = get_tree().get_first_node_in_group("level")
+	level.cutscene_ended.connect(_on_cutscene_ended)
+	level.cutscene_started.connect(_on_cutscene_started)
+
+func _on_cutscene_ended() -> void:
+	can_move = true
+	pass
+
+func _on_cutscene_started() -> void:
+	can_move = false
+	pass
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = jump_speed
+	if can_move:
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = jump_speed
+		
+		if dodge_component and dodge_component.is_currently_dodging():
+			move_and_slide()
+			return
+		
+		var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
+		var move_dir = transform.basis * Vector3(input.x, 0, input.y)
+		velocity.x = move_dir.x * speed
+		velocity.z = move_dir.z * speed
 	
-	if dodge_component and dodge_component.is_currently_dodging():
-		move_and_slide()
-		return
-	
-	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
-	var move_dir = transform.basis * Vector3(input.x, 0, input.y)
-	velocity.x = move_dir.x * speed
-	velocity.z = move_dir.z * speed
+	else:
+		velocity = Vector3.ZERO
 	
 	move_and_slide()
 

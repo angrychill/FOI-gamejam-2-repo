@@ -27,6 +27,7 @@ SceneLoader="*uid://cbwmrnp0af35y"
 ProjectMusicController="*uid://r5t485lr3p7t"
 ProjectUISoundController="*uid://cc37235kj4384"
 GlobalData="*uid://dldhfot6k3ujv"
+GlobalVFX="*uid://bjp2dfdh2amqn"
 
 [display]
 
@@ -44,6 +45,7 @@ enabled=PackedStringArray("res://addons/maaacks_game_template/plugin.cfg", "res:
 [global_group]
 
 player="fps player in world"
+level=""
 
 [gui]
 
@@ -125,5 +127,3 @@ copy_path="res://maack_example_scenes/"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

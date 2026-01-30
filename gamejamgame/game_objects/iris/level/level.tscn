@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://6f7y4bc4cxae"]
+
+[ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_v7de1"]
+
+[node name="Level" type="Node3D" unique_id=1627353637 groups=["level"]]
+script = ExtResource("1_v7de1")
