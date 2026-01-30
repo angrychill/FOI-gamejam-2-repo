@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="1_543v3"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="1_qio7j"]
+[ext_resource type="PackedScene" uid="uid://dkqaln0oqfjtg" path="res://game_objects/aleks/sword_enemy/ban_enemy.tscn" id="4_fisvw"]
 [ext_resource type="PackedScene" uid="uid://d0nkdarb7mtqp" path="res://game_objects/aleks/sword_enemy/sword_enemy.tscn" id="5_e7kjq"]
 
 [sub_resource type="PackedScene" id="PackedScene_5hgea"]
@@ -75,3 +76,6 @@ mesh = SubResource("PlaneMesh_2mtng")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
 
 [node name="SwordEnemy" parent="." unique_id=1578922120 instance=ExtResource("5_e7kjq")]
+
+[node name="SwordEnemy2" parent="." unique_id=704426080 instance=ExtResource("4_fisvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.068953, 0, 0)
