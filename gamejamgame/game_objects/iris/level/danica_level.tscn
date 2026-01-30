@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://l1h4chksuy0p"]
+[gd_scene format=4 uid="uid://66eqrw437g1s"]
 
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="1_x3qid"]
 [ext_resource type="Material" uid="uid://bw0oyoerlxwje" path="res://assets/mats/dark level geometry.tres" id="2_gv6r4"]
@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="4_qp0aj"]
 [ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="5_15gtl"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="6_qp0aj"]
-[ext_resource type="Resource" uid="uid://ce732m4vbb350" path="res://assets/dialogues/danica_pick_up.dialogue" id="6_u6mlw"]
+[ext_resource type="Resource" uid="uid://1yswo5imisu3" path="res://assets/dialogues/danica_pick_up.dialogue" id="6_u6mlw"]
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="7_btayy"]
-[ext_resource type="Resource" uid="uid://ctxs5gbmx7uhp" path="res://assets/dialogues/danica_intro.dialogue" id="8_u6mlw"]
-[ext_resource type="Resource" uid="uid://bjq30gv12ijel" path="res://assets/dialogues/brat_jedan_encounter.dialogue" id="10_cke48"]
-[ext_resource type="Resource" uid="uid://wo5uk14hfbpg" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="11_vwr77"]
+[ext_resource type="Resource" uid="uid://bac1husm6c047" path="res://assets/dialogues/danica_intro.dialogue" id="8_u6mlw"]
+[ext_resource type="Resource" uid="uid://cbui0mexcjp2o" path="res://assets/dialogues/brat_jedan_encounter.dialogue" id="10_cke48"]
+[ext_resource type="Resource" uid="uid://ds1vd6hg145y3" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="11_vwr77"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp0aj"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -329,7 +329,7 @@ environment = SubResource("Environment_h2b23")
 [node name="danica_level2" type="Node3D" parent="." index="1" unique_id=1119499239]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
-[node name="Cube_001" type="MeshInstance3D" parent="danica_level2" index="0" unique_id=1567250984]
+[node name="Cube_001" type="MeshInstance3D" parent="danica_level2" index="0" unique_id=1567250984 groups=["lidar"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.057024002, 4.7683716e-07, 0.057231903)
 mesh = SubResource("ArrayMesh_cscba")
 surface_material_override/0 = ExtResource("2_gv6r4")
