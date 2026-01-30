@@ -3,8 +3,18 @@ class_name TeslaCoil
 
 const TESLA_COIL_RAY_SHAPE: CylinderShape3D = preload("res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres")
 
+signal fired
+signal cooldown_finished
+
 @export var debug_draw_query_shape := true
 
+@export_range(0.0, 10.0, 0.05) var cooldown_time: float = 0.35
+
+var _next_attack_time: float = 0.0
+var _cooldown_active: bool = false
+
+
+@onready var holes_vfx: TeslaCoilShotgunHoles = $TeslaCoilShotgunHoles
 var _debug_mesh_instance: MeshInstance3D
 
 
@@ -17,52 +27,51 @@ func _process(_delta: float) -> void:
 	if debug_draw_query_shape and _debug_mesh_instance:
 		_update_debug_shape_transform()
 
+	if _cooldown_active:
+		var now := Time.get_ticks_msec() * 0.001
+		if now >= _next_attack_time:
+			_cooldown_active = false
+			emit_signal("cooldown_finished")
+
 
 func _get_query_transform() -> Transform3D:
 	var t := global_transform
 	t.basis *= Basis(Vector3.RIGHT, deg_to_rad(90.0)) # rotate X +90
 
-	var camera: Camera3D = GlobalData.get_player().camera
-	if camera:
+	if GlobalData.get_player() and GlobalData.get_player().camera:
+		var camera: Camera3D = GlobalData.get_player().camera
 		var viewport := camera.get_viewport()
 		var screen_center := viewport.get_visible_rect().size * 0.5
 
 		var ray_origin := camera.project_ray_origin(screen_center)
 		var ray_dir := camera.project_ray_normal(screen_center)
 
-		# --- NEW: raycast to get the real point under the crosshair ---
 		var space := get_world_3d().direct_space_state
 		var ray_to := ray_origin + ray_dir * 1000.0
 
 		var rq := PhysicsRayQueryParameters3D.create(ray_origin, ray_to)
 		rq.collide_with_bodies = true
 		rq.collide_with_areas = true
-		rq.exclude = [self] # avoid hitting the weapon node
+		rq.exclude = [self]
 
 		var hit := space.intersect_ray(rq)
 
 		var target_point: Vector3 = ray_to
 		if hit.size() > 0:
 			target_point = hit["position"]
-		# -------------------------------------------------------------
 
 		var aim_dir := (target_point - t.origin).normalized()
 
-		# After +90° X rotation, cylinder axis is +Y
 		var current_axis := t.basis.y.normalized()
-
 		var rot := current_axis.cross(aim_dir)
 		var angle := acos(clamp(current_axis.dot(aim_dir), -1.0, 1.0))
 		if rot.length() > 0.0001:
 			t.basis = Basis(rot.normalized(), angle) * t.basis
 
-		# Keep your 180° flip fix
 		t.basis = Basis(t.basis.x.normalized(), PI) * t.basis
 
-	t.origin += t.basis.y * -5.0 # local y = -5
+	t.origin += t.basis.y * -5.0
 	return t
-
-
 
 
 func _create_debug_shape() -> void:
@@ -89,6 +98,7 @@ func _create_debug_shape() -> void:
 func _update_debug_shape_transform() -> void:
 	_debug_mesh_instance.global_transform = _get_query_transform()
 
+
 func _exit_tree() -> void:
 	if _debug_mesh_instance and is_instance_valid(_debug_mesh_instance):
 		_debug_mesh_instance.queue_free()
@@ -96,6 +106,14 @@ func _exit_tree() -> void:
 
 
 func attack() -> void:
+	var now := Time.get_ticks_msec() * 0.001
+	if now < _next_attack_time:
+		return
+
+	_next_attack_time = now + cooldown_time
+	_cooldown_active = true
+	emit_signal("fired")
+
 	var camera: Camera3D = GlobalData.get_player().camera
 	if not camera:
 		push_warning("There's no camera!")
@@ -108,17 +126,23 @@ func attack() -> void:
 	query_shape.collide_with_areas = true
 	query_shape.shape = TESLA_COIL_RAY_SHAPE
 	query_shape.transform = _get_query_transform()
+	query_shape.exclude = [self]
 
 	var collision: Array[Dictionary] = space.intersect_shape(query_shape)
 
 	if collision.size() > 0:
+		if holes_vfx:
+			holes_vfx.emit_holes_from_cylinder_query(
+				query_shape.transform,
+				TESLA_COIL_RAY_SHAPE,
+				query_shape.exclude
+			)
+
 		for collider_res in collision:
 			var collider: Node3D = collider_res.get("collider")
-			print_debug("hit collider: ", collider.name)
 			if collider is Enemy:
 				shoot_enemy(collider)
-	else:
-		print_debug("hit nothing")
+
 
 
 func shoot_enemy(enemy: Enemy) -> void:
