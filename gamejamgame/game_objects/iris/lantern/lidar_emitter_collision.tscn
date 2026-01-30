@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dfd65w5piul8w"]
 
-[ext_resource type="Script" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="1_0xy40"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar/lidar_trail_emitter.gd" id="1_0xy40"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
 radius = 2.5
