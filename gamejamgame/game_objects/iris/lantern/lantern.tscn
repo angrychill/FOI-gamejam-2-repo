@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d3gmgsfi3kd8y"]
 
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="2_6ma5o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4m0mg"]
 albedo_color = Color(1, 0.8117647, 0.5137255, 1)
@@ -34,5 +35,6 @@ mesh = SubResource("BoxMesh_6ma5o")
 [node name="LanternArea" type="Area3D" parent="." unique_id=911193770]
 collision_layer = 16
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="LanternArea" unique_id=983500537]
+[node name="LidarEmitterCollision" type="CollisionShape3D" parent="LanternArea" unique_id=983500537]
 shape = SubResource("SphereShape3D_4m0mg")
+script = ExtResource("2_6ma5o")

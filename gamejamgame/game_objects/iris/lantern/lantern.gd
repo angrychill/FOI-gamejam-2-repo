@@ -1,6 +1,7 @@
 extends Weapon
 class_name Lantern
 @onready var lantern_debug_label: Label = $LanternDebugLabel
+@onready var trail: LidarTrailEmitter = $LanternArea/LidarEmitterCollision
 
 @export var lantern_area : Area3D
 
@@ -20,6 +21,7 @@ var current_shooting_rate : float: # = strength
 var fire_accumulator : float = 0.0
 
 func _ready() -> void:
+	trail.set_mode_manual()
 	current_shooting_rate = 0.0
 	shooting_decay_timer.wait_time = shooting_decay_rate
 
@@ -52,9 +54,13 @@ func _on_shooting_decay_timer_timeout() -> void:
 
 func fire_pulse() -> void:
 	print("firing a pulse")
-	# scan
+
+	# Example mapping:
+	# radius uses fire_accumulator, hz uses current_shooting_rate (clamped inside emitter)
+	trail.emit_now()
+
 	var overlaps := lantern_area.get_overlapping_bodies()
-	for node : Node3D in overlaps:
+	for node: Node3D in overlaps:
 		if node is Enemy:
 			node.take_damage(damage)
 
