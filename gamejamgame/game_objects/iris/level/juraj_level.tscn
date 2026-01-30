@@ -12,6 +12,8 @@
 [ext_resource type="Resource" uid="uid://d0psfigs2tw6q" path="res://assets/dialogues/juraj_intro.dialogue" id="10_ev3vp"]
 [ext_resource type="Resource" uid="uid://da2580y7lo71q" path="res://assets/dialogues/pozoj_intro.dialogue" id="11_5wak2"]
 
+[sub_resource type="PackedScene" id="PackedScene_y6yb7"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o37a0"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_lcxi0"]
@@ -108,6 +110,7 @@ size = Vector3(10, 0.1, 10)
 
 [node name="Level" type="Node3D" unique_id=1117802177]
 script = ExtResource("1_nbrci")
+next_level = SubResource("PackedScene_y6yb7")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="juraj_level2" type="Node3D" parent="." unique_id=1226275906]
