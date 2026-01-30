@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://hprcw48vd6a5"]
+
+[ext_resource type="Script" uid="uid://df2r7a767uvyl" path="res://game_objects/aleks/dragon/dragon_boss.gd" id="1_mnnxo"]
+[ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="2_x1ym3"]
+[ext_resource type="PackedScene" uid="uid://bhayn5ix4omw7" path="res://game_objects/aleks/dragon/fireball.tscn" id="3_hx41l"]
+[ext_resource type="Script" uid="uid://cvsfpxad7g2w0" path="res://game_objects/aleks/dragon/dragon_shooting_component.gd" id="4_7gxyh"]
+[ext_resource type="Script" uid="uid://20sg03bimjte" path="res://game_objects/iris/enemy/attack_patterns/burst_attack_pattern.gd" id="5_0qfhw"]
+[ext_resource type="Script" uid="uid://c21tn21vhnyj8" path="res://game_objects/aleks/dragon/melee_attack_component.gd" id="5_ljl2f"]
+[ext_resource type="Script" uid="uid://cp5ytvyr7ye54" path="res://game_objects/aleks/dragon/boss_ai_controller.gd" id="6_0qfhw"]
+[ext_resource type="Script" uid="uid://byttreyge7avk" path="res://game_objects/aleks/dragon/dragon_boss_data.gd" id="7_v17i5"]
+[ext_resource type="Script" uid="uid://duop5oxat752x" path="res://game_objects/aleks/dragon/boss_movement_controller.gd" id="9_v17i5"]
+[ext_resource type="Script" uid="uid://b17228ocn12p0" path="res://game_objects/aleks/dragon/boss_health_bar.gd" id="10_rgi28"]
+
+[sub_resource type="Resource" id="Resource_0qfhw"]
+script = ExtResource("7_v17i5")
+boss_name = "Pozoj"
+phase_health_thresholds = Array[float]([])
+melee_rush_speed = 30.0
+shots_per_volley = 6
+volley_delay = 0.1
+health = 300
+move_speed = 1.0
+sprite = ExtResource("2_x1ym3")
+metadata/_custom_type_script = "uid://byttreyge7avk"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x1ym3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mnnxo"]
+load_path = "res://.godot/imported/pozoj.png-d8528959236eb5d86a477943794141d4.s3tc.ctex"
+
+[sub_resource type="Resource" id="Resource_v17i5"]
+script = ExtResource("5_0qfhw")
+default_burst_count = 6
+default_burst_delay = 1.0
+default_cooldown_after_burst = 4.0
+metadata/_custom_type_script = "uid://20sg03bimjte"
+
+[sub_resource type="Resource" id="Resource_rgi28"]
+script = ExtResource("7_v17i5")
+metadata/_custom_type_script = "uid://byttreyge7avk"
+
+[node name="DragonBoss" type="CharacterBody3D" unique_id=388612048 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+script = ExtResource("1_mnnxo")
+boss_data_override = SubResource("Resource_0qfhw")
+sprite_3d = NodePath("Sprite3D")
+nav_agent = NodePath("NavigationAgent3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1214140607]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_x1ym3")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1034404380]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1, 0)
+billboard = 1
+texture = SubResource("CompressedTexture2D_mnnxo")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=788797925]
+path_desired_distance = 0.1
+target_desired_distance = 0.1
+
+[node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=142393505]
+autostart = true
+
+[node name="EnemyDebugLabel" type="Label3D" parent="." unique_id=1988520870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+
+[node name="ShootingComponent" type="Node" parent="." unique_id=551277511]
+script = ExtResource("4_7gxyh")
+projectile_scene = ExtResource("3_hx41l")
+shoot_interval = 0.25
+attack_pattern = SubResource("Resource_v17i5")
+
+[node name="MeleeAttackComponent" type="Node" parent="." unique_id=578512175]
+script = ExtResource("5_ljl2f")
+launch_speed = 30.0
+launch_distance = 1000.0
+telegraph_duration = 0.7
+
+[node name="BossAIController" type="Node" parent="." unique_id=2069120548 node_paths=PackedStringArray("shooting_component", "melee_component")]
+script = ExtResource("6_0qfhw")
+boss_data = SubResource("Resource_rgi28")
+shooting_component = NodePath("../ShootingComponent")
+melee_component = NodePath("../MeleeAttackComponent")
+
+[node name="BossMovementController" type="Node" parent="." unique_id=623384725]
+script = ExtResource("9_v17i5")
+move_speed = 0.5
+strafe_speed = 1.0
+retreat_speed = 5.0
+preferred_min_distance = 4.0
+preferred_max_distance = 14.0
+optimal_distance = 8.0
+
+[node name="BossHealthBar" type="Node3D" parent="." unique_id=713490719]
+script = ExtResource("10_rgi28")
+boss_display_name = "Pozoj"

@@ -28,6 +28,7 @@ script = ExtResource("6_ooti1")
 metadata/_custom_type_script = "uid://yhymsg8fj0ue"
 
 [node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+process_mode = 4
 script = ExtResource("1_ru4oe")
 enemy_data = SubResource("Resource_ooti1")
 sprite_3d = NodePath("Sprite3D")

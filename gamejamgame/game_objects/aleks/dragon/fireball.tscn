@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bhayn5ix4omw7"]
+
+[ext_resource type="Script" uid="uid://cv72uwoy21o57" path="res://game_objects/aleks/dragon/fireball.gd" id="1_ampum"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3vvo0"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_uemex"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvt4e"]
+albedo_color = Color(1, 0.19607843, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.15686275, 0, 1)
+emission_energy_multiplier = 2.0
+
+[node name="Fireball" type="Area3D" unique_id=864161499]
+script = ExtResource("1_ampum")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1662485524]
+shape = SubResource("SphereShape3D_3vvo0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=29838257]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_uemex")
+surface_material_override/0 = SubResource("StandardMaterial3D_gvt4e")

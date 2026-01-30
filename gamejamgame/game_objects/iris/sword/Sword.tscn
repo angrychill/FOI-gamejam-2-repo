@@ -35,11 +35,11 @@ material = SubResource("StandardMaterial3D_6hn66")
 transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
 script = ExtResource("1_7n2bh")
 particles = NodePath("MeshInstance3D/GPUParticles3D")
-sword_range = 5
-damage = 2
+sword_range = 15
+damage = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1675329963]
-transform = Transform3D(0.96592605, 0, 0.2588191, 0, 1, 0, -0.2588191, 0, 0.96592605, -0.10000002, 0, -0.50000006)
+transform = Transform3D(0.4829629, 0, 0.25881907, 0, 1, 0, -0.12940954, 0, 0.9659258, -0.10000002, 0, -0.50000006)
 mesh = SubResource("PlaneMesh_7n2bh")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D" unique_id=523648935]
