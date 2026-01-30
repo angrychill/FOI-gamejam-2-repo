@@ -5,6 +5,8 @@ class_name SwordEnemy
 
 @export var sword_attack_range: float = 5.0
 
+@export var enemy_model : EnemyModel
+
 var attack_check_timer: Timer
 
 func _ready() -> void:
@@ -51,6 +53,9 @@ func _on_attack_check() -> void:
 func _on_sword_telegraph() -> void:
 	if sprite_3d:
 		sprite_3d.modulate = Color.RED
+	
+	if enemy_model:
+		enemy_model.play_attack_anim()
 
 func _on_sword_swing() -> void:
 	if sprite_3d:
@@ -59,6 +64,8 @@ func _on_sword_swing() -> void:
 	await get_tree().create_timer(sword_component.swing_duration).timeout
 	if sprite_3d and not is_dead:
 		sprite_3d.modulate = Color.WHITE
+	if enemy_model:
+		enemy_model.play_walk_anim()
 
 func _on_sword_hit() -> void:
 	if sprite_3d:

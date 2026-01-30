@@ -94,7 +94,6 @@ metadata/_custom_type_script = "uid://byttreyge7avk"
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="Level" parent="." unique_id=1627353637 instance=ExtResource("1_543v3")]
-next_level = SubResource("PackedScene_5hgea")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Level" unique_id=427039732]
 environment = SubResource("Environment_fisvw")
@@ -120,6 +119,7 @@ mesh = SubResource("PlaneMesh_2mtng")
 [node name="FpsPlayer" parent="Level" unique_id=301422806 instance=ExtResource("1_qio7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
 
+<<<<<<< HEAD
 [node name="Enemy" parent="Level" unique_id=778402213 instance=ExtResource("2_0io8h")]
 process_mode = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, 0)
@@ -160,5 +160,7 @@ sword_attack_range = 5.0
 enemy_data = SubResource("Resource_s7syl")
 
 [node name="DragonBoss" parent="." unique_id=388612048 instance=ExtResource("9_dg6sy")]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.134537, 0.66113615, 10.96369)
 boss_data_override = SubResource("Resource_e7kjq")
+
