@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://3xplsnauhroo"]
+
+[ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_mwv6m"]
+[ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_pxob7"]
+[ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="3_2uy2r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ed1p3"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+ground_curve = 0.040000003
+
+[sub_resource type="Sky" id="Sky_15gtl"]
+sky_material = SubResource("ProceduralSkyMaterial_ed1p3")
+
+[sub_resource type="Environment" id="Environment_uhqdk"]
+background_mode = 2
+sky = SubResource("Sky_15gtl")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Level" type="Node3D" unique_id=1458522852]
+script = ExtResource("1_mwv6m")
+metadata/_custom_type_script = "uid://81niap6lcxo"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1718275619]
+environment = SubResource("Environment_uhqdk")
+
+[node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_pxob7")]
+
+[node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("3_2uy2r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 17)
+speed = 10.0
