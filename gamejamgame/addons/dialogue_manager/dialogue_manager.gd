@@ -78,6 +78,7 @@ func _ready() -> void:
 
 	# Make the dialogue manager available as a singleton
 	if not Engine.has_singleton("DialogueManager"):
+		print("making autoload")
 		Engine.register_singleton("DialogueManager", self)
 
 
