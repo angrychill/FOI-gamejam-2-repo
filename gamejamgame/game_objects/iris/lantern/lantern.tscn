@@ -13,12 +13,13 @@ material = SubResource("StandardMaterial3D_4m0mg")
 size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
-radius = 2.0
+radius = 2.5
 
 [node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("lantern_area", "shooting_decay_timer")]
 script = ExtResource("1_4m0mg")
 lantern_area = NodePath("LanternArea")
 shooting_decay_timer = NodePath("ShootingDecay")
+damage = 1
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
 autostart = true

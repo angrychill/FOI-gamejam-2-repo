@@ -94,7 +94,7 @@ func _perform_shoot() -> void:
 	else:
 		shoot_timer = shoot_interval
 	
-	print_debug("Enemy shot at player from ", spawn_pos, " towards ", target_pos)
+	#print_debug("Enemy shot at player from ", spawn_pos, " towards ", target_pos)
 
 func get_current_interval() -> float:
 	if use_random_interval:
