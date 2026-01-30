@@ -7,19 +7,22 @@
 [ext_resource type="PackedScene" uid="uid://bsl6kk3t2ug2w" path="res://game_objects/aleks/sword_enemy/slash_effect.tscn" id="5_dkot4"]
 [ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="5_tttq3"]
 [ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="6_illuv"]
+[ext_resource type="PackedScene" uid="uid://cgfe7p2s8g6iv" path="res://game_objects/aleks/sword_enemy/brat_model_2.tscn" id="8_msw54"]
 
 [sub_resource type="Resource" id="Resource_tttq3"]
 script = ExtResource("2_qk658")
+health = 100
+move_speed = 1.0
 metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lk1qt"]
 
-[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent")]
 script = ExtResource("1_lk1qt")
+enemy_model = NodePath("Injured Walk brat 2")
 enemy_data = SubResource("Resource_tttq3")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
-sword_attack_range = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250803623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,6 +30,7 @@ shape = SubResource("CapsuleShape3D_lk1qt")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=180372592]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.9685894, 0)
+visible = false
 billboard = 1
 texture = ExtResource("3_dkot4")
 
@@ -46,9 +50,13 @@ script = ExtResource("3_8ijr3")
 sword_damage = 15
 attack_range = 4.0
 telegraph_duration = 0.4
-cooldown_duration = 0.5
+swing_duration = 1.0
+cooldown_duration = 10.0
 slash_effect_scene = ExtResource("5_dkot4")
 
 [node name="SlashEffect" type="Node3D" parent="." unique_id=979177752]
 script = ExtResource("5_tttq3")
 slash_texture = ExtResource("6_illuv")
+effect_size = Vector2(0.25, 0.25)
+
+[node name="Injured Walk brat 2" parent="." unique_id=1702391947 instance=ExtResource("8_msw54")]
