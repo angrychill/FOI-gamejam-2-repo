@@ -5,12 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://dkqaln0oqfjtg" path="res://game_objects/aleks/sword_enemy/ban_enemy.tscn" id="4_fisvw"]
 [ext_resource type="PackedScene" uid="uid://d0nkdarb7mtqp" path="res://game_objects/aleks/sword_enemy/sword_enemy.tscn" id="5_e7kjq"]
 [ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="5_ljjh0"]
-[ext_resource type="PackedScene" uid="uid://cl1jda5pt3hts" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.tscn" id="7_2mtng"]
-[ext_resource type="Resource" uid="uid://ddt3mscdlhh3h" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="9_5hgea"]
-[ext_resource type="PackedScene" uid="uid://hprcw48vd6a5" path="res://game_objects/aleks/dragon/dragon_boss.tscn" id="9_dg6sy"]
-[ext_resource type="Script" uid="uid://byttreyge7avk" path="res://game_objects/aleks/dragon/dragon_boss_data.gd" id="10_5ten5"]
-[ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="11_5hgea"]
-[ext_resource type="Texture2D" uid="uid://ch2h02o4188go" path="res://game_objects/aleks/sword_enemy/knight.png" id="11_s7syl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0io8h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -116,7 +110,31 @@ mesh = SubResource("PlaneMesh_2mtng")
 [node name="FpsPlayer" parent="Level" unique_id=301422806 instance=ExtResource("1_qio7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
 
-[node name="SwordEnemy" parent="." unique_id=1578922120 instance=ExtResource("5_e7kjq")]
+[node name="Enemy" parent="Level" unique_id=778402213 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, 0)
 
-[node name="SwordEnemy2" parent="." unique_id=704426080 instance=ExtResource("4_fisvw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.068953, 0, 0)
+[node name="Enemy2" parent="Level" unique_id=362387938 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -5.694751)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Enemy3" parent="Level" unique_id=1019870270 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -10.843231)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Enemy4" parent="Level" unique_id=449308096 instance=ExtResource("2_0io8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.135967, 0, -15.8388)
+enemy_data = SubResource("Resource_dg6sy")
+
+[node name="Carryable" parent="Level" unique_id=1286907608 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, 2.8562279)
+debug_label = "Lantern"
+
+[node name="Carryable2" parent="Level" unique_id=1168108728 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, -1.7066875)
+pickup_item = ExtResource("4_fisvw")
+debug_label = "Tesla coil"
+
+[node name="Carryable3" parent="Level" unique_id=1051818204 instance=ExtResource("3_4uu8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, -7.4510927)
+pickup_item = ExtResource("5_ljjh0")
+debug_label = "Sword"

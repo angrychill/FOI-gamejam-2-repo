@@ -1,141 +1,178 @@
 extends Weapon
 class_name Sword
 
-# ----------------------------
-# Node references (drag in Inspector)
-# ----------------------------
+@export_category("Sword")
 @export var particles: GPUParticles3D
-@export var hit_ray: RayCast3D                 # child RayCast3D (HitRay)
-@export var camera: Camera3D                   # optional; if empty we auto grab player camera
+@export var sword_range: float = 2.5
 
-# ----------------------------
-# Sword hit tuning
-# ----------------------------
-@export var sword_range: float = 5.0
-@export var min_mouse_speed_to_attack: float = 5.0
+@export_category("Hit Detection")
+@export var hit_ray: RayCast3D
+@export var damage_per_hit: int = 2
+@export var allow_multi_hit_same_enemy: bool = false
 
-# How often to apply damage while the swing is "active"
-@export_range(0.01, 1.0, 0.01) var damage_tick_s: float = 0.12
-var _damage_timer: float = 0.0
+@export_category("Attack Input")
+@export var swing_velocity_threshold: float = 5.0
 
-# ----------------------------
-# Lidar emission (separate from hit ray)
-# ----------------------------
-@export var emit_lidar: bool = true
-@export var lidar_shape: int = LidarManager.TYPE_SPHERE  # or TYPE_CAPSULE if you want
-@export var lidar_radius: float = 0.15
-@export var lidar_capsule_half_height: float = 0.25      # used if capsule
-@export var lidar_color: Color = Color(0.2, 0.9, 1.0, 0.9)
-@export var lidar_lifetime_s: float = 0.12
+# How long we consider the sword "active" after the last mouse motion
+@export var motion_grace_time: float = 0.12
 
-# Emit lidar even if not an Enemy? (useful for impact/trace feedback)
-@export var lidar_emit_on_any_hit: bool = true
+@export_category("Emission Throttle")
+@export var emit_hz: float = 20.0              # limits both trail + hit checks while moving
+@export var max_hits_per_swing: int = 8         # perf safety (prevents spam on jittery colliders)
+
+@export_category("Lidar Trail (separate shape)")
+@export var trail_emitter: LidarTrailEmitter
+@export var emit_trail_while_attacking: bool = true
+
+@export_category("Lidar Hit Volume (separate shape)")
+@export var emit_hit_volume: bool = true
+@export var hit_volume_shape: Shape3D
+@export var hit_volume_color: Color = Color(0.2, 0.9, 1.0, 0.9)
+
+# Make lidar last long
+@export var lidar_lifetime_s: float = 30.0
+
+# Slight push off the surface so it doesn't z-fight / sit inside
+@export var hit_volume_offset_along_normal: float = 0.02
 
 var _mgr: LidarManager = null
-var _is_attacking: bool = false
+
+var _moving_until_s: float = -1.0
+var _emit_accum: float = 0.0
+var _hits_this_swing: int = 0
+
+# enemy multi-hit control per swing (only stores a handful ids)
+var _already_hit: Dictionary = {} # int -> true
+
 
 func _ready() -> void:
+	_mgr = LidarAccess.manager(get_tree())
+
 	if particles:
 		particles.emitting = false
 
-	# Auto camera if not assigned
-	if camera == null and GlobalData.get_player() and GlobalData.get_player().camera:
-		camera = GlobalData.get_player().camera
+	if hit_ray:
+		hit_ray.enabled = true
+		hit_ray.target_position = Vector3(0, 0, -sword_range)
 
-	# Ensure ray exists and is configured
-	if hit_ray == null:
-		push_warning("Sword: hit_ray is not assigned (RayCast3D).")
-		return
+	# (Optional) Ensure trail emitter uses long lifetime too
+	if trail_emitter:
+		trail_emitter.trail_lifetime_s = lidar_lifetime_s
 
-	hit_ray.enabled = true
-	hit_ray.collide_with_areas = false
-	hit_ray.collide_with_bodies = true
-	_update_hit_ray()
-
-	# LidarManager via LidarAccess (no NodePaths)
-	_mgr = LidarAccess.manager(get_tree())
 
 func _physics_process(dt: float) -> void:
-	if hit_ray == null:
+	# Only run while we're in "moving window"
+	var now_s := Time.get_ticks_msec() * 0.001
+	if now_s > _moving_until_s:
+		# stop visuals and reset timers cheaply
+		if particles and particles.emitting:
+			particles.emitting = false
+		_emit_accum = 0.0
 		return
 
-	_update_hit_ray()
+	# We are "attacking" while mouse is moving
+	if particles and not particles.emitting:
+		particles.emitting = true
 
-	# Manage "continuous" hit check while attacking
-	if not _is_attacking:
-		return
+	# Throttle expensive work by emit_hz
+	var hz :float= max(emit_hz, 0.001)
+	var step :float= 1.0 / hz
+	_emit_accum += dt
 
-	_damage_timer -= dt
-	if _damage_timer > 0.0:
-		return
+	while _emit_accum >= step:
+		_emit_accum -= step
 
-	_damage_timer = damage_tick_s
+		# 1) trail (manual) at fixed frequency
+		if emit_trail_while_attacking and trail_emitter:
+			# Emit exactly one lidar sample using long lifetime
+			trail_emitter.emit_now(-1.0, Color(0, 0, 0, 0), lidar_lifetime_s, false)
 
-	# RayCast3D collision is already computed by engine
-	if not hit_ray.is_colliding():
-		return
+		# 2) hit test at fixed frequency (perf win vs. every frame)
+		if hit_ray:
+			hit_ray.force_raycast_update()
+			if hit_ray.is_colliding():
+				_handle_hit()
 
-	var collider := hit_ray.get_collider()
-	var hit_pos: Vector3 = hit_ray.get_collision_point()
-
-	# Lidar emission (separate shape at hit position)
-	if emit_lidar and _mgr != null and (lidar_emit_on_any_hit or collider is Enemy):
-		_emit_lidar_at(hit_pos)
-
-	# Damage
-	if collider is Enemy:
-		(collider as Enemy).take_damage(damage)
-
-func _update_hit_ray() -> void:
-	# Use camera direction when available (feels correct for FPS)
-	if camera != null:
-		var from := camera.global_transform.origin
-		var dir := -camera.global_transform.basis.z.normalized()
-		hit_ray.global_transform.origin = from
-		hit_ray.target_position = dir * sword_range
-	else:
-		# Fallback: ray from the sword node forward
-		hit_ray.target_position = -global_transform.basis.z.normalized() * sword_range
-
-	# If you ever set target_position in editor, this keeps it updated with sword_range.
-	# Force update if needed when you change transforms quickly.
-	hit_ray.force_raycast_update()
-
-func _emit_lidar_at(world_pos: Vector3) -> void:
-	match lidar_shape:
-		LidarManager.TYPE_CAPSULE:
-			_mgr.add_volume(
-				Transform3D(Basis.IDENTITY, world_pos),
-				LidarManager.TYPE_CAPSULE,
-				Vector4(lidar_radius, lidar_capsule_half_height, 0, 0),
-				lidar_color,
-				lidar_lifetime_s
-			)
-		_:
-			# default sphere
-			_mgr.add_volume(
-				Transform3D(Basis.IDENTITY, world_pos),
-				LidarManager.TYPE_SPHERE,
-				Vector4(lidar_radius, 0, 0, 0),
-				lidar_color,
-				lidar_lifetime_s
-			)
 
 func _input(event: InputEvent) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
 
 	if event is InputEventMouseMotion:
-		var speed :float = event.screen_relative.length()
+		var vel :float= event.screen_relative.length()
+		if vel > swing_velocity_threshold:
+			# extend moving window
+			var now_s := Time.get_ticks_msec() * 0.001
+			var new_until := now_s + motion_grace_time
 
-		var want_attack := speed > min_mouse_speed_to_attack
-		if want_attack != _is_attacking:
-			_is_attacking = want_attack
-			_damage_timer = 0.0  # hit immediately on start
-			if particles:
-				particles.emitting = _is_attacking
+			# if we were previously "not moving", start a new swing
+			if now_s > _moving_until_s:
+				_on_swing_started()
+
+			_moving_until_s = max(_moving_until_s, new_until)
+
+
+func _on_swing_started() -> void:
+	_hits_this_swing = 0
+	_already_hit.clear()
+
+
+func _handle_hit() -> void:
+	if _hits_this_swing >= max_hits_per_swing:
+		return
+
+	var col := hit_ray.get_collider()
+	if col == null:
+		return
+
+	var id := col.get_instance_id()
+	if (not allow_multi_hit_same_enemy) and _already_hit.has(id):
+		return
+	_already_hit[id] = true
+	_hits_this_swing += 1
+
+	if col is Enemy:
+		(col as Enemy).take_damage(damage_per_hit)
+
+	if emit_hit_volume:
+		_emit_lidar_hit_volume(hit_ray.get_collision_point(), hit_ray.get_collision_normal())
+
+
+func _emit_lidar_hit_volume(pos: Vector3, normal: Vector3) -> void:
+	if _mgr == null:
+		return
+
+	var n := normal.normalized()
+	var origin := pos + n * hit_volume_offset_along_normal
+
+	# Build a basis whose +Y points along normal (good for capsule/cylinder "Y axis")
+	var basis := Basis.IDENTITY
+	if n.length() > 0.0001:
+		basis = Basis.looking_at(n, Vector3.UP)
+
+	var xf := Transform3D(basis, origin)
+
+	# If no shape provided, fallback sphere
+	if hit_volume_shape == null:
+		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(0.12, 0, 0, 0), hit_volume_color, lidar_lifetime_s)
+		return
+
+	if hit_volume_shape is SphereShape3D:
+		var s := hit_volume_shape as SphereShape3D
+		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(s.radius, 0, 0, 0), hit_volume_color, lidar_lifetime_s)
+
+	elif hit_volume_shape is BoxShape3D:
+		var b := hit_volume_shape as BoxShape3D
+		var he := b.size * 0.5
+		_mgr.add_volume(xf, LidarManager.TYPE_BOX, Vector4(he.x, he.y, he.z, 0), hit_volume_color, lidar_lifetime_s)
+
+	elif hit_volume_shape is CapsuleShape3D:
+		var c := hit_volume_shape as CapsuleShape3D
+		_mgr.add_volume(xf, LidarManager.TYPE_CAPSULE, Vector4(c.radius, c.height * 0.5, 0, 0), hit_volume_color, lidar_lifetime_s)
+
+	elif hit_volume_shape is CylinderShape3D:
+		var cy := hit_volume_shape as CylinderShape3D
+		_mgr.add_volume(xf, LidarManager.TYPE_CYLINDER, Vector4(cy.radius, cy.height * 0.5, 0, 0), hit_volume_color, lidar_lifetime_s)
+
 	else:
-		# Stop attack when mouse stops / other events
-		_is_attacking = false
-		if particles:
-			particles.emitting = false
+		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(0.12, 0, 0, 0), hit_volume_color, lidar_lifetime_s)

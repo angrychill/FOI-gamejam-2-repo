@@ -18,6 +18,7 @@ var _t3 := PackedVector4Array()
 var _params := PackedVector4Array()
 var _colors := PackedColorArray()
 var _fade := PackedFloat32Array()
+var _time_now_s: float = 0.0
 
 # Lifetime bookkeeping (in seconds)
 var _birth_ms := PackedInt64Array()
@@ -80,7 +81,7 @@ func clear() -> void:
 #  - <= 0 => infinite
 #  - > 0  => fades from 1 -> 0 over that duration
 func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Color, lifetime_s: float = 0.0) -> void:
-	_ensure_buffers() # <-- IMPORTANT
+	_ensure_buffers()
 
 	var idx := _count % MAX_SHAPES
 	_count += 1
@@ -93,58 +94,72 @@ func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Co
 	_t2[idx] = Vector4(B.z.x, B.z.y, B.z.z, 0.0)
 	_t3[idx] = Vector4(O.x, O.y, O.z, float(type))
 
-	_params[idx] = params
+	# Store birth time in params.w
+	var birth_s := float(Time.get_ticks_msec()) * 0.001
+	_params[idx] = Vector4(params.x, params.y, params.z, birth_s)
+
 	_colors[idx] = color
 
-	_birth_ms[idx] = Time.get_ticks_msec()
-	_lifetime_s[idx] = lifetime_s
-	_fade[idx] = 1.0
+	# Store lifetime in _fade (repurposed)
+	_fade[idx] = lifetime_s # <=0 => infinite
 
 	_dirty = true
 
+
 func _process(_dt: float) -> void:
-	_update_fades()
+	_time_now_s = float(Time.get_ticks_msec()) * 0.001
+
 	if _dirty:
-		_push_to_all()
+		_push_to_all(true)   # push arrays + time
 		_dirty = false
+	else:
+		_push_to_all(false)  # push only time
 
-func _update_fades() -> void:
-	var now := Time.get_ticks_msec()
-	var active :int = min(_count, MAX_SHAPES)
-	var any_changed := false
 
-	for i in range(active):
-		if _colors[i].a <= 0.0:
-			if _fade[i] != 0.0:
-				_fade[i] = 0.0
-				any_changed = true
+
+func _push_to_all(push_arrays: bool) -> void:
+	for i in range(_receivers.size() - 1, -1, -1):
+		if not is_instance_valid(_receivers[i]):
+			_receivers.remove_at(i)
 			continue
+		_push_to_receiver(_receivers[i], push_arrays)
 
-		var life := _lifetime_s[i]
-		if life <= 0.0:
-			if _fade[i] != 1.0:
-				_fade[i] = 1.0
-				any_changed = true
-			continue
 
-		var age_s := float(now - _birth_ms[i]) / 1000.0
-		var f :float= clamp(1.0 - (age_s / life), 0.0, 1.0)
 
-		if abs(_fade[i] - f) > 0.001:
-			_fade[i] = f
-			any_changed = true
 
-		if f <= 0.0 and _colors[i].a > 0.0:
-			_colors[i].a = 0.0
-			any_changed = true
+func _push_to_receiver(geo: GeometryInstance3D, push_arrays: bool) -> void:
+	# 0) material_override (covers MultiMeshInstance3D and many others)
+	var sm := _pick_overlay_shader(geo.material_override)
+	if sm != null:
+		_copy_base_material_into_lidar_shader(geo.material_override, sm)
+		_apply_uniforms(sm, push_arrays)
 
-	if any_changed:
-		_dirty = true
+	# 1) MeshInstance3D: per-surface materials (this is what you were missing)
+	if geo is MeshInstance3D:
+		var mi := geo as MeshInstance3D
+		var mesh := mi.mesh
+		if mesh != null:
+			var sc := mesh.get_surface_count()
+			for s in range(sc):
+				# Prefer surface override, otherwise active
+				var mat: Material = mi.get_surface_override_material(s)
+				if mat == null:
+					mat = mi.get_active_material(s)
 
-func _push_to_all() -> void:
-	for geo in _receivers:
-		if is_instance_valid(geo):
-			_push_to_receiver(geo)
+				var sm_s := _pick_overlay_shader(mat)
+				if sm_s != null:
+					_copy_base_material_into_lidar_shader(mat, sm_s)
+					_apply_uniforms(sm_s, push_arrays)
+
+	# 2) CSGShape3D / CSGMesh3D: single material
+	if geo is CSGShape3D:
+		var csg := geo as CSGShape3D
+		var mat_csg: Material = csg.material
+		var sm_csg := _pick_overlay_shader(mat_csg)
+		if sm_csg != null:
+			_copy_base_material_into_lidar_shader(mat_csg, sm_csg)
+			_apply_uniforms(sm_csg, push_arrays)
+
 
 # --- Material selection helpers ---
 
@@ -167,7 +182,18 @@ func _pick_overlay_shader(mat: Material) -> ShaderMaterial:
 
 	return null
 
-func _apply_uniforms(sm: ShaderMaterial) -> void:
+func _apply_uniforms(sm: ShaderMaterial, push_arrays: bool) -> void:
+	# Always update time
+	sm.set_shader_parameter("time_now_s", _time_now_s)
+
+	# Arrays are still valid even when we skip pushing them,
+	# because the ShaderMaterial keeps the last values.
+	# Only set false if you *truly* want to disable lidar evaluation.
+	sm.set_shader_parameter("lidar_arrays_valid", true)
+
+	if not push_arrays:
+		return
+
 	sm.set_shader_parameter("lidar_shape_count", min(_count, MAX_SHAPES))
 	sm.set_shader_parameter("lidar_t0", _t0)
 	sm.set_shader_parameter("lidar_t1", _t1)
@@ -175,41 +201,11 @@ func _apply_uniforms(sm: ShaderMaterial) -> void:
 	sm.set_shader_parameter("lidar_t3", _t3)
 	sm.set_shader_parameter("lidar_params", _params)
 	sm.set_shader_parameter("lidar_colors", _colors)
+
+	# IMPORTANT: lidar_fade now stores lifetime_s (<=0 => infinite)
 	sm.set_shader_parameter("lidar_fade", _fade)
 
-func _push_to_receiver(geo: GeometryInstance3D) -> void:
-	# 1) material_override (works for many geometry nodes)
-	var base_mat := geo.material_override
-	var sm := _pick_overlay_shader(geo.material_override)
-	if sm != null:
-		_copy_base_material_into_lidar_shader(base_mat, sm)
-		_apply_uniforms(sm)
 
-	# 2) MeshInstance3D surfaces (per-surface materials)
-	if geo is MeshInstance3D:
-		var mi := geo as MeshInstance3D
-		if mi.mesh:
-			var sc := mi.mesh.get_surface_count()
-			for s in range(sc):
-				var surf_mat := mi.get_active_material(s)
-				var sm_s := _pick_overlay_shader(surf_mat)
-				if sm_s != null:
-					_copy_base_material_into_lidar_shader(surf_mat, sm_s)
-					_apply_uniforms(sm_s)
-
-
-	# 3) CSG nodes: CSGShape3D has a single `material` property
-	# (CSGMesh3D inherits CSGShape3D)
-	if geo is CSGShape3D:
-		var csg := geo as CSGShape3D
-		var sm_csg := _pick_overlay_shader(csg.material)
-		if sm_csg != null:
-			_copy_base_material_into_lidar_shader(csg.material, sm_csg)
-			_apply_uniforms(sm_csg)
-
-	# 4) MultiMeshInstance3D: usually only material_override
-	# (already covered by #1). Included here only for clarity.
-	
 func _copy_base_material_into_lidar_shader(base_mat: Material, sm: ShaderMaterial) -> void:
 	if base_mat == null or sm == null:
 		return
