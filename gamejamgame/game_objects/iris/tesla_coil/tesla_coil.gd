@@ -22,7 +22,8 @@ func _get_query_transform() -> Transform3D:
 	# Single source of truth for both debug and physics query
 	var t := global_transform
 	t.basis *= Basis(Vector3.RIGHT, deg_to_rad(90.0)) # rotate X +90
-	t.origin += t.basis.y * -5.0                    # local z = -5
+	t.basis *= Basis(Vector3.FORWARD, deg_to_rad(2.5))
+	t.origin += t.basis.y * -5.0                    # local y = -5
 	return t
 
 
@@ -49,6 +50,11 @@ func _create_debug_shape() -> void:
 
 func _update_debug_shape_transform() -> void:
 	_debug_mesh_instance.global_transform = _get_query_transform()
+
+func _exit_tree() -> void:
+	if _debug_mesh_instance and is_instance_valid(_debug_mesh_instance):
+		_debug_mesh_instance.queue_free()
+		_debug_mesh_instance = null
 
 
 func attack() -> void:
