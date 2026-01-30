@@ -27,7 +27,7 @@ vertices = PackedVector3Array(-24.5, 1, -24.5, -24.5, 1, 24.5, 24.5, 1, 24.5, 24
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0io8h"]
-size = Vector3(50, 1, 50)
+size = Vector3(50, 0.1, 50)
 
 [sub_resource type="Gradient" id="Gradient_4uu8m"]
 colors = PackedColorArray(0, 0, 0, 1, 0.2915, 0.53, 0.32330003, 1)
@@ -78,6 +78,7 @@ navigation_mesh = SubResource("NavigationMesh_0io8h")
 [node name="Floor" type="StaticBody3D" parent="Level/NavigationRegion3D" unique_id=1055116212]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level/NavigationRegion3D/Floor" unique_id=2039648559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49, 0)
 shape = SubResource("BoxShape3D_0io8h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Level/NavigationRegion3D/Floor" unique_id=79124086 groups=["lidar"]]
