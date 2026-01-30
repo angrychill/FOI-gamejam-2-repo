@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://byttreyge7avk" path="res://game_objects/aleks/dragon/dragon_boss_data.gd" id="10_5ten5"]
 [ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="11_5hgea"]
 
+[sub_resource type="PackedScene" id="PackedScene_5hgea"]
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0io8h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -85,6 +87,7 @@ metadata/_custom_type_script = "uid://byttreyge7avk"
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="Level" parent="." unique_id=1627353637 instance=ExtResource("1_543v3")]
+next_level = SubResource("PackedScene_5hgea")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Level" unique_id=427039732]
 environment = SubResource("Environment_fisvw")

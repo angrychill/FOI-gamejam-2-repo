@@ -106,7 +106,7 @@ size = Vector3(29, 10, 0.1)
 [sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
 size = Vector3(10, 0.1, 10)
 
-[node name="Level" type="Node3D" unique_id=1117802177]
+[node name="Level2" type="Node3D" unique_id=1117802177]
 script = ExtResource("1_nbrci")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 

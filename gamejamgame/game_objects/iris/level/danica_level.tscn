@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="1_x3qid"]
 [ext_resource type="Material" uid="uid://bw0oyoerlxwje" path="res://assets/mats/dark level geometry.tres" id="2_gv6r4"]
+[ext_resource type="PackedScene" uid="uid://bp1lygg8np3pl" path="res://game_objects/iris/level/juraj_level.tscn" id="2_vwr77"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="3_wlcnk"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="4_qp0aj"]
 [ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="5_15gtl"]
@@ -322,6 +323,7 @@ size = Vector3(29, 22, 0.1)
 size = Vector3(10, 0.1, 10)
 
 [node name="Level" unique_id=1627353637 instance=ExtResource("1_x3qid")]
+next_level = ExtResource("2_vwr77")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0" unique_id=2017065920]
 environment = SubResource("Environment_h2b23")
