@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://bp1lygg8np3pl"]
+[gd_scene format=4 uid="uid://c2lej3it2g3ld"]
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_nbrci"]
 [ext_resource type="Material" uid="uid://bw0oyoerlxwje" path="res://assets/mats/dark level geometry.tres" id="2_d1tre"]
@@ -106,7 +106,7 @@ size = Vector3(29, 10, 0.1)
 [sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
 size = Vector3(10, 0.1, 10)
 
-[node name="Level2" type="Node3D" unique_id=1117802177]
+[node name="Level" type="Node3D" unique_id=1117802177]
 script = ExtResource("1_nbrci")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 

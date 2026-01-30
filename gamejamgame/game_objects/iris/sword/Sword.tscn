@@ -1,9 +1,7 @@
-[gd_scene format=3 uid="uid://dq4osdlxothv0"]
+[gd_scene format=4 uid="uid://dq4osdlxothv0"]
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_7n2bh"]
-size = Vector2(0.15, 1)
+[ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_ntrel"]
 
 [sub_resource type="Curve" id="Curve_7n2bh"]
 _data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -31,20 +29,57 @@ billboard_keep_scale = true
 [sub_resource type="QuadMesh" id="QuadMesh_ntrel"]
 material = SubResource("StandardMaterial3D_6hn66")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vogwl"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_2inma"]
+_surfaces = [{
+"aabb": AABB(-0.05914465, -0.75112677, -0.33844164, 0.1182893, 2.6810281, 0.6768833),
+"format": 34359742465,
+"index_count": 132,
+"index_data": PackedByteArray("DAANAA4ADAAPAA0AEAAOAA0ADwAQAA0AEQAMAA4ADwAMABEAEAASAA4AEQAOABIADwATABAADwARABMAEwASABAAEwARABIAAAABAAIAAAADAAEAAwAAAAQABAAAAAIAAwAEAAUABAACAAYABQAEAAYAAwAFAAcAAwAHAAEABQAGAAcAAgAIAAYABwAJAAEAAQAKAAIAAgAKAAgAAQAJAAoABgAIAAsABgALAAcACwAIAAoABwALAAkACwAKAAkAFAAVABYAFQAXABYAFAAYABUAFgAXABkAFgAZABQAFAAaABgAFAAZABoAGAAbABUAFQAbABcAGAAaABsAGQAXABsAGQAbABoA"),
+"lods": [0.37679398, PackedByteArray("AAABAAIAAAADAAEAAwAAAAQABAAAAAIAAwAEAAUABAACAAYABQAEAAYAAwAFAAcAAwAHAAEABQAGAAcAAgAIAAYABwAJAAEAAQAKAAIAAgAKAAgAAQAJAAoABgAIAAsABgALAAcACwAIAAoABwALAAkACwAKAAkA")],
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 28,
+"vertex_data": PackedByteArray("pW2SvPrSK73qgSk+pW2SvP1c0T/qgSm+pW2SvP1c0T/qgSk+pW2SvPrSK73qgSm+pW2SPPrSK73qgSk+pW2SPPrSK73qgSm+pW2SPP1c0T/qgSk+pW2SPP1c0T/qgSm+PL1OOwIH9z8EU+88PL1OuwIH9z8EU++8PL1OuwIH9z8EU+88PL1OOwIH9z8EU++8qUFyvWKCPr05SK0+qUFyvWKCPj05SK2+qUFyvWKCPj05SK0+qUFyvWKCPr05SK2+qUFyPWKCPj05SK2+qUFyPWKCPr05SK0+qUFyPWKCPj05SK0+qUFyPWKCPr05SK2+QJZ8vGKCPr1e6Ae+QJZ8PGKCPr1e6Ac+QJZ8vGKCPr1e6Ac+v6auu9hJQL9l8js9QJZ8PGKCPr1e6Ae+v6auu9hJQL9l8ju9v6auO9hJQL9l8ju9v6auO9hJQL9l8js9")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_d43g3"]
+resource_name = "sword_1_Cube_001"
+_surfaces = [{
+"aabb": AABB(-0.05914465, -0.75112677, -0.33844164, 0.1182893, 2.6810281, 0.6768833),
+"attribute_data": PackedByteArray("AADAPgAAgD8AACA/AABAPwAAID8AAIA/AADAPgAAQD8AACA/AACAPwAAID8AAEA/AADAPgAAQD8AACA/AAAAPwAAID8AAEA/AADAPgAAAD8AAMA+AAAAPwAAID8AAIA+AAAgPwAAAD8AAMA+AACAPgAAID8AAAA/AAAgPwAAgD4AAMA+AACAPgAAID8AAAAAAAAgPwAAgD4AAMA+AAAAAAAAAD4AAAA/AADAPgAAgD4AAMA+AAAAPwAAAD4AAIA+AAAgPwAAAD8AAGA/AACAPgAAYD8AAAA/AAAgPwAAgD4AACA/AAAAAAAAID8AAIA+AAAgPwAAgD4AACA/AAAAAAAAID8AAAA/AAAgPwAAQD8AACA/AABAPwAAID8AAAA/AADAPgAAgD8AACA/AABAPwAAID8AAIA/AADAPgAAQD8AAMA+AABAPwAAID8AAAA/AAAgPwAAQD8AAMA+AAAAPwAAwD4AAAA/AAAgPwAAgD4AACA/AAAAPwAAwD4AAIA+AADAPgAAgD4AACA/AAAAAAAAID8AAIA+AADAPgAAAAAAAAA+AAAAPwAAwD4AAIA+AADAPgAAAD8AAAA+AACAPgAAID8AAAA/AABgPwAAgD4AAGA/AAAAPwAAID8AAIA+AAAgPwAAQD8AACA/AACAPwAAID8AAIA+AAAgPwAAAD8AAAA+AAAAPwAAwD4AAIA+AAAAPgAAgD4AAMA+AAAAPwAAAD4AAAA/AADAPgAAgD4AAMA+AAAAPwAAAD4AAIA+AADAPgAAAD8AAMA+AACAPgAAwD4AAIA+AADAPgAAAD8AAAA+AACAPgAAAD4AAAA/AAAAPgAAAD8AAAA+AACAPgAAwD4AAIA+AAAAPgAAgD4AAAA+AACAPgAAwD4AAIA+AAAAPgAAAD8AAMA+AAAAPwAAwD4AAAA/AAAAPgAAAD8="),
+"format": 34359742487,
+"index_count": 132,
+"index_data": PackedByteArray("JAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAAAA8AD0AAAADADwABgAHAAgABgAJAAcACgA+AD8ACgANAD4AEAARABIAEAATABEAFAAVABYAFAAXABUACwAOAAwACwAPAA4AGAAZABoAGAAbABkAAQAEAAIAAQAFAAQAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAQABBAEIAQABDAEEARABFAEYARABHAEUASABJAEoASABLAEkATABNAE4ATABPAE0AUABRAFIAUABTAFEAVABVAFYAVABXAFUA"),
+"lods": [0.37679398, PackedByteArray("AAABAAIAAAADAAEAAQAEAAIAAQAFAAQABgAHAAgABgAJAAcACgALAAwACgANAAsACwAOAAwACwAPAA4AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEA")],
+"material": SubResource("StandardMaterial3D_vogwl"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 88,
+"vertex_data": PackedByteArray("pW2SvPrSK73qgSk+pW2SvP1c0T/qgSm+pW2SvP1c0T/qgSk+pW2SvPrSK73qgSm+PL1OuwIH9z8EU+88PL1OuwIH9z8EU++8pW2SvPrSK73qgSm+pW2SPP1c0T/qgSm+pW2SvP1c0T/qgSm+pW2SPPrSK73qgSm+pW2SPPrSK73qgSm+pW2SPP1c0T/qgSk+pW2SPP1c0T/qgSm+pW2SPPrSK73qgSk+PL1OOwIH9z8EU++8PL1OOwIH9z8EU+88pW2SPPrSK73qgSk+pW2SvP1c0T/qgSk+pW2SPP1c0T/qgSk+pW2SvPrSK73qgSk+pW2SvPrSK73qgSm+pW2SPPrSK73qgSk+pW2SPPrSK73qgSm+pW2SvPrSK73qgSk+PL1OOwIH9z8EU++8PL1OuwIH9z8EU+88PL1OuwIH9z8EU++8PL1OOwIH9z8EU+88pW2SvP1c0T/qgSk+PL1OOwIH9z8EU+88pW2SPP1c0T/qgSk+PL1OuwIH9z8EU+88pW2SPP1c0T/qgSm+PL1OuwIH9z8EU++8pW2SvP1c0T/qgSm+PL1OOwIH9z8EU++8qUFyvWKCPr05SK0+qUFyvWKCPj05SK2+qUFyvWKCPj05SK0+qUFyvWKCPr05SK2+qUFyvWKCPr05SK2+qUFyPWKCPj05SK2+qUFyvWKCPj05SK2+qUFyPWKCPr05SK2+qUFyPWKCPr05SK2+qUFyPWKCPj05SK0+qUFyPWKCPj05SK2+qUFyPWKCPr05SK0+qUFyPWKCPr05SK0+qUFyvWKCPj05SK0+qUFyPWKCPj05SK0+qUFyvWKCPr05SK0+qUFyvWKCPr05SK2+qUFyPWKCPr05SK0+qUFyPWKCPr05SK2+qUFyvWKCPr05SK0+qUFyPWKCPj05SK2+qUFyvWKCPj05SK0+qUFyvWKCPj05SK2+qUFyPWKCPj05SK0+pW2SvP1c0T/qgSm+pW2SvP1c0T/qgSk+pW2SPP1c0T/qgSk+pW2SPP1c0T/qgSm+QJZ8vGKCPr1e6Ae+QJZ8PGKCPr1e6Ac+QJZ8vGKCPr1e6Ac+QJZ8PGKCPr1e6Ae+v6auu9hJQL9l8ju9v6auO9hJQL9l8js9v6auO9hJQL9l8ju9v6auu9hJQL9l8js9QJZ8PGKCPr1e6Ae+v6auO9hJQL9l8js9QJZ8PGKCPr1e6Ac+v6auO9hJQL9l8ju9QJZ8vGKCPr1e6Ac+v6auu9hJQL9l8ju9QJZ8vGKCPr1e6Ae+v6auu9hJQL9l8js9QJZ8PGKCPr1e6Ac+v6auu9hJQL9l8js9QJZ8vGKCPr1e6Ac+v6auO9hJQL9l8js9QJZ8vGKCPr1e6Ae+v6auO9hJQL9l8ju9QJZ8PGKCPr1e6Ae+v6auu9hJQL9l8ju9AAD/f/9///8aBhmG////vxoGGYb///+/AAD/f/9///8aBhmG////vxoGGYb///+///////9//////////3//////////f/////////9///////9//3///+T5GYb///+/5PkZhv///7////9//3///+T5GYb///+/5PkZhv///7//f/9//3////9//3//f////3//f/9/////f/9//3////9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/7//f4ao////P/9/hqj///8//3+GqP///z//f4ao////P3jX//////+/eNf//////7941///////v3jX//////+/AAD/f/9///8AAP9//3///wAA/3//f///AAD/f/9//////////3//////////f/////////9//////////3///////3//f///////f/9///////9//3///////3//f////3//f/9/////f/9//3////9//3//f////3//f/9/////fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9///8AAP+//3///wAA/7//f///AAD/v/9///8AAP+/AAD/f/9///8AAP9//3///////3//f///////f/9/////f///////P/9///////8//3///////z//f///////P/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/MP4xfv///78w/jF+////vzD+MX7///+/MP4xfv///7/OATF+////v84BMX7///+/zgExfv///7/OATF+////v/9/9HH///8//3/0cf///z//f/Rx////P/9/9HH///8/9PEAAP///7/08QAA////v/TxAAD///+/9PEAAP///78=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_2inma")
+
 [node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles")]
-transform = Transform3D(0.9999999, 0, 0, 0, 1, 0, 0, 0, 0.9999999, 0, 0, 0)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9659258, -0.258819, 0, 0.25881904, 0.9659257, 0, 0, -0.2)
 script = ExtResource("1_7n2bh")
-particles = NodePath("MeshInstance3D/GPUParticles3D")
-sword_range = 15
-damage = 1
+particles = NodePath("GPUParticles3D")
+sword_range = 5
+damage = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1675329963]
-transform = Transform3D(0.4829629, 0, 0.25881907, 0, 1, 0, -0.12940954, 0, 0.9659258, -0.10000002, 0, -0.50000006)
-mesh = SubResource("PlaneMesh_7n2bh")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="MeshInstance3D" unique_id=523648935]
-transform = Transform3D(0.9999997, 0, 0, 0, 1, 0, 0, 0, 0.9999997, 0, 0, -0.29999995)
-amount = 16
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=523648935]
+transform = Transform3D(0.9659259, -5.960465e-08, 0.258819, 1.7881393e-07, 0.99999994, 3.5968375e-09, -0.2588191, 3.7252907e-08, 0.9659257, -0.27764577, 1.8626451e-09, -0.88977784)
+amount = 32
 lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_7n2bh")
 draw_pass_1 = SubResource("QuadMesh_ntrel")
+
+[node name="sword" type="MeshInstance3D" parent="." unique_id=1796759005]
+transform = Transform3D(-0.24148144, -0.12940952, -0.41825816, 0.43301272, -1.8927587e-08, -0.24999999, 0.06470474, -0.4829629, 0.11207195, -0.10000002, 0, -0.20000003)
+mesh = SubResource("ArrayMesh_d43g3")
+surface_material_override/0 = ExtResource("2_ntrel")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=978954748]
