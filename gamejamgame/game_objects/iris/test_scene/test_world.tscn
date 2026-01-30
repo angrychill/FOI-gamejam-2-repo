@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cle07qd032bk4" path="res://game_objects/iris/tesla_coil/tesla_coil.tscn" id="4_fisvw"]
 [ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="5_ljjh0"]
 [ext_resource type="PackedScene" uid="uid://cl1jda5pt3hts" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.tscn" id="7_2mtng"]
+[ext_resource type="Resource" uid="uid://ds1vd6hg145y3" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="9_5hgea"]
 [ext_resource type="PackedScene" uid="uid://hprcw48vd6a5" path="res://game_objects/aleks/dragon/dragon_boss.tscn" id="9_dg6sy"]
 [ext_resource type="Script" uid="uid://byttreyge7avk" path="res://game_objects/aleks/dragon/dragon_boss_data.gd" id="10_5ten5"]
 [ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="11_5hgea"]
@@ -81,7 +82,6 @@ sprite = ExtResource("11_5hgea")
 metadata/_custom_type_script = "uid://byttreyge7avk"
 
 [node name="TestWorld" type="Node3D" unique_id=1468049234]
-script = ExtResource("1_543v3")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="Level" parent="." unique_id=1627353637 instance=ExtResource("1_543v3")]
@@ -141,6 +141,7 @@ debug_label = "Sword"
 
 [node name="CutsceneTrigger" parent="Level" unique_id=341458773 instance=ExtResource("7_2mtng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.275969, 0, 0)
+cutscene_dialogue = ExtResource("9_5hgea")
 
 [node name="DragonBoss" parent="." unique_id=388612048 instance=ExtResource("9_dg6sy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.134537, 0.66113615, 10.96369)
