@@ -9,11 +9,13 @@ radius = 0.1
 
 [node name="Projectile" type="Area3D" unique_id=1735319718]
 script = ExtResource("1_uu6ke")
-speed = 0.5
+speed = 10.0
+lifetime = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1261922261]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("SphereShape3D_pa4uy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=523530360]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
 mesh = SubResource("SphereMesh_uu6ke")

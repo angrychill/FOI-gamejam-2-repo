@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://lqnhpifsi7a" path="res://icon.svg" id="1_rnnvq"]
 [ext_resource type="Script" uid="uid://bm81grx7kf22x" path="res://game_objects/iris/enemy/enemy.gd" id="1_ru4oe"]
 [ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ohikj"]
-[ext_resource type="Script" path="res://game_objects/iris/enemy/shooting_component.gd" id="4_cmpv4"]
-[ext_resource type="PackedScene" path="res://game_objects/iris/enemy/projectile.tscn" id="5_vqfed"]
+[ext_resource type="Script" uid="uid://yno5r2r54yue" path="res://game_objects/iris/enemy/shooting_component.gd" id="4_cmpv4"]
+[ext_resource type="PackedScene" uid="uid://ma3kckekukyf" path="res://game_objects/iris/enemy/projectile.tscn" id="5_vqfed"]
+[ext_resource type="Script" uid="uid://yhymsg8fj0ue" path="res://game_objects/iris/enemy/attack_patterns/basic_attack_pattern.gd" id="6_ooti1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cmpv4"]
 
@@ -22,6 +23,10 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ru4oe"]
 
+[sub_resource type="Resource" id="Resource_mo88c"]
+script = ExtResource("6_ooti1")
+metadata/_custom_type_script = "uid://yhymsg8fj0ue"
+
 [node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
 script = ExtResource("1_ru4oe")
 enemy_data = SubResource("Resource_ooti1")
@@ -33,7 +38,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ru4oe")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1218884648]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1.5, 0, 0, 0, 1, 0, 0.92549086, 0)
 billboard = 2
 texture = ExtResource("1_rnnvq")
 
@@ -51,4 +56,9 @@ autostart = true
 [node name="ShootingComponent" type="Node" parent="." unique_id=648031059]
 script = ExtResource("4_cmpv4")
 projectile_scene = ExtResource("5_vqfed")
-shoot_interval = 100.0
+shoot_offset = Vector3(0, 1.5, 0)
+projectile_speed = 10.0
+use_random_interval = true
+min_shoot_interval = 0.1
+max_shoot_interval = 2.0
+attack_pattern = SubResource("Resource_mo88c")

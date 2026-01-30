@@ -16,6 +16,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export var current_carryable : Node3D
 
+@onready var dodge_component: DodgeComponent = $DodgeComponent
+
 var current_health : int:
 	set(value):
 		current_health = value
@@ -25,8 +27,25 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	current_health = max_health
 	add_to_group("player")
+	
+	if not camera:
+		camera = get_node_or_null("Camera3D")
+		if not camera:
+			camera = get_node_or_null("Head/Camera3D")
+		if not camera:
+			push_error("No camera found!")
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = jump_speed
+	
+	if dodge_component and dodge_component.is_currently_dodging():
+		move_and_slide()
+		return
+	
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
 	var move_dir = transform.basis * Vector3(input.x, 0, input.y)
 	velocity.x = move_dir.x * speed
@@ -35,10 +54,13 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func set_carryable(node : Node3D) -> void:
-	
 	if node == null:
 		remove_carryable()
 		print_debug("carryable is null")
+		return
+	
+	if hand == null:
+		push_error("Hand node is not assigned in the inspector!")
 		return
 	
 	if hand.get_child_count() > 0:
@@ -48,12 +70,18 @@ func set_carryable(node : Node3D) -> void:
 	current_carryable = node
 	print_debug("Set new carryable")
 
-func remove_carryable() ->void:
+func remove_carryable() -> void:
+	if hand == null:
+		return
+		
 	if hand.get_child_count() > 0:
 		for c in hand.get_children():
 			c.queue_free()
 
 func _input(event: InputEvent) -> void:
+	if not camera:
+		return
+	
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		camera.rotate_x(-event.relative.y * mouse_sensitivity)
@@ -68,13 +96,15 @@ func _input(event: InputEvent) -> void:
 		
 		check_for_item()
 
-	
 	if event.is_action("scroll_up"):
 		print_debug("Scrolling up!")
 	if event.is_action("scroll_down"):
 		print_debug("Scrolling down!")
 
 func shoot() -> void:
+	if not camera:
+		return
+	
 	var space = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
 		camera.global_position - camera.global_transform.basis.z * 100)
@@ -100,8 +130,10 @@ func shoot_enemy(enemy : Enemy) -> void:
 
 
 func check_for_item():
-	
 	print("checking for item")
+	
+	if not camera:
+		return
 	
 	var space = get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
