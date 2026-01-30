@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 		if dodge_timer <= 0:
 			is_dodging = false
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed(dodge_button) and can_dodge and not is_dodging:
 		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_down")
 		if input_dir.length() > 0.1:

@@ -179,8 +179,10 @@ func _apply_uniforms(sm: ShaderMaterial) -> void:
 
 func _push_to_receiver(geo: GeometryInstance3D) -> void:
 	# 1) material_override (works for many geometry nodes)
+	var base_mat := geo.material_override
 	var sm := _pick_overlay_shader(geo.material_override)
 	if sm != null:
+		_copy_base_material_into_lidar_shader(base_mat, sm)
 		_apply_uniforms(sm)
 
 	# 2) MeshInstance3D surfaces (per-surface materials)
@@ -192,7 +194,9 @@ func _push_to_receiver(geo: GeometryInstance3D) -> void:
 				var surf_mat := mi.get_active_material(s)
 				var sm_s := _pick_overlay_shader(surf_mat)
 				if sm_s != null:
+					_copy_base_material_into_lidar_shader(surf_mat, sm_s)
 					_apply_uniforms(sm_s)
+
 
 	# 3) CSG nodes: CSGShape3D has a single `material` property
 	# (CSGMesh3D inherits CSGShape3D)
@@ -200,7 +204,17 @@ func _push_to_receiver(geo: GeometryInstance3D) -> void:
 		var csg := geo as CSGShape3D
 		var sm_csg := _pick_overlay_shader(csg.material)
 		if sm_csg != null:
+			_copy_base_material_into_lidar_shader(csg.material, sm_csg)
 			_apply_uniforms(sm_csg)
 
 	# 4) MultiMeshInstance3D: usually only material_override
 	# (already covered by #1). Included here only for clarity.
+	
+func _copy_base_material_into_lidar_shader(base_mat: Material, sm: ShaderMaterial) -> void:
+	if base_mat == null or sm == null:
+		return
+
+	if base_mat is BaseMaterial3D:
+		var bm := base_mat as BaseMaterial3D
+		sm.set_shader_parameter("base_albedo_color", bm.albedo_color)
+		sm.set_shader_parameter("base_albedo_tex", bm.albedo_texture)
