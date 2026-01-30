@@ -19,12 +19,50 @@ func _process(_delta: float) -> void:
 
 
 func _get_query_transform() -> Transform3D:
-	# Single source of truth for both debug and physics query
 	var t := global_transform
 	t.basis *= Basis(Vector3.RIGHT, deg_to_rad(90.0)) # rotate X +90
-	t.basis *= Basis(Vector3.FORWARD, deg_to_rad(2.5))
-	t.origin += t.basis.y * -5.0                    # local y = -5
+
+	var camera: Camera3D = GlobalData.get_player().camera
+	if camera:
+		var viewport := camera.get_viewport()
+		var screen_center := viewport.get_visible_rect().size * 0.5
+
+		var ray_origin := camera.project_ray_origin(screen_center)
+		var ray_dir := camera.project_ray_normal(screen_center)
+
+		# --- NEW: raycast to get the real point under the crosshair ---
+		var space := get_world_3d().direct_space_state
+		var ray_to := ray_origin + ray_dir * 1000.0
+
+		var rq := PhysicsRayQueryParameters3D.create(ray_origin, ray_to)
+		rq.collide_with_bodies = true
+		rq.collide_with_areas = true
+		rq.exclude = [self] # avoid hitting the weapon node
+
+		var hit := space.intersect_ray(rq)
+
+		var target_point: Vector3 = ray_to
+		if hit.size() > 0:
+			target_point = hit["position"]
+		# -------------------------------------------------------------
+
+		var aim_dir := (target_point - t.origin).normalized()
+
+		# After +90° X rotation, cylinder axis is +Y
+		var current_axis := t.basis.y.normalized()
+
+		var rot := current_axis.cross(aim_dir)
+		var angle := acos(clamp(current_axis.dot(aim_dir), -1.0, 1.0))
+		if rot.length() > 0.0001:
+			t.basis = Basis(rot.normalized(), angle) * t.basis
+
+		# Keep your 180° flip fix
+		t.basis = Basis(t.basis.x.normalized(), PI) * t.basis
+
+	t.origin += t.basis.y * -5.0 # local y = -5
 	return t
+
+
 
 
 func _create_debug_shape() -> void:
