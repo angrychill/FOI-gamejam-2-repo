@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://d0nkdarb7mtqp"]
+
+[ext_resource type="Script" uid="uid://c86ke2yeprx6h" path="res://game_objects/aleks/sword_enemy/sword_enemy.gd" id="1_lk1qt"]
+[ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_qk658"]
+[ext_resource type="Script" uid="uid://ccoedxkv887xl" path="res://game_objects/aleks/sword_enemy/sword_component.gd" id="3_8ijr3"]
+[ext_resource type="Texture2D" uid="uid://ch2h02o4188go" path="res://game_objects/aleks/sword_enemy/knight.png" id="3_dkot4"]
+[ext_resource type="PackedScene" uid="uid://bsl6kk3t2ug2w" path="res://game_objects/aleks/sword_enemy/slash_effect.tscn" id="5_dkot4"]
+[ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="5_tttq3"]
+[ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="6_illuv"]
+
+[sub_resource type="Resource" id="Resource_tttq3"]
+script = ExtResource("2_qk658")
+metadata/_custom_type_script = "uid://bnm48nwrslv5i"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lk1qt"]
+
+[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+script = ExtResource("1_lk1qt")
+enemy_data = SubResource("Resource_tttq3")
+sprite_3d = NodePath("Sprite3D")
+nav_agent = NodePath("NavigationAgent3D")
+sword_attack_range = null
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250803623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_lk1qt")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=180372592]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.9685894, 0)
+billboard = 1
+texture = ExtResource("3_dkot4")
+
+[node name="EnemyDebugLabel" type="Label3D" parent="." unique_id=193266184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0731382, 0)
+billboard = 1
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1830872934]
+path_desired_distance = 0.1
+target_desired_distance = 0.1
+
+[node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=32783493]
+autostart = true
+
+[node name="SwordComponent" type="Node" parent="." unique_id=1701549013]
+script = ExtResource("3_8ijr3")
+sword_damage = 15
+attack_range = 4.0
+telegraph_duration = 0.4
+cooldown_duration = 0.5
+slash_effect_scene = ExtResource("5_dkot4")
+
+[node name="SlashEffect" type="Node3D" parent="." unique_id=979177752]
+script = ExtResource("5_tttq3")
+slash_texture = ExtResource("6_illuv")
