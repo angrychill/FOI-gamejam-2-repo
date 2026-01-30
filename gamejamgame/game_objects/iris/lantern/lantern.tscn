@@ -52,6 +52,7 @@ offset_right = 40.0
 offset_bottom = 29.0
 
 [node name="danica_1" type="Node3D" parent="." unique_id=705846098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 
 [node name="danica" type="MeshInstance3D" parent="danica_1" unique_id=1368553005]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.19999999, 0)
