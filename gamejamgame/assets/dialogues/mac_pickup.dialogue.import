@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c54w4l74g0r0o"
+path="res://.godot/imported/mac_pickup.dialogue-477717542cbc1106e9c6283a367809de.tres"
+
+[deps]
+
+source_file="res://assets/dialogues/mac_pickup.dialogue"
+dest_files=["res://.godot/imported/mac_pickup.dialogue-477717542cbc1106e9c6283a367809de.tres"]
+
+[params]
+
+defaults=true

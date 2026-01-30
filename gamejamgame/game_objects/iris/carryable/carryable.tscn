@@ -28,4 +28,3 @@ mesh = SubResource("BoxMesh_6ggbl")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 billboard = 1
-text = "Pick up"
