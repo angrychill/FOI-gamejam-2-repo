@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_mwv6m"]
 [ext_resource type="Material" uid="uid://bw0oyoerlxwje" path="res://assets/mats/dark level geometry.tres" id="2_ed1p3"]
+[ext_resource type="PackedScene" uid="uid://coteb0i3mdv6r" path="res://game_objects/iris/test_scene/test_world.tscn" id="2_noy7f"]
 [ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_pxob7"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="3_2uy2r"]
 [ext_resource type="PackedScene" uid="uid://tetxpi17gcmn" path="res://game_objects/iris/level/dead_tree.tscn" id="5_uhqdk"]
 [ext_resource type="PackedScene" uid="uid://dw1xqi1mp37ih" path="res://game_objects/iris/level/leaf_tree.tscn" id="6_pb0vb"]
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="7_hfvkk"]
-[ext_resource type="Resource" uid="uid://brfx8bfxxlhan" path="res://assets/dialogues/tesla_intro.dialogue" id="8_7pipg"]
+[ext_resource type="Resource" uid="uid://bb3h0u0qk5vq8" path="res://assets/dialogues/tesla_intro.dialogue" id="8_7pipg"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="9_my518"]
 [ext_resource type="PackedScene" uid="uid://cle07qd032bk4" path="res://game_objects/iris/tesla_coil/tesla_coil.tscn" id="10_eaqa5"]
-[ext_resource type="Resource" uid="uid://soqsag6mxb0k" path="res://assets/dialogues/coil_pickup.dialogue" id="11_noy7f"]
+[ext_resource type="Resource" uid="uid://c2gx3u73s6f7m" path="res://assets/dialogues/coil_pickup.dialogue" id="11_noy7f"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="12_j83l6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_04rw6"]
@@ -109,6 +110,7 @@ radius = 0.8
 
 [node name="Level" type="Node3D" unique_id=1458522852]
 script = ExtResource("1_mwv6m")
+next_level = ExtResource("2_noy7f")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="forest_level1" type="Node3D" parent="." unique_id=1855860344]
@@ -163,6 +165,7 @@ surface_material_override/0 = ExtResource("12_j83l6")
 [node name="Label3D" type="Label3D" parent="Carryable" unique_id=539298571]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+text = "Tesla"
 
 [node name="Area3D" type="Area3D" parent="Carryable" unique_id=1944881870]
 

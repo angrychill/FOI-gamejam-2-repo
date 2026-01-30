@@ -9,9 +9,9 @@
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="6_qp0aj"]
 [ext_resource type="Resource" uid="uid://1yswo5imisu3" path="res://assets/dialogues/danica_pick_up.dialogue" id="6_u6mlw"]
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="7_btayy"]
-[ext_resource type="Resource" uid="uid://bac1husm6c047" path="res://assets/dialogues/danica_intro.dialogue" id="8_u6mlw"]
-[ext_resource type="Resource" uid="uid://cbui0mexcjp2o" path="res://assets/dialogues/brat_jedan_encounter.dialogue" id="10_cke48"]
-[ext_resource type="Resource" uid="uid://ds1vd6hg145y3" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="11_vwr77"]
+[ext_resource type="Resource" uid="uid://bl5hr0u8yqmdj" path="res://assets/dialogues/danica_intro.dialogue" id="8_u6mlw"]
+[ext_resource type="Resource" uid="uid://i1ij7rbdt5rd" path="res://assets/dialogues/brat_jedan_encounter.dialogue" id="10_cke48"]
+[ext_resource type="Resource" uid="uid://dpmn20bppv6bt" path="res://assets/dialogues/brat_dva_encounter.dialogue" id="11_vwr77"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp0aj"]
 sky_top_color = Color(0, 0, 0, 1)
