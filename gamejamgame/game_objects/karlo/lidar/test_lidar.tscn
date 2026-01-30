@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cxjobkdfcoivc"]
 
-[ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://game_objects/karlo/camera_test.gd" id="1_pbydm"]
+[ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://game_objects/karlo/lidar/camera_test.gd" id="1_pbydm"]
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="2_gtlyp"]
 [ext_resource type="Material" uid="uid://bwbav7wl7c17u" path="res://game_objects/karlo/lidar/assets/base_material.tres" id="3_8lv5o"]
-[ext_resource type="Script" uid="uid://bo7v8nf88dw6o" path="res://game_objects/karlo/mover.gd" id="4_cbuoy"]
-[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="5_hw60r"]
+[ext_resource type="Script" uid="uid://bo7v8nf88dw6o" path="res://game_objects/karlo/lidar/mover.gd" id="4_cbuoy"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar/lidar_trail_emitter.gd" id="5_hw60r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

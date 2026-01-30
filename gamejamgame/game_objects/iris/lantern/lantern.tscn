@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_avpwt"]
-[ext_resource type="PackedScene" uid="uid://dfd65w5piul8w" path="res://game_objects/iris/lantern/lidar_emitter_collision.tscn" id="3_avpwt"]
+[ext_resource type="PackedScene" uid="uid://dfd65w5piul8w" path="res://game_objects/iris/lantern/lidar/lidar_emitter_collision.tscn" id="3_avpwt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_686yb"]
 

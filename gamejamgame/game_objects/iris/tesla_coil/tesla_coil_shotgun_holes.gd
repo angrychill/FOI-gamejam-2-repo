@@ -187,7 +187,7 @@ func emit_holes_from_cylinder_query(
 			pr = max(0.001, pellet_radius + randf_range(-pellet_radius_jitter, pellet_radius_jitter))
 
 		# Emit as a lidar point (spherical SDF in your manager)
-		print("pellet @", pos, " collider=", (hit_collider as Node).name)
+		# print("pellet @", pos, " collider=", (hit_collider as Node).name)
 		mgr.add_volume(
 			Transform3D(Basis.IDENTITY, pos),
 			LidarManager.TYPE_SPHERE,
