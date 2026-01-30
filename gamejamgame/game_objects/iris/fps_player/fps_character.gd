@@ -146,7 +146,8 @@ func check_for_item():
 		var item := carryable.pickup_item
 		var inst := item.instantiate()
 		set_carryable(inst)
-		carryable.queue_free()
+		carryable.trigger_pickup_dialogue()
+		carryable.remove_pickup()
 		return true
 	else:
 		# if no item, shoot

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d0psfigs2tw6q"
+path="res://.godot/imported/juraj_intro.dialogue-45c1a064f463a240283949f7461a50c2.tres"
+
+[deps]
+
+source_file="res://assets/dialogues/juraj_intro.dialogue"
+dest_files=["res://.godot/imported/juraj_intro.dialogue-45c1a064f463a240283949f7461a50c2.tres"]
+
+[params]
+
+defaults=true

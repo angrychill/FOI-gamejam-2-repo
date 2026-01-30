@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c5b54mc7wkk6e"
-path="res://.godot/imported/danica_1.glb-d42a76c4434127521859ad0a010dc7bf.scn"
+uid="uid://byhf37hpqogmk"
+path="res://.godot/imported/danica_level2.glb-62ffdb63d9e318de1283868e74a12ba8.scn"
 
 [deps]
 
-source_file="res://assets/blend files/danica_1.glb"
-dest_files=["res://.godot/imported/danica_1.glb-d42a76c4434127521859ad0a010dc7bf.scn"]
+source_file="res://assets/blend files/danica_level2.glb"
+dest_files=["res://.godot/imported/danica_level2.glb-62ffdb63d9e318de1283868e74a12ba8.scn"]
 
 [params]
 
@@ -40,8 +40,7 @@ materials/extract_path=""
 _subresources={
 "materials": {
 "@MATERIAL:0": {
-"use_external/enabled": true,
-"use_external/path": "uid://cwwkl2tyu5sr0"
+"use_external/enabled": true
 }
 }
 }

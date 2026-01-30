@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://da2580y7lo71q"
+path="res://.godot/imported/pozoj_intro.dialogue-b1834b301fb89fad86b2323c7f59d1e9.tres"
+
+[deps]
+
+source_file="res://assets/dialogues/pozoj_intro.dialogue"
+dest_files=["res://.godot/imported/pozoj_intro.dialogue-b1834b301fb89fad86b2323c7f59d1e9.tres"]
+
+[params]
+
+defaults=true

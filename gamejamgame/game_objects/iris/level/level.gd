@@ -20,6 +20,7 @@ func _ready() -> void:
 	cutscene_started.connect(_on_cutscene_started)
 
 
+
 func _on_cutscene_started() -> void:
 	var player : FPSPlayer = GlobalData.get_player()
 	player.can_move = false

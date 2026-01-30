@@ -3,7 +3,8 @@ class_name CutsceneTrigger
 
 @export var is_active : bool = true
 
-@export var cutscene_to_trigger : CutsceneResource
+
+@export var cutscene_dialogue : DialogueResource
 
 func _ready() -> void:
 	is_active = true
@@ -25,9 +26,10 @@ func _on_body_entered(body : Node3D) ->void:
 	trigger_dialogue()
 
 func trigger_dialogue() -> void:
-	DialogueManager.show_dialogue_balloon(cutscene_to_trigger.dialogue_file)
+	DialogueManager.show_dialogue_balloon(cutscene_dialogue)
 
 func _on_dialogue_ended(res : DialogueResource) -> void:
-	if res == cutscene_to_trigger.dialogue_file:
+	if res == cutscene_dialogue:
 		var level : Level = get_tree().get_first_node_in_group("level")
 		level.is_in_cutscene = false
+	
