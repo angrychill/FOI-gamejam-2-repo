@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://cafvnl8c6l373" path="res://game_objects/iris/carryable/carryable.tscn" id="3_4uu8m"]
 [ext_resource type="PackedScene" uid="uid://cle07qd032bk4" path="res://game_objects/iris/tesla_coil/tesla_coil.tscn" id="4_fisvw"]
 [ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="5_ljjh0"]
-[ext_resource type="PackedScene" uid="uid://cl1jda5pt3hts" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.tscn" id="7_2mtng"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0io8h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -116,6 +115,3 @@ debug_label = "Tesla coil"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53408504, -7.4510927)
 pickup_item = ExtResource("5_ljjh0")
 debug_label = "Sword"
-
-[node name="CutsceneTrigger" parent="Level" unique_id=341458773 instance=ExtResource("7_2mtng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.275969, 0, 0)
