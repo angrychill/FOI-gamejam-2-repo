@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://btcib87vhi756"]
+
+[ext_resource type="Script" uid="uid://defed628bt3hy" path="res://game_objects/karlo/lidar/logic/lidar_manager.gd" id="1_hwbm7"]
+
+[node name="LidarManager" type="Node" unique_id=644378498]
+script = ExtResource("1_hwbm7")

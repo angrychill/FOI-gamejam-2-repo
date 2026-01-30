@@ -1,7 +1,7 @@
 extends Camera3D
 
-@export var lidar_manager_path: NodePath = NodePath("/root/LidarManager")
-@onready var mgr: LidarManager = get_node(lidar_manager_path)
+
+@onready var mgr: LidarManager = LidarAccess.manager(get_tree())
 
 @export var max_distance := 1000.0
 
@@ -25,7 +25,7 @@ extends Camera3D
 @export var cylinder_half_height_range := Vector2(0.15, 0.90)
 
 @export var lidar_registrar_path: NodePath = NodePath("/root/LidarRegistrar")
-@onready var registrar: LidarRegistrar = get_node(lidar_registrar_path)
+@onready var registrar: LidarRegistrar = LidarAccess.registrar(get_tree())
 
 @export var toggle_key := KEY_T
 var _lidar_overlay_on := true

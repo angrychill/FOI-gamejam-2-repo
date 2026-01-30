@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cbsytyrqwoshm"]
+
+[ext_resource type="Script" uid="uid://c1qi8tl1b6by" path="res://game_objects/karlo/lidar/logic/lidar_registrar.gd" id="1_2er6f"]
+
+[node name="LidarRegistrar" type="Node" unique_id=503081385]
+script = ExtResource("1_2er6f")

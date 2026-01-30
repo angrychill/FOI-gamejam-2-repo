@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://6f7y4bc4cxae"]
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_v7de1"]
+[ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_lablr"]
 
 [node name="Level" type="Node3D" unique_id=1627353637 groups=["level"]]
 script = ExtResource("1_v7de1")
+
+[node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_lablr")]

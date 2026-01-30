@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cx3t8l6kxqokp"]
+
+[ext_resource type="PackedScene" uid="uid://btcib87vhi756" path="res://game_objects/karlo/lidar/logic/lidar_manager.tscn" id="1_bduu7"]
+[ext_resource type="Script" uid="uid://0ph3orutb4lm" path="res://game_objects/karlo/lidar/logic/lidar_api.gd" id="1_twd6n"]
+[ext_resource type="PackedScene" uid="uid://cbsytyrqwoshm" path="res://game_objects/karlo/lidar/logic/lidar_registrar.tscn" id="2_bduu7"]
+[ext_resource type="Shader" uid="uid://lb6m8647pv34" path="res://game_objects/karlo/lidar/assets/lidar_overlay.gdshader" id="4_tosl8"]
+
+[node name="LidarAPI" type="Node" unique_id=1771151327 node_paths=PackedStringArray("manager", "registrar") groups=["lidar_api"]]
+script = ExtResource("1_twd6n")
+manager = NodePath("LidarManager")
+registrar = NodePath("LidarRegistrar")
+
+[node name="LidarManager" parent="." unique_id=644378498 instance=ExtResource("1_bduu7")]
+
+[node name="LidarRegistrar" parent="." unique_id=503081385 node_paths=PackedStringArray("manager") instance=ExtResource("2_bduu7")]
+manager = NodePath("../LidarManager")
+apply_overlay_shader = ExtResource("4_tosl8")

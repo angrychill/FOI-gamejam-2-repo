@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://cxjobkdfcoivc"]
+
+[ext_resource type="Script" uid="uid://bglx0le0n2u2u" path="res://game_objects/karlo/camera_test.gd" id="1_pbydm"]
+[ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="2_gtlyp"]
+[ext_resource type="Material" uid="uid://bwbav7wl7c17u" path="res://game_objects/karlo/lidar/assets/base_material.tres" id="3_8lv5o"]
+[ext_resource type="Script" uid="uid://bo7v8nf88dw6o" path="res://game_objects/karlo/mover.gd" id="4_cbuoy"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar_trail_emitter.gd" id="5_hw60r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oebh7"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_n2so6"]
+sky_material = SubResource("ProceduralSkyMaterial_oebh7")
+
+[sub_resource type="Environment" id="Environment_gndwi"]
+background_mode = 2
+sky = SubResource("Sky_n2so6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_8lv5o"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8lv5o"]
+size = Vector2(1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8lv5o"]
+size = Vector3(1, 1, 0.015)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u0u5i"]
+
+[node name="TestLidar" type="Node3D" unique_id=601369198]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1189220980]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1969251321]
+environment = SubResource("Environment_gndwi")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1171683026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.355)
+script = ExtResource("1_pbydm")
+volume_lifetime_s = 1.5
+lidar_registrar_path = NodePath("")
+
+[node name="Level" parent="." unique_id=1627353637 instance=ExtResource("2_gtlyp")]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Level" unique_id=1361914216 groups=["lidar"]]
+transform = Transform3D(0.75491565, 0, 0.65582186, 0.2675726, 0.9129838, -0.30800247, -0.5987547, 0.40799588, 0.68922573, 0, 0, 0)
+use_collision = true
+mesh = SubResource("BoxMesh_8lv5o")
+material = ExtResource("3_8lv5o")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Level" unique_id=707723526]
+transform = Transform3D(0.9363172, -0.3511554, 0, 0.3511554, 0.9363172, 0, 0, 0, 1, -0.6069952, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Level/StaticBody3D" unique_id=953989971 groups=["lidar"]]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_8lv5o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D" unique_id=219683232]
+shape = SubResource("BoxShape3D_8lv5o")
+
+[node name="Mover" type="StaticBody3D" parent="Level" unique_id=1962599635]
+script = ExtResource("4_cbuoy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Mover" unique_id=1027556765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3399096)
+shape = SubResource("SphereShape3D_u0u5i")
+script = ExtResource("5_hw60r")
+prefer_lidar_access = null
+lidar_manager_path = null
+want_registrar = null
+collision_object_path = null
+trail_lifetime_s = null
+emit_hz = null
+color = null
+use_collision_shape_size = null
+fallback_sphere_radius = null
