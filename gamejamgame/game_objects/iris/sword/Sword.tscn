@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dq4osdlxothv0"]
+
+[ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
+
+[node name="Sword" type="Node3D" unique_id=1003536756]
+script = ExtResource("1_7n2bh")

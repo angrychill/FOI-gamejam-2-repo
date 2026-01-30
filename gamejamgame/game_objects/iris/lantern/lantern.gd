@@ -1,4 +1,4 @@
-extends Node3D
+extends Weapon
 class_name Lantern
 @onready var lantern_debug_label: Label = $LanternDebugLabel
 
@@ -56,7 +56,7 @@ func fire_pulse() -> void:
 	var overlaps := lantern_area.get_overlapping_bodies()
 	for node : Node3D in overlaps:
 		if node is Enemy:
-			node.take_damage(current_shooting_rate)
+			node.take_damage(damage)
 
-		
-		
+func attack() -> void:
+	fire_pulse()

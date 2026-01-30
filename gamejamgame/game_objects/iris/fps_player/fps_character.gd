@@ -14,7 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @export var max_health : int = 100
 
-@export var current_carryable : Node3D
+@export var current_weapon : Weapon
 
 @onready var dodge_component: DodgeComponent = $DodgeComponent
 
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
-func set_carryable(node : Node3D) -> void:
+func set_carryable(node : Weapon) -> void:
 	if node == null:
 		remove_carryable()
 		print_debug("carryable is null")
@@ -67,8 +67,8 @@ func set_carryable(node : Node3D) -> void:
 		remove_carryable()
 	
 	hand.add_child(node)
-	current_carryable = node
-	print_debug("Set new carryable")
+	current_weapon = node
+	print_debug("Set new carryable: ", current_weapon.name)
 
 func remove_carryable() -> void:
 	if hand == null:
@@ -94,39 +94,23 @@ func _input(event: InputEvent) -> void:
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
-		check_for_item()
+		if check_for_item():
+			return
+		else:
+			if current_weapon != null:
+				current_weapon.attack()
 
 	if event.is_action("scroll_up"):
 		print_debug("Scrolling up!")
 	if event.is_action("scroll_down"):
 		print_debug("Scrolling down!")
 
-func shoot() -> void:
-	if not camera:
-		return
-	
-	var space = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(camera.global_position,
-		camera.global_position - camera.global_transform.basis.z * 100)
-	var collision = space.intersect_ray(query)
-	if collision:
-		print_debug("hit collider ", collision.collider.name, collision.position)
-		if collision.collider is Enemy:
-			shoot_enemy(collision.collider)
-	
-	else:
-		print_debug("hit nothing")
+
 
 func take_damage(damage : int) -> void:
 	current_health -= damage
 	print("Player took ", damage, " damage!")
 
-
-func shoot_enemy(enemy : Enemy) -> void:
-	print_debug("shooting enemy: ", enemy)
-	# hard coded for now
-	enemy.take_damage(10)
-	pass
 
 
 func check_for_item():
@@ -152,7 +136,8 @@ func check_for_item():
 		var inst := item.instantiate()
 		set_carryable(inst)
 		carryable.queue_free()
+		return true
 	else:
 		# if no item, shoot
 		print("no item")
-		shoot()
+		return false
