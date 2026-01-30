@@ -5,7 +5,7 @@ extends Area3D
 @export var lifetime: float = 5.0
 
 var direction: Vector3 = Vector3.FORWARD
-var shooter: Node3D = null  # Reference to who shot this projectile
+var shooter: Node3D = null
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -23,26 +23,21 @@ func initialize(start_position: Vector3, target_direction: Vector3, projectile_s
 	shooter = projectile_shooter
 
 func _on_body_entered(body: Node3D) -> void:
-	# Ignore the shooter
 	if body == shooter:
 		return
 	
-	# Hit the player
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
 		queue_free()
 		return
 	
-	# Hit walls, floors, etc
 	if body is StaticBody3D or body is CSGShape3D:
 		queue_free()
 		return
 	
-	# Hit other enemies (ignore them, only target player)
 	if body is Enemy:
 		return
 
 func _on_area_entered(area: Area3D) -> void:
-	# Handle area collisions if needed
 	pass
