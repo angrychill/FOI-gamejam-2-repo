@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cle07qd032bk4"]
 
 [ext_resource type="Script" uid="uid://bbpq5bhkgungh" path="res://game_objects/iris/tesla_coil/tesla_coil.gd" id="1_etei5"]
+[ext_resource type="Script" uid="uid://bfbfs76typxn" path="res://game_objects/iris/tesla_coil/tesla_coil_shotgun_holes.gd" id="2_u20te"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_etei5"]
 top_radius = 0.01
@@ -10,8 +11,12 @@ radial_segments = 32
 
 [node name="TeslaCoil" type="Node3D" unique_id=1196484093]
 script = ExtResource("1_etei5")
+cooldown_time = 1.0
 damage = 50
 
 [node name="TeslaMesh" type="MeshInstance3D" parent="." unique_id=336740422]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.099999994, 0)
 mesh = SubResource("CylinderMesh_etei5")
+
+[node name="TeslaCoilShotgunHoles" type="Node3D" parent="." unique_id=885444130]
+script = ExtResource("2_u20te")
