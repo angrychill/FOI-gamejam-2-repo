@@ -89,10 +89,14 @@ func emit_holes_from_cylinder_query(
 
 func _oriented_normal(hit_normal: Vector3, ray_dir: Vector3) -> Vector3:
 	var n := hit_normal
+	# Avoid repeated normalization if possible.
+	var rd := ray_dir
+	if rd.length_squared() > 0.0:
+		rd = rd.normalized()
 	if n == Vector3.ZERO:
-		return -ray_dir.normalized()
+		return -rd
 	# If normal points in same direction as ray, flip it.
-	if n.dot(ray_dir) > 0.0:
+	if n.dot(rd) > 0.0:
 		n = -n
 	return n.normalized()
 
@@ -104,11 +108,13 @@ func _find_surface_hit_in_cylinder(
 	y1: float,
 	exclude: Array
 ) -> Dictionary:
+	var max_attempts :int= max(max_attempts_per_pellet, 1)
 	for _attempt in range(max_attempts_per_pellet):
 		# Random point in disc (uniform)
 		var p2 := _random_point_in_disc(cyl_radius)
-		var local_a := Vector3(p2.x, y0, p2.y)
-		var local_b := Vector3(p2.x, y1, p2.y)
+		# Cast from the coil toward the target (near -> far along the beam)
+		var local_a := Vector3(p2.x, y1, p2.y)
+		var local_b := Vector3(p2.x, y0, p2.y)
 
 		var a := query_xform * local_a
 		var b := query_xform * local_b
@@ -119,17 +125,7 @@ func _find_surface_hit_in_cylinder(
 			# Orient normal so surface_offset pushes OUT of the surface.
 			var ray_dir := (b - a)
 			if ray_dir.length_squared() > 0.0:
-				ray_dir = ray_dir.normalized()
-
-				var n :Vector3= hit.get("normal", Vector3.ZERO)
-				if n != Vector3.ZERO:
-					# If normal points in same direction as ray, flip it.
-					if n.dot(ray_dir) > 0.0:
-						n = -n
-					hit["normal"] = n.normalized()
-				else:
-					# Fallback if normal missing
-					hit["normal"] = -ray_dir
+				hit["normal"] = _oriented_normal(hit.get("normal", Vector3.ZERO), ray_dir)
 			return hit
 
 		# --- Optional reverse cast ---
@@ -138,15 +134,7 @@ func _find_surface_hit_in_cylinder(
 			if not hit.is_empty():
 				var ray_dir := (a - b)
 				if ray_dir.length_squared() > 0.0:
-					ray_dir = ray_dir.normalized()
-
-					var n :Vector3= hit.get("normal", Vector3.ZERO)
-					if n != Vector3.ZERO:
-						if n.dot(ray_dir) > 0.0:
-							n = -n
-						hit["normal"] = n.normalized()
-					else:
-						hit["normal"] = -ray_dir
+					hit["normal"] = _oriented_normal(hit.get("normal", Vector3.ZERO), ray_dir)
 				return hit
 
 	return {}
@@ -160,10 +148,11 @@ func _ray(
 	to_p: Vector3,
 	exclude: Array
 ) -> Dictionary:
-	var dir := (to_p - from_p)
-	if dir.length_squared() < 0.0000001:
+	var dir := to_p - from_p
+	var dir_len_sq := dir.length_squared()
+	if dir_len_sq < 0.0000001:
 		return {}
-	dir = dir.normalized()
+	dir /= sqrt(dir_len_sq)
 
 	# Nudge start forward a hair to avoid edge cases when starting inside/at the surface
 	var start := from_p + dir * 0.002
@@ -171,6 +160,7 @@ func _ray(
 	var rq := PhysicsRayQueryParameters3D.create(start, to_p)
 	rq.collide_with_bodies = collide_with_bodies
 	rq.collide_with_areas = collide_with_areas
+	rq.collision_mask = collision_mask
 	rq.exclude = exclude
 	rq.hit_from_inside = true
 	rq.hit_back_faces = true

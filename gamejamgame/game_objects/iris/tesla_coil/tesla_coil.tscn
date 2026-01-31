@@ -51,7 +51,7 @@ surface_material_override/0 = ExtResource("2_t4hyo")
 
 [node name="TeslaCoilShotgunHoles" type="Node3D" parent="." unique_id=885444130]
 script = ExtResource("2_u20te")
-pellets = 18
-pellet_radius = 0.15000000000000002
+pellets = 9
+pellet_radius = 0.3
 lifetime_s = 15.0
 max_attempts_per_pellet = 10
