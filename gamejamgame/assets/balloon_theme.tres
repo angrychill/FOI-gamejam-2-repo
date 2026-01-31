@@ -1,6 +1,6 @@
 [gd_resource type="Theme" format=3 uid="uid://dykro2i3g0ntu"]
 
-[ext_resource type="FontFile" uid="uid://dil0r8w6cwm1c" path="res://assets/NotJamOldStyle14.ttf" id="1_bcxog"]
+[ext_resource type="FontFile" uid="uid://dyitr84otg7dt" path="res://assets/NotJamOldStyle14.ttf" id="1_bcxog"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0, 0, 0, 1)

@@ -17,7 +17,7 @@ move_speed = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
 
-[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("enemy_model", "nav_agent", "telegraph_light", "damage_light", "audio_player")]
+[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("enemy_model", "nav_agent", "telegraph_light", "damage_light", "audio_player") groups=["vukodlak"]]
 script = ExtResource("1_5x6dn")
 enemy_model = NodePath("werewolf walking")
 enemy_data = SubResource("Resource_vukodlak_enemy_data")

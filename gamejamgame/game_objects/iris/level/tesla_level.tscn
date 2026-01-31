@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://ob8x4nel48oq" path="res://assets/leaf_tree_2.tscn" id="14_ltwfk"]
 [ext_resource type="PackedScene" uid="uid://cf57bikwky3y4" path="res://assets/dead_tree_2.tscn" id="15_0agjn"]
 [ext_resource type="PackedScene" uid="uid://clgbtjqaxlp46" path="res://game_objects/iris/enemy/vukodlak_enemy.tscn" id="16_ltwfk"]
+[ext_resource type="Script" uid="uid://cuevike7agkq4" path="res://game_objects/iris/level/tesla_level_logic.gd" id="17_tesla"]
 
 [sub_resource type="Environment" id="Environment_uhqdk"]
 background_mode = 2
@@ -110,7 +111,7 @@ shadow_mesh = SubResource("ArrayMesh_sf0xe")
 height = 1.5
 radius = 0.8
 
-[node name="Level" type="Node3D" unique_id=1458522852]
+[node name="Level2" type="Node3D" unique_id=1458522852]
 script = ExtResource("1_mwv6m")
 next_level = ExtResource("2_noy7f")
 metadata/_custom_type_script = "uid://81niap6lcxo"
@@ -827,7 +828,7 @@ speed = 10.0
 [node name="IntroTrigger" type="Area3D" parent="." unique_id=1227195127 node_paths=PackedStringArray("enemies_to_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
 script = ExtResource("7_hfvkk")
-enemies_to_trigger = [NodePath("../VukodlakEnemy"), NodePath("../VukodlakEnemy2")]
+enemies_to_trigger = [NodePath("../VukodlakEnemy")]
 cutscene_dialogue = ExtResource("8_7pipg")
 metadata/_custom_type_script = "uid://l7hjunjmqawd"
 
@@ -862,9 +863,9 @@ shape = SubResource("CylinderShape3D_j83l6")
 [node name="OmniLight3D" type="OmniLight3D" parent="Carryable" unique_id=1488114250]
 
 [node name="VukodlakEnemy" parent="." unique_id=1907426832 instance=ExtResource("16_ltwfk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50.167206)
-
-[node name="VukodlakEnemy2" parent="." unique_id=640417421 instance=ExtResource("16_ltwfk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -53.620476)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5538864, -20.509132)
 
 [node name="BackgroundMusicPlayer" parent="." unique_id=1575749014 instance=ExtResource("14_j83l6")]
+
+[node name="Vukodlak" type="Node" parent="." unique_id=1482418554]
+script = ExtResource("17_tesla")
