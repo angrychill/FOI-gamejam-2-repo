@@ -14,6 +14,7 @@ func _ready() -> void:
 func _on_body_entered(body : Node3D) ->void:
 	if not is_active:
 		# disabled bitch
+		print("disabled!")
 		return
 	if body is not FPSPlayer:
 		# do not do shit

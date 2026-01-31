@@ -53,11 +53,12 @@ func _on_shooting_decay_timer_timeout() -> void:
 
 
 func fire_pulse() -> void:
-	print("firing a pulse")
 
 	# Example mapping:
 	# radius uses fire_accumulator, hz uses current_shooting_rate (clamped inside emitter)
-	trail.emit_now()
+	trail.emit_now(
+		trail.shape.radius - trail.shape.radius/2 + current_shooting_rate
+	)
 
 	var overlaps := lantern_area.get_overlapping_bodies()
 	for node: Node3D in overlaps:
