@@ -27,7 +27,8 @@ func _ready() -> void:
 func _on_dialogue_ended(res : DialogueResource) -> void:
 	if res == pickup_dialogue:
 		var level : Level = get_tree().get_first_node_in_group("level")
-		level.is_in_cutscene = false
+		if level:
+			level.is_in_cutscene = false
 
 func _update_label() -> void:
 	if label_3d == null:
