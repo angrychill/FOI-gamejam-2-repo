@@ -18,7 +18,11 @@ func get_player_position() -> Vector3:
 	else:
 		return player.global_position
 
-func switch_to_level(switch_level : PackedScene) -> void:
+func switch_to_level(switch_level : String) -> void:
 	var level : Level = get_tree().get_first_node_in_group("level")
-	level.next_level = switch_level
+	var next_level : PackedScene = load(switch_level)
+	level.next_level = next_level
 	level.on_level_complete()
+
+func free_mouse() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

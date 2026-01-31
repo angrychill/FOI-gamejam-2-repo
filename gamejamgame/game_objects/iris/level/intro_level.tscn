@@ -5,6 +5,8 @@
 [ext_resource type="Resource" uid="uid://dhwf6ec13ore2" path="res://assets/dialogues/intro_dialogue.dialogue" id="3_1prwc"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_a1gax"]
 
+[sub_resource type="PackedScene" id="PackedScene_a1gax"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m8d4g"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eq44s"]
@@ -103,6 +105,7 @@ metadata/_custom_type_script = "uid://81niap6lcxo"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("2_1prwc")
 pickup_area = NodePath("Area3D")
+pickup_item = SubResource("PackedScene_a1gax")
 pickup_dialogue = ExtResource("3_1prwc")
 metadata/_custom_type_script = "uid://d3wnbb0t7d6dr"
 
