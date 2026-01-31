@@ -120,10 +120,13 @@ func take_damage(damage : int) -> void:
 	current_health -= damage
 	# print("Player took ", damage, " damage!")
 
+@onready var canvas_layer: CanvasLayer = %CanvasLayer
 func die() -> void:
-	var level : Level = get_tree().get_first_node_in_group("level")
-	if level:
-		level.restart_level()
+	const DEATH_SCREEN = preload("res://assets/death_screen.tscn")
+	var death_screen = DEATH_SCREEN.instantiate()
+	canvas_layer.get_child(0).hide()
+	canvas_layer.add_child(death_screen)
+	
 
 
 func check_for_item():
