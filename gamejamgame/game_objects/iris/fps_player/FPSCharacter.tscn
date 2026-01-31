@@ -40,6 +40,7 @@ shape = ExtResource("2_mlmhm")
 script = ExtResource("2_l6ovs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=732711742]
+unique_name_in_owner = true
 
 [node name="PlayerUI" parent="CanvasLayer" unique_id=1576458718 instance=ExtResource("2_w52vm")]
 

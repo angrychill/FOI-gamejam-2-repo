@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="GAMEJAMGAME"
-run/main_scene="uid://c5c03uj5b5h5e"
+config/name="Svjetlonoša"
+run/main_scene="uid://b8liuss3jvhxw"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 run/max_fps=120
 config/icon="res://icon.svg"
@@ -30,6 +30,10 @@ GlobalData="*uid://dldhfot6k3ujv"
 GlobalVFX="*uid://bjp2dfdh2amqn"
 DialogueManager="*uid://c3rodes2l3gxb"
 LidarAccessAPI="*uid://dq3247mrraabp"
+
+[dialogue_manager]
+
+runtime/balloon_path="res://assets/balloon.tscn"
 
 [display]
 
