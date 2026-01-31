@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_avpwt"]
+[ext_resource type="AudioStream" uid="uid://rdgaxj4nbn31" path="res://game_objects/aleks/SFX/star/star_chime1.mp3" id="2_vi1qh"]
 [ext_resource type="PackedScene" uid="uid://dfd65w5piul8w" path="res://game_objects/iris/lantern/lidar_emitter_collision.tscn" id="3_avpwt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_686yb"]
@@ -38,12 +39,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h8wvv")
 
-[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("lantern_area", "shooting_decay_timer")]
+[node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("lantern_area", "shooting_decay_timer", "audio_player")]
 script = ExtResource("1_4m0mg")
 lantern_area = NodePath("LanternArea")
 shooting_decay_timer = NodePath("ShootingDecay")
 shooting_rate_increment = 0.2
+attack_sound_effects = Array[AudioStream]([ExtResource("2_vi1qh")])
 damage = 2
+audio_player = NodePath("AudioStreamPlayer3D")
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
 autostart = true
@@ -69,3 +72,8 @@ trail_lifetime_s = 2.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2018274816]
 visible = false
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=12560115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+volume_db = 1.0
+bus = &"SFX"
