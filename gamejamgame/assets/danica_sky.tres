@@ -1,0 +1,15 @@
+[gd_resource type="Sky" format=3 uid="uid://duvxd4nd83cs8"]
+
+[ext_resource type="Shader" path="res://game_objects/iris/level/star_sky_material.gdshader" id="1_j7vku"]
+[ext_resource type="Texture2D" uid="uid://cbt3528pxkhpg" path="res://assets/visual/space.png" id="2_44aej"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqsdi"]
+shader = ExtResource("1_j7vku")
+shader_parameter/sky_texture = ExtResource("2_44aej")
+shader_parameter/grayscale_amount = 1.0
+shader_parameter/uv_scale = 4.5
+shader_parameter/contrast = 5.0
+shader_parameter/intensity = 0.50000002375
+
+[resource]
+sky_material = SubResource("ShaderMaterial_fqsdi")

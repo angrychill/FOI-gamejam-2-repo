@@ -2,6 +2,8 @@ extends Control
 @export var da_button : Button
 @export var ne_button : Button
 
+func _ready() -> void:
+	GlobalData.free_mouse()
 
 func _on_da_button_pressed() -> void:
 	var level : Level = get_tree().get_first_node_in_group("level")

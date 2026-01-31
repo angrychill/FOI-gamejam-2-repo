@@ -26,6 +26,8 @@ func _ready() -> void:
 
 func _on_dialogue_ended(res : DialogueResource) -> void:
 	if res == pickup_dialogue:
+		if get_tree() == null:
+			return
 		var level : Level = get_tree().get_first_node_in_group("level")
 		if level:
 			level.is_in_cutscene = false

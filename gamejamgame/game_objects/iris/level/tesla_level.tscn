@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://coteb0i3mdv6r" path="res://game_objects/iris/test_scene/test_world.tscn" id="2_noy7f"]
 [ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_pxob7"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="3_2uy2r"]
+[ext_resource type="Sky" uid="uid://duvxd4nd83cs8" path="res://assets/danica_sky.tres" id="3_j4anm"]
 [ext_resource type="PackedScene" uid="uid://tetxpi17gcmn" path="res://game_objects/iris/level/dead_tree.tscn" id="5_uhqdk"]
 [ext_resource type="PackedScene" uid="uid://dw1xqi1mp37ih" path="res://game_objects/iris/level/leaf_tree.tscn" id="6_pb0vb"]
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="7_hfvkk"]
@@ -15,19 +16,9 @@
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="12_j83l6"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="14_j83l6"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ed1p3"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0, 0, 0, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0, 0, 0, 1)
-ground_curve = 0.040000003
-
-[sub_resource type="Sky" id="Sky_15gtl"]
-sky_material = SubResource("ProceduralSkyMaterial_ed1p3")
-
 [sub_resource type="Environment" id="Environment_uhqdk"]
 background_mode = 2
-sky = SubResource("Sky_15gtl")
+sky = ExtResource("3_j4anm")
 tonemap_mode = 2
 glow_enabled = true
 

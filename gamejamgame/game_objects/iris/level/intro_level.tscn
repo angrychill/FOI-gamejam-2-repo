@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="2_1prwc"]
 [ext_resource type="Resource" uid="uid://g1u3ya5nrbn" path="res://assets/dialogues/intro_dialogue.dialogue" id="3_1prwc"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_a1gax"]
+[ext_resource type="Sky" uid="uid://duvxd4nd83cs8" path="res://assets/danica_sky.tres" id="5_a1v2w"]
 
 [sub_resource type="PackedScene" id="PackedScene_a1gax"]
 
@@ -97,6 +98,10 @@ size = Vector2(10, 10)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_37mci"]
 data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
 
+[sub_resource type="Environment" id="Environment_37mci"]
+background_mode = 2
+sky = ExtResource("5_a1v2w")
+
 [node name="IntroLevel" type="Node3D" unique_id=715132248 groups=["level"]]
 script = ExtResource("1_n6px6")
 metadata/_custom_type_script = "uid://81niap6lcxo"
@@ -147,3 +152,6 @@ shape = SubResource("ConcavePolygonShape3D_37mci")
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("4_a1gax")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.3)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=191627226]
+environment = SubResource("Environment_37mci")

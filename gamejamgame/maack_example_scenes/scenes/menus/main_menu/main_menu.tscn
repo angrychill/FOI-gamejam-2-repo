@@ -12,14 +12,14 @@ theme = ExtResource("2_x4i1q")
 script = ExtResource("2_f7mvx")
 level_select_packed_scene = null
 confirm_new_game = true
+game_scene_path = "uid://bcj50bq43hb1d"
 options_packed_scene = ExtResource("3_x4i1q")
 credits_packed_scene = ExtResource("4_pnej7")
 
 [node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
 offset_top = -1.0
 offset_bottom = 100.0
-text = "Svijetlonoša
-"
+text = "Svjetlonoša"
 
 [node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" index="0"]
 text = "A FOI GameJam Game
@@ -40,9 +40,6 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "Level Select"
-
-[node name="VersionLabel" parent="VersionMargin/VersionContainer" index="0"]
-text = "v1.0.0"
 
 [node name="NewGameConfirmation" parent="." index="5" unique_id=383342779 instance=ExtResource("5_8i2f3")]
 unique_name_in_owner = true
