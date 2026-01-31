@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dfjg0q0l0n5gs"]
+
+[ext_resource type="Theme" uid="uid://dykro2i3g0ntu" path="res://assets/balloon_theme.tres" id="1_orths"]
+[ext_resource type="Script" uid="uid://bo37rp4v8ht7w" path="res://assets/death_screen.gd" id="2_p15hh"]
+
+[node name="DeathScreen" type="Control" unique_id=525075916]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_orths")
+script = ExtResource("2_p15hh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1065736861]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -49.0
+offset_right = 23.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="DaButton" type="Button" parent="VBoxContainer" unique_id=1069430240]
+layout_mode = 2
+text = "Da"
+
+[node name="NeButton" type="Button" parent="VBoxContainer" unique_id=1256860604]
+layout_mode = 2
+text = "Ne"
+
+[node name="Label" type="Label" parent="." unique_id=1779731990]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.0
+offset_top = -192.0
+offset_right = 164.0
+offset_bottom = -99.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Naš junak suočio se sa kobnom sudbinom.
+
+Želiš li početi čitati ispočetka?"
+
+[connection signal="pressed" from="VBoxContainer/DaButton" to="." method="_on_da_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/NeButton" to="." method="_on_ne_button_pressed"]
