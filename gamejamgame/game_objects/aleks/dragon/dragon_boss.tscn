@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="2_x1ym3"]
 [ext_resource type="PackedScene" uid="uid://bhayn5ix4omw7" path="res://game_objects/aleks/dragon/fireball.tscn" id="3_hx41l"]
 [ext_resource type="Script" uid="uid://cvsfpxad7g2w0" path="res://game_objects/aleks/dragon/dragon_shooting_component.gd" id="4_7gxyh"]
+[ext_resource type="PackedScene" uid="uid://6ngm15nm1u4g" path="res://game_objects/aleks/dragon/dragonfuckit_2_model.tscn" id="4_eewml"]
 [ext_resource type="Script" uid="uid://20sg03bimjte" path="res://game_objects/iris/enemy/attack_patterns/burst_attack_pattern.gd" id="5_0qfhw"]
 [ext_resource type="Script" uid="uid://c21tn21vhnyj8" path="res://game_objects/aleks/dragon/melee_attack_component.gd" id="5_ljl2f"]
 [ext_resource type="Script" uid="uid://cp5ytvyr7ye54" path="res://game_objects/aleks/dragon/boss_ai_controller.gd" id="6_0qfhw"]
@@ -24,9 +25,10 @@ sprite = ExtResource("2_x1ym3")
 metadata/_custom_type_script = "uid://byttreyge7avk"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x1ym3"]
+radius = 1.5036621
+height = 3.0073242
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mnnxo"]
-load_path = "res://.godot/imported/pozoj.png-d8528959236eb5d86a477943794141d4.s3tc.ctex"
 
 [sub_resource type="Resource" id="Resource_v17i5"]
 script = ExtResource("5_0qfhw")
@@ -45,12 +47,16 @@ boss_data_override = SubResource("Resource_0qfhw")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
 
+[node name="dragonfuckit2" parent="." unique_id=681020188 instance=ExtResource("4_eewml")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 2)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1214140607]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.0651367, 0)
 shape = SubResource("CapsuleShape3D_x1ym3")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1034404380]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1, 0)
+visible = false
 billboard = 1
 texture = SubResource("CompressedTexture2D_mnnxo")
 
@@ -94,4 +100,6 @@ optimal_distance = 8.0
 
 [node name="BossHealthBar" type="Node3D" parent="." unique_id=713490719]
 script = ExtResource("10_rgi28")
+bar_height = 0.5
+offset_above_boss = 5.0
 boss_display_name = "Pozoj"

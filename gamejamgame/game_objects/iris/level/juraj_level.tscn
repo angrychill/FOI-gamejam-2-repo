@@ -13,6 +13,8 @@
 [ext_resource type="Resource" uid="uid://da2580y7lo71q" path="res://assets/dialogues/pozoj_intro.dialogue" id="11_5wak2"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="12_5wak2"]
 [ext_resource type="AudioStream" uid="uid://rw510g7fn1ih" path="res://game_objects/aleks/SFX/juraj_level/tunnels_bgm.mp3" id="13_3bc4e"]
+[ext_resource type="PackedScene" uid="uid://bqj8k4yewhbdu" path="res://game_objects/iris/level/kill_plane.tscn" id="14_3bc4e"]
+[ext_resource type="PackedScene" uid="uid://hprcw48vd6a5" path="res://game_objects/aleks/dragon/dragon_boss.tscn" id="15_6scko"]
 
 [sub_resource type="PackedScene" id="PackedScene_y6yb7"]
 
@@ -119,7 +121,7 @@ size = Vector3(7.213623, 11.168701, 4.6953125)
 [sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
 size = Vector3(10, 0.1, 10)
 
-[node name="Level" type="Node3D" unique_id=1117802177]
+[node name="Level" type="Node3D" unique_id=1117802177 groups=["level"]]
 script = ExtResource("1_nbrci")
 next_level = SubResource("PackedScene_y6yb7")
 metadata/_custom_type_script = "uid://81niap6lcxo"
@@ -141,10 +143,10 @@ environment = SubResource("Environment_tvxio")
 [node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_rf000")]
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("4_ig5q3")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5828605, 2.3, -125.40018)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 36.0392, 1.805583, -19.460709)
 
 [node name="Carryable" type="Node3D" parent="." unique_id=189911530 node_paths=PackedStringArray("pickup_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1577128, 0.8353281, -119.0772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.435226, 0.8353281, -13.137733)
 script = ExtResource("5_wwo1f")
 pickup_area = NodePath("Area3D")
 pickup_item = ExtResource("6_5wak2")
@@ -187,17 +189,17 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0
 visible = false
 mesh = SubResource("BoxMesh_iyvv7")
 
-[node name="CutsceneTrigger2" type="Area3D" parent="." unique_id=1636665051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 5.2, 135)
+[node name="DragonTrigger" type="Area3D" parent="." unique_id=1636665051 node_paths=PackedStringArray("enemy_to_trigger")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.410038, 1.880353, 4.407237)
 monitorable = false
 script = ExtResource("9_y6yb7")
+enemy_to_trigger = NodePath("../DragonBoss")
 cutscene_dialogue = ExtResource("11_5wak2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CutsceneTrigger2" unique_id=777908647]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.583862, -1.8786268, -130.47586)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DragonTrigger" unique_id=777908647]
 shape = SubResource("BoxShape3D_ighb5")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CutsceneTrigger2" unique_id=1654204121]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DragonTrigger" unique_id=1654204121]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_iyvv7")
@@ -205,3 +207,9 @@ mesh = SubResource("BoxMesh_iyvv7")
 [node name="BackgroundMusicPlayer" parent="." unique_id=1022672399 instance=ExtResource("12_5wak2")]
 stream = ExtResource("13_3bc4e")
 parameters/looping = true
+
+[node name="KillPlane" parent="." unique_id=1020691500 instance=ExtResource("14_3bc4e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.300003, 0)
+
+[node name="DragonBoss" parent="." unique_id=388612048 instance=ExtResource("15_6scko")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.483337, 1.6754704, 20.461197)

@@ -118,6 +118,10 @@ func take_damage(damage : int) -> void:
 	current_health -= damage
 	# print("Player took ", damage, " damage!")
 
+func die() -> void:
+	var level : Level = get_tree().get_first_node_in_group("level")
+	if level:
+		level.restart_level()
 
 
 func check_for_item():
