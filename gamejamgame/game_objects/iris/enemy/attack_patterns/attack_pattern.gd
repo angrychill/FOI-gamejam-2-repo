@@ -6,7 +6,7 @@ var shooter_component: ShootingComponent
 func initialize(shooter: ShootingComponent) -> void:
 	shooter_component = shooter
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	pass
 
 func should_shoot() -> bool:

@@ -119,7 +119,7 @@ environment = SubResource("Environment_uhqdk")
 
 [node name="forest_level1" type="Node3D" parent="." unique_id=1855860344]
 
-[node name="Plane_001" type="MeshInstance3D" parent="forest_level1" unique_id=1404838840]
+[node name="Plane_001" type="MeshInstance3D" parent="forest_level1" unique_id=1404838840 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_igjwr")
 surface_material_override/0 = ExtResource("2_ed1p3")
 
