@@ -23,7 +23,7 @@ class_name Sword
 @export var emit_trail_while_attacking: bool = true
 @export_range(0.01, 2.0, 0.01) var trail_radius: float = 0.15
 @export_range(1, 256, 1) var max_trail_points: int = 48
-@export_range(0.05, 30.0, 0.05) var trail_lifetime_s: float = 1.2
+@export var trail_lifetime_s: float = 1.2
 @export var hit_volume_color: Color = Color(0.2, 0.9, 1.0, 0.9)
 
 var _mgr: LidarManager = null
@@ -146,31 +146,24 @@ func _emit_trail_sample() -> void:
 		var max_life := float(max_trail_points) / hz
 		trail_life = min(trail_life, max_life)
 
-	var start := hit_ray.global_transform.origin
-	var end := start + hit_ray.global_transform.basis * hit_ray.target_position
-
-	var dir := end - start
-	var len := dir.length()
-
-	if len < 0.0001:
-		var xf_sphere := Transform3D(Basis.IDENTITY, start)
-		_mgr.add_volume(
-			xf_sphere,
-			LidarManager.TYPE_SPHERE,
-			Vector4(trail_radius, 0, 0, 0),
-			hit_volume_color,
-			trail_life
-		)
+	# Only draw a trail sample where the ray actually hits something.
+	hit_ray.force_raycast_update()
+	if not hit_ray.is_colliding():
 		return
 
-	var mid := start + dir * 0.5
-	var basis := Basis.looking_at(dir, Vector3.UP)
-	var xf := Transform3D(basis, mid)
+	var pos := hit_ray.get_collision_point()
+	var normal := hit_ray.get_collision_normal()
+
+	# Push slightly off the surface along the normal to avoid z-fighting.
+	if normal.length() > 0.0001:
+		pos += normal.normalized() * 0.02
+
+	var xf := Transform3D(Basis.IDENTITY, pos)
 
 	_mgr.add_volume(
 		xf,
-		LidarManager.TYPE_CAPSULE,
-		Vector4(trail_radius, len * 0.5, 0, 0),
+		LidarManager.TYPE_SPHERE,
+		Vector4(trail_radius, 0, 0, 0),
 		hit_volume_color,
 		trail_life
 	)

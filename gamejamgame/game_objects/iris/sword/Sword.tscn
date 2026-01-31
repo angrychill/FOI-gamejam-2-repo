@@ -69,8 +69,8 @@ script = ExtResource("1_7n2bh")
 particles = NodePath("GPUParticles3D")
 hit_ray = NodePath("HitRay")
 emit_hz = 10.0
-trail_radius = 1.0
-trail_lifetime_s = 30.0
+trail_radius = 2.0
+trail_lifetime_s = 60.0
 damage = 2
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=523648935]
