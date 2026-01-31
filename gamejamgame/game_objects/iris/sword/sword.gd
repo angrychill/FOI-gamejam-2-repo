@@ -54,6 +54,8 @@ func _ready() -> void:
 			len = 1.0
 			hit_ray.target_position = tp
 		sword_range = len
+	
+	play_carry_sound_effect()
 
 
 func _physics_process(dt: float) -> void:
@@ -123,6 +125,8 @@ func _handle_hit() -> void:
 	var col := hit_ray.get_collider()
 	if col == null:
 		return
+	
+	play_attack_sound_effect()
 
 	var id := col.get_instance_id()
 	if (not allow_multi_hit_same_enemy) and _already_hit.has(id):

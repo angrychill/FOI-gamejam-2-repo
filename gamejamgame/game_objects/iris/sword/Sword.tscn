@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_ntrel"]
+[ext_resource type="AudioStream" uid="uid://dse1oggrd7vx5" path="res://game_objects/aleks/SFX/sword/fire.mp3" id="2_ylv2f"]
+[ext_resource type="AudioStream" uid="uid://btkgxp8dnmita" path="res://game_objects/aleks/SFX/sword/sword1.mp3" id="3_evwgk"]
+[ext_resource type="AudioStream" uid="uid://dsj63v6absjm2" path="res://game_objects/aleks/SFX/sword/sword2.mp3" id="4_mo7gq"]
+[ext_resource type="AudioStream" uid="uid://c6jb1nlbqu8mn" path="res://game_objects/aleks/SFX/sword/sword3.mp3" id="5_3oqe1"]
 
 [sub_resource type="Curve" id="Curve_7n2bh"]
 _data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -63,7 +67,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2inma")
 
-[node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles", "hit_ray")]
+[node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles", "hit_ray", "audio_player")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9659258, -0.258819, 0, 0.25881904, 0.9659257, 0, 0, -0.2)
 script = ExtResource("1_7n2bh")
 particles = NodePath("GPUParticles3D")
@@ -71,7 +75,10 @@ hit_ray = NodePath("HitRay")
 emit_hz = 10.0
 trail_radius = 2.0
 trail_lifetime_s = 60.0
+carry_sound_effects = Array[AudioStream]([ExtResource("2_ylv2f")])
+attack_sound_effects = Array[AudioStream]([ExtResource("3_evwgk"), ExtResource("4_mo7gq"), ExtResource("5_3oqe1")])
 damage = 2
+audio_player = NodePath("AudioStreamPlayer3D")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=523648935]
 transform = Transform3D(0.9659259, -5.960465e-08, 0.258819, 1.7881393e-07, 0.99999994, 3.5968375e-09, -0.2588191, 3.7252907e-08, 0.9659257, -0.27764577, 1.8626451e-09, -0.88977784)
@@ -90,3 +97,6 @@ surface_material_override/0 = ExtResource("2_ntrel")
 [node name="HitRay" type="RayCast3D" parent="." unique_id=1850257494]
 transform = Transform3D(0.4829629, 0.2588191, -0.83651626, -0.86602575, -5.9604645e-08, -0.50000024, -0.12940964, 0.9659262, 0.22414407, 0.0059705125, 0.016200565, 0.25758943)
 target_position = Vector3(0, -12, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1663050674]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.9802322e-08, 0, 2.9802322e-08, 1.0000002, -0.15721889, 0.011060711, -0.4901229)
