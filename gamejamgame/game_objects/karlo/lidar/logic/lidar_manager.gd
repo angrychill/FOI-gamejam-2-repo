@@ -75,6 +75,7 @@ func clear() -> void:
 	for i in range(MAX_SHAPES):
 		_colors[i] = Color(0, 0, 0, 0)
 		_fade[i] = 0.0
+		_params[i].w = 0.0
 	_dirty = true
 
 # lifetime_s:
@@ -83,8 +84,8 @@ func clear() -> void:
 func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Color, lifetime_s: float = 0.0) -> int:
 	_ensure_buffers()
 
-	var idx := _count % MAX_SHAPES
-	_count += 1
+	var now_s := float(Time.get_ticks_msec()) * 0.001
+	var idx := _alloc_slot(now_s)
 
 	var B := global_xform.basis.orthonormalized()
 	var O := global_xform.origin
@@ -95,8 +96,7 @@ func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Co
 	_t3[idx] = Vector4(O.x, O.y, O.z, float(type))
 
 	# Store birth time in params.w
-	var birth_s := float(Time.get_ticks_msec()) * 0.001
-	_params[idx] = Vector4(params.x, params.y, params.z, birth_s)
+	_params[idx] = Vector4(params.x, params.y, params.z, now_s)
 
 	_colors[idx] = color
 
@@ -114,7 +114,43 @@ func clear_volume(idx: int) -> void:
 
 	_colors[idx] = Color(0, 0, 0, 0)
 	_fade[idx] = 0.0
+	_params[idx].w = 0.0
 	_dirty = true
+
+
+func _alloc_slot(now_s: float) -> int:
+	# If we still have room, append at the end.
+	if _count < MAX_SHAPES:
+		var idx_new := _count
+		_count += 1
+		return idx_new
+
+	# Lazily free any shapes whose lifetime has expired, and reuse that slot.
+	for i in range(MAX_SHAPES):
+		var life_s := _fade[i]
+		if life_s > 0.0:
+			var birth_s := _params[i].w
+			if birth_s > 0.0 and now_s - birth_s >= life_s:
+				# Expired: mark as free and reuse immediately.
+				_colors[i] = Color(0, 0, 0, 0)
+				_fade[i] = 0.0
+				_params[i].w = 0.0
+				return i
+
+		# Also treat explicitly-cleared slots (zero alpha) as reusable.
+		if _colors[i].a <= 0.0:
+			return i
+
+	# No free / expired slots: overwrite the oldest shape (FIFO cap).
+	var oldest_idx := 0
+	var oldest_birth := _params[0].w
+	for j in range(1, MAX_SHAPES):
+		var b := _params[j].w
+		if b < oldest_birth:
+			oldest_birth = b
+			oldest_idx = j
+
+	return oldest_idx
 
 
 func _process(_dt: float) -> void:
