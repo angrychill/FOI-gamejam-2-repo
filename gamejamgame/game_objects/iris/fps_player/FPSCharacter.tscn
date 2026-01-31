@@ -5,12 +5,18 @@
 [ext_resource type="Shape3D" uid="uid://cuc458ufw3sty" path="res://game_objects/iris/tesla_coil/tesla_coil_ray_shape.tres" id="2_mlmhm"]
 [ext_resource type="PackedScene" uid="uid://djr26x4ros1jy" path="res://game_objects/iris/player_ui/player_ui.tscn" id="2_w52vm"]
 [ext_resource type="Script" uid="uid://c2ah7l2b3ejty" path="res://game_objects/iris/fps_player/dodge_component.gd" id="3_res4l"]
+[ext_resource type="Shader" uid="uid://cpr0jyo76y5f2" path="res://game_objects/iris/fps_player/FPSCharacterDither.gdshader" id="5_xh2v4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_peoph"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_w52vm"]
 radius = 0.2
 height = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wi8j"]
+shader = ExtResource("5_xh2v4")
+shader_parameter/dither_strength = 0.37600001786
+shader_parameter/grain_size = 6.3190002526525
 
 [node name="FpsPlayer" type="CharacterBody3D" unique_id=301422806 node_paths=PackedStringArray("camera", "hand") groups=["player"]]
 script = ExtResource("1_5jr3e")
@@ -41,8 +47,18 @@ script = ExtResource("2_l6ovs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=732711742]
 unique_name_in_owner = true
+layer = 100
 
 [node name="PlayerUI" parent="CanvasLayer" unique_id=1576458718 instance=ExtResource("2_w52vm")]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1253050547]
+material = SubResource("ShaderMaterial_8wi8j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=782727456]
 
