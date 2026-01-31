@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://bp1lygg8np3pl"]
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_nbrci"]
-[ext_resource type="Texture2D" uid="uid://x7rx3ljatmas" path="res://assets/blend files/juraj_level3_Brick 5 - 128x128.png" id="2_5wak2"]
+[ext_resource type="Texture2D" uid="uid://ch5ysunbdr56t" path="res://assets/blend files/juraj_level3_Brick 5 - 128x128.png" id="2_5wak2"]
 [ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_rf000"]
-[ext_resource type="Script" uid="uid://dt4arhaf7ab81" path="res://game_objects/iris/level/juraj_buff.gd" id="2_vf0g6"]
+[ext_resource type="Script" path="res://game_objects/iris/level/juraj_buff.gd" id="2_vf0g6"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_ig5q3"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="5_wwo1f"]
 [ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="6_y6yb7"]
@@ -13,10 +13,10 @@
 [ext_resource type="Resource" uid="uid://d0psfigs2tw6q" path="res://assets/dialogues/juraj_intro.dialogue" id="10_ev3vp"]
 [ext_resource type="Resource" uid="uid://da2580y7lo71q" path="res://assets/dialogues/pozoj_intro.dialogue" id="11_5wak2"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="12_5wak2"]
-[ext_resource type="AudioStream" uid="uid://d10nx3v8janb6" path="res://game_objects/aleks/SFX/juraj_level/tunnels_bgm.mp3" id="13_3bc4e"]
+[ext_resource type="AudioStream" uid="uid://rw510g7fn1ih" path="res://game_objects/aleks/SFX/juraj_level/tunnels_bgm.mp3" id="13_3bc4e"]
 [ext_resource type="PackedScene" uid="uid://bqj8k4yewhbdu" path="res://game_objects/iris/level/kill_plane.tscn" id="14_3bc4e"]
 [ext_resource type="PackedScene" uid="uid://hprcw48vd6a5" path="res://game_objects/aleks/dragon/dragon_boss.tscn" id="15_6scko"]
-[ext_resource type="AudioStream" uid="uid://dbwdfvjqxsks4" path="res://game_objects/aleks/SFX/juraj_level/doom_dragon_boss.mp3" id="17_x4ni4"]
+[ext_resource type="AudioStream" uid="uid://wn2m8ouis0so" path="res://game_objects/aleks/SFX/juraj_level/doom_dragon_boss.mp3" id="17_x4ni4"]
 
 [sub_resource type="PackedScene" id="PackedScene_y6yb7"]
 
@@ -174,15 +174,18 @@ shape = SubResource("BoxShape3D_3bc4e")
 [node name="Label3D" type="Label3D" parent="Carryable" unique_id=975268234]
 unique_name_in_owner = true
 transform = Transform3D(-0.9961947, 0, -0.08715564, 0, 1, 0, 0.08715564, 0, -0.9961947, 0, 2, 0)
+visible = false
 text = "Sword"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Carryable" unique_id=1784170956]
 
-[node name="IntroTrigger" type="Area3D" parent="." unique_id=341458773]
+[node name="IntroTrigger" type="Area3D" parent="." unique_id=341458773 node_paths=PackedStringArray("old_music", "new_music")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, -118.556175)
 monitorable = false
 script = ExtResource("9_y6yb7")
 cutscene_dialogue = ExtResource("10_ev3vp")
+old_music = NodePath("../BackgroundMusicPlayer")
+new_music = NodePath("../DragonMusic")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IntroTrigger" unique_id=710499234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3145752, -5.0843506, -1.2082596)

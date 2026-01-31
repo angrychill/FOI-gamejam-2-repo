@@ -73,7 +73,7 @@ effect_size = Vector2(0.25, 0.25)
 [node name="Injured Walk brat 2" parent="." unique_id=1702391947 instance=ExtResource("8_msw54")]
 
 [node name="DmgIndicator" type="Sprite3D" parent="Injured Walk brat 2" unique_id=1954548187]
-transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 1.4901161e-08, 0.90000004, 0.9000001)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 1.4901161e-08, 0.90000004, 0.9000001)
 sorting_offset = 10.0
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 billboard = 1

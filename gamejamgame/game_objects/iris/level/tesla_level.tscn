@@ -854,6 +854,7 @@ surface_material_override/0 = ExtResource("12_j83l6")
 [node name="Label3D" type="Label3D" parent="Carryable" unique_id=539298571]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
 text = "Tesla"
 
 [node name="Area3D" type="Area3D" parent="Carryable" unique_id=1944881870]
