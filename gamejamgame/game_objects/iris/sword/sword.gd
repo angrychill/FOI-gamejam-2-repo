@@ -58,6 +58,8 @@ func _ready() -> void:
 	# (Optional) Ensure trail emitter uses long lifetime too
 	if trail_emitter:
 		trail_emitter.trail_lifetime_s = lidar_lifetime_s
+	
+	play_carry_sound_effect()
 
 
 func _physics_process(dt: float) -> void:
@@ -124,6 +126,8 @@ func _handle_hit() -> void:
 	var col := hit_ray.get_collider()
 	if col == null:
 		return
+	
+	play_attack_sound_effect()
 
 	var id := col.get_instance_id()
 	if (not allow_multi_hit_same_enemy) and _already_hit.has(id):
