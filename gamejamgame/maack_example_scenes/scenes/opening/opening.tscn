@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b13if6rijgs1a" path="res://maack_example_scenes/assets/images/WildcardsBanner.png" id="4_wyh2y"]
 
 [node name="Opening" unique_id=318941596 instance=ExtResource("1_sin1j")]
+next_scene_path = "uid://b8liuss3jvhxw"
 images = Array[Texture2D]([ExtResource("2_sin1j"), ExtResource("3_mvqhg"), ExtResource("4_wyh2y")])
 
 [node name="ImagesContainer" parent="." index="1"]
