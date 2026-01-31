@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_n6px6"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="2_1prwc"]
-[ext_resource type="Resource" uid="uid://dhwf6ec13ore2" path="res://assets/dialogues/intro_dialogue.dialogue" id="3_1prwc"]
+[ext_resource type="Resource" uid="uid://g1u3ya5nrbn" path="res://assets/dialogues/intro_dialogue.dialogue" id="3_1prwc"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_a1gax"]
 
 [sub_resource type="PackedScene" id="PackedScene_a1gax"]
@@ -97,7 +97,7 @@ size = Vector2(10, 10)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_37mci"]
 data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
 
-[node name="IntroLevel" type="Node3D" unique_id=715132248]
+[node name="IntroLevel" type="Node3D" unique_id=715132248 groups=["level"]]
 script = ExtResource("1_n6px6")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
