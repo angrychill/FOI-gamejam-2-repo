@@ -63,3 +63,8 @@ use_random_interval = true
 min_shoot_interval = 0.1
 max_shoot_interval = 2.0
 attack_pattern = SubResource("Resource_mo88c")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1353371183]
+volume_db = 2.0
+max_distance = 2.0
+bus = &"SFX"

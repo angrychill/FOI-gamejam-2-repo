@@ -16,6 +16,9 @@ class_name Enemy
 
 @export var is_active : bool = false
 
+@export var damage_sounds : Array[AudioStream]
+@export var audio_player : AudioStreamPlayer3D
+
 var enemy_speed : float
 var current_enemy_health : int
 var max_enemy_health : int
@@ -24,6 +27,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var is_dead : bool = false
 
 var shoot_timer: Timer
+
+func play_damage_sound() -> void:
+	if damage_sounds and audio_player:
+		audio_player.bus = &"SFX"
+		audio_player.stream = damage_sounds.pick_random()
+		audio_player.pitch_scale = randf_range(0.75, 1.25)
+		audio_player.play()
 
 func _ready() -> void:
 	if not sprite_3d:
@@ -95,6 +105,7 @@ func take_damage(damage : int) ->void:
 		if not is_dead:
 			current_enemy_health -= damage
 			damage_light.show()
+			play_damage_sound()
 			if current_enemy_health <= 0:
 				die()
 			

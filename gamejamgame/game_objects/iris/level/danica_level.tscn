@@ -3,7 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="1_x3qid"]
 [ext_resource type="PackedScene" uid="uid://bp1lygg8np3pl" path="res://game_objects/iris/level/juraj_level.tscn" id="2_vwr77"]
 [ext_resource type="Texture2D" uid="uid://y53r3wsr6mm4" path="res://assets/blend files/danica_level4_holes_Brick 24 - 128x128.png" id="3_5mc43"]
+[ext_resource type="Shader" uid="uid://0dynl18rtgp2" path="res://game_objects/iris/level/star_sky_material.gdshader" id="3_53pla"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="3_wlcnk"]
+[ext_resource type="Texture2D" uid="uid://cbt3528pxkhpg" path="res://assets/visual/space.png" id="4_fqsdi"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="4_qp0aj"]
 [ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="5_15gtl"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="6_qp0aj"]
@@ -18,19 +20,21 @@
 [ext_resource type="PackedScene" uid="uid://dkqaln0oqfjtg" path="res://game_objects/aleks/sword_enemy/ban_enemy.tscn" id="16_5mc43"]
 [ext_resource type="PackedScene" uid="uid://bqj8k4yewhbdu" path="res://game_objects/iris/level/kill_plane.tscn" id="17_5mc43"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp0aj"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0, 0, 0, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0, 0, 0, 1)
-ground_curve = 0.040000003
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqsdi"]
+shader = ExtResource("3_53pla")
+shader_parameter/sky_texture = ExtResource("4_fqsdi")
+shader_parameter/grayscale_amount = 1.0
+shader_parameter/uv_scale = 4.5
+shader_parameter/contrast = 5.0
+shader_parameter/intensity = 0.50000002375
 
-[sub_resource type="Sky" id="Sky_ylg6e"]
-sky_material = SubResource("ProceduralSkyMaterial_qp0aj")
+[sub_resource type="Sky" id="Sky_5nkht"]
+sky_material = SubResource("ShaderMaterial_fqsdi")
 
 [sub_resource type="Environment" id="Environment_h2b23"]
 background_mode = 2
-sky = SubResource("Sky_ylg6e")
+sky = SubResource("Sky_5nkht")
+sky_rotation = Vector3(1.5707964, 1.5707964, 0)
 tonemap_mode = 2
 glow_enabled = true
 
