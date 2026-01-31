@@ -3,7 +3,7 @@ class_name SwordSlashEffect
 
 @export var slash_texture: Texture2D
 @export var effect_duration: float = 0.3
-@export var effect_size: Vector2 = Vector2(1.5, 1.5)
+@export var effect_size: Vector2
 
 var sprite_3d: Sprite3D
 
@@ -14,6 +14,7 @@ func _ready() -> void:
 	if slash_texture:
 		sprite_3d.texture = slash_texture
 	
+	sprite_3d.scale = Vector3(effect_size.x, effect_size.y, 1)
 	sprite_3d.pixel_size = 0.01
 	sprite_3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	
@@ -23,7 +24,6 @@ func _ready() -> void:
 	mat.albedo_texture = slash_texture
 	sprite_3d.material_override = mat
 	
-	sprite_3d.scale = Vector3(effect_size.x, effect_size.y, 1)
 		
 	var tween = create_tween()
 	tween.tween_property(sprite_3d, "modulate:a", 0.0, effect_duration)
