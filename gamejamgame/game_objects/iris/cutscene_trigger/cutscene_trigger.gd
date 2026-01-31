@@ -7,7 +7,7 @@ class_name CutsceneTrigger
 @export var cutscene_dialogue : DialogueResource
 
 func _ready() -> void:
-	is_active = true
+	# is_active = true
 	body_entered.connect(_on_body_entered)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 

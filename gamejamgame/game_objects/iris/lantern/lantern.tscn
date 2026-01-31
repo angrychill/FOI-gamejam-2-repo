@@ -43,7 +43,6 @@ script = ExtResource("1_4m0mg")
 lantern_area = NodePath("LanternArea")
 shooting_decay_timer = NodePath("ShootingDecay")
 shooting_rate_increment = 0.2
-shooting_decay_rate = 0.4
 damage = 2
 
 [node name="ShootingDecay" type="Timer" parent="." unique_id=913962911]
@@ -66,6 +65,7 @@ collision_layer = 16
 
 [node name="LidarEmitterCollision" parent="LanternArea" unique_id=978801536 instance=ExtResource("3_avpwt")]
 emission_mode = 1
+trail_lifetime_s = 2.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2018274816]
 visible = false

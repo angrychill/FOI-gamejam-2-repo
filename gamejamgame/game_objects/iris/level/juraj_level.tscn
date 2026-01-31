@@ -164,16 +164,17 @@ text = "Sword"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Carryable" unique_id=1784170956]
 
-[node name="CutsceneTrigger" type="Area3D" parent="." unique_id=341458773]
+[node name="IntroTrigger" type="Area3D" parent="." unique_id=341458773]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, -121)
 monitorable = false
 script = ExtResource("9_y6yb7")
+is_active = false
 cutscene_dialogue = ExtResource("10_ev3vp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CutsceneTrigger" unique_id=710499234]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IntroTrigger" unique_id=710499234]
 shape = SubResource("BoxShape3D_ighb5")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CutsceneTrigger" unique_id=747779965]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="IntroTrigger" unique_id=747779965]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_iyvv7")

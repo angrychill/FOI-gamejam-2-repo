@@ -25,7 +25,7 @@ uniform vec4 base_albedo_color : source_color = vec4(1.0);
 
 /* Darkness tint applied to the GRAYSCALE (outside reveal) */
 uniform vec3  dark_color : source_color = vec3(0.02, 0.02, 0.02);
-uniform float dark_alpha = 0.85;
+uniform float dark_alpha = 1;
 
 /* Lidar reveal strength */
 uniform float reveal_strength = 1.0;
