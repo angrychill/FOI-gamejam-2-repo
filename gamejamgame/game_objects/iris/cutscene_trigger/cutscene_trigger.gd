@@ -3,6 +3,8 @@ class_name CutsceneTrigger
 
 @export var is_active : bool = true
 
+@export var enemy_to_trigger : Enemy
+
 
 @export var cutscene_dialogue : DialogueResource
 
@@ -20,6 +22,10 @@ func _on_body_entered(body : Node3D) ->void:
 		# do not do shit
 		return
 	
+	trigger_cutscene()
+	
+
+func trigger_cutscene() -> void:
 	# once triggered and then never again
 	is_active = false
 	var level : Level = get_tree().get_first_node_in_group("level")
@@ -33,4 +39,10 @@ func _on_dialogue_ended(res : DialogueResource) -> void:
 	if res == cutscene_dialogue:
 		var level : Level = get_tree().get_first_node_in_group("level")
 		level.is_in_cutscene = false
+		
+		trigger_enemy()
+
+func trigger_enemy() -> void:
+	if enemy_to_trigger:
+		pass
 	

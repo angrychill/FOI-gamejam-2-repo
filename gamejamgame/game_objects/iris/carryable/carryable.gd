@@ -7,7 +7,6 @@ var _debug_label := ""
 
 @export var pickup_area : Area3D
 @export var pickup_item : PackedScene
-@export var pickup_mesh : MeshInstance3D
 @export var pickup_dialogue : DialogueResource
 
 @export var debug_label : String:

@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="6_dyeyj"]
 [ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="7_faa2o"]
 [ext_resource type="PackedScene" uid="uid://ce85nq674ywub" path="res://game_objects/aleks/sword_enemy/ban_model.tscn" id="8_xgnpn"]
+[ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="9_owax2"]
+[ext_resource type="Texture2D" uid="uid://b7qhomfishrme" path="res://assets/visual/glowCircle.png" id="10_mbo3c"]
 
 [sub_resource type="Resource" id="Resource_xgnpn"]
 script = ExtResource("2_xgnpn")
@@ -17,12 +19,15 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lk1qt"]
 
-[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent")]
+[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent", "telegraph_light", "damage_light")]
 script = ExtResource("1_ia0xi")
+sword_attack_range = 10.0
 enemy_model = NodePath("Injured Run ban")
 enemy_data = SubResource("Resource_xgnpn")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
+telegraph_light = NodePath("SlashIndicator")
+damage_light = NodePath("DmgIndicator")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250803623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -60,3 +65,19 @@ slash_texture = ExtResource("7_faa2o")
 effect_size = Vector2(0.25, 0.25)
 
 [node name="Injured Run ban" parent="." unique_id=664188235 instance=ExtResource("8_xgnpn")]
+
+[node name="DmgIndicator" type="Sprite3D" parent="." unique_id=65965301]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.8, 0)
+visible = false
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+billboard = 1
+no_depth_test = true
+texture = ExtResource("9_owax2")
+
+[node name="SlashIndicator" type="Sprite3D" parent="." unique_id=1198300674]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0.8, 0)
+visible = false
+modulate = Color(1, 0, 0, 1)
+billboard = 1
+no_depth_test = true
+texture = ExtResource("10_mbo3c")
