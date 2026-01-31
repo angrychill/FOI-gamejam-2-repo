@@ -21,7 +21,7 @@ class_name Sword
 
 @export_category("Lidar Trail (hit ray)")
 @export var emit_trail_while_attacking: bool = true
-@export_range(0.01, 2.0, 0.01) var trail_radius: float = 0.15
+@export var trail_radius: float = 0.15
 @export_range(1, 256, 1) var max_trail_points: int = 48
 @export var trail_lifetime_s: float = 1.2
 @export var hit_volume_color: Color = Color(0.2, 0.9, 1.0, 0.9)
