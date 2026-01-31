@@ -1,0 +1,13 @@
+~ start
+
+Dobrodošli u svijet hrvatskih legenda.
+O kojoj legendi se želite prosvjetliti?
+do GlobalData.free_mouse()
+- Legendu o Manduši
+	do GlobalData.switch_to_level("res://game_objects/iris/level/danica_level.tscn")
+- Legendu o Sv. Juraju
+	do GlobalData.switch_to_level("res://game_objects/iris/level/juraj_level.tscn")
+- Legendu o vukodlacima
+	do GlobalData.switch_to_level("res://game_objects/iris/level/tesla_level.tscn")
+
+=> END

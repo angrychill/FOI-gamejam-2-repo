@@ -114,7 +114,7 @@ dodge={
 [internationalization]
 
 locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
-locale/translations_pot_files=PackedStringArray("res://assets/dialogues/danica_intro.dialogue", "res://assets/dialogues/brat_jedan_encounter.dialogue", "res://assets/dialogues/brat_dva_encounter.dialogue", "res://assets/dialogues/danica_pick_up.dialogue", "res://assets/dialogues/juraj_intro.dialogue", "res://assets/dialogues/mac_pickup.dialogue", "res://assets/dialogues/pozoj_intro.dialogue", "res://assets/dialogues/tesla_intro.dialogue", "res://assets/dialogues/coil_pickup.dialogue")
+locale/translations_pot_files=PackedStringArray("res://assets/dialogues/danica_intro.dialogue", "res://assets/dialogues/brat_jedan_encounter.dialogue", "res://assets/dialogues/brat_dva_encounter.dialogue", "res://assets/dialogues/danica_pick_up.dialogue", "res://assets/dialogues/juraj_intro.dialogue", "res://assets/dialogues/mac_pickup.dialogue", "res://assets/dialogues/pozoj_intro.dialogue", "res://assets/dialogues/tesla_intro.dialogue", "res://assets/dialogues/coil_pickup.dialogue", "res://assets/dialogues/intro_dialogue.dialogue")
 
 [layer_names]
 

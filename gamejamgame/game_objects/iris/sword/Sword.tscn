@@ -72,12 +72,13 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9659258, -0.258819, 0, 0.25881904,
 script = ExtResource("1_7n2bh")
 particles = NodePath("GPUParticles3D")
 hit_ray = NodePath("HitRay")
+swing_velocity_threshold = 2.0
 emit_hz = 10.0
 trail_radius = 2.0
 trail_lifetime_s = 60.0
 carry_sound_effects = Array[AudioStream]([ExtResource("2_ylv2f")])
 attack_sound_effects = Array[AudioStream]([ExtResource("3_evwgk"), ExtResource("4_mo7gq"), ExtResource("5_3oqe1")])
-damage = 2
+damage = 20
 audio_player = NodePath("AudioStreamPlayer3D")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=523648935]
@@ -96,7 +97,7 @@ surface_material_override/0 = ExtResource("2_ntrel")
 
 [node name="HitRay" type="RayCast3D" parent="." unique_id=1850257494]
 transform = Transform3D(0.4829629, 0.2588191, -0.83651626, -0.86602575, -5.9604645e-08, -0.50000024, -0.12940964, 0.9659262, 0.22414407, 0.0059705125, 0.016200565, 0.25758943)
-target_position = Vector3(0, -12, 0)
+target_position = Vector3(0, -32, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1663050674]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.9802322e-08, 0, 2.9802322e-08, 1.0000002, -0.15721889, 0.011060711, -0.4901229)
