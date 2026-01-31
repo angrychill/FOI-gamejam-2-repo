@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://clgbtjqaxlp46"]
+
+[ext_resource type="Script" uid="uid://d1qm7xwmdryyk" path="res://game_objects/iris/enemy/vukodlak_enemy.gd" id="1_qmkgk"]
+[ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ld4cu"]
+[ext_resource type="PackedScene" uid="uid://dotyjm87gyx2g" path="res://game_objects/iris/enemy/werewolf_model.tscn" id="2_qmkgk"]
+
+[sub_resource type="Resource" id="Resource_eytqq"]
+script = ExtResource("2_ld4cu")
+health = 50
+move_speed = 2.5
+metadata/_custom_type_script = "uid://bnm48nwrslv5i"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
+
+[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("nav_agent")]
+script = ExtResource("1_qmkgk")
+enemy_data = SubResource("Resource_eytqq")
+nav_agent = NodePath("NavigationAgent3D")
+metadata/_custom_type_script = "uid://bm81grx7kf22x"
+
+[node name="werewolf walking" parent="." unique_id=608999702 instance=ExtResource("2_qmkgk")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=337216484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qmkgk")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1983461637]
