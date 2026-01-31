@@ -3,7 +3,6 @@ class_name Sword
 
 @export_category("Sword")
 @export var particles: GPUParticles3D
-@export var sword_range: float = 2.5
 
 @export_category("Hit Detection")
 @export var hit_ray: RayCast3D
@@ -20,26 +19,20 @@ class_name Sword
 @export var emit_hz: float = 20.0              # limits both trail + hit checks while moving
 @export var max_hits_per_swing: int = 8         # perf safety (prevents spam on jittery colliders)
 
-@export_category("Lidar Trail (separate shape)")
-@export var trail_emitter: LidarTrailEmitter
+@export_category("Lidar Trail (hit ray)")
 @export var emit_trail_while_attacking: bool = true
-
-@export_category("Lidar Hit Volume (separate shape)")
-@export var emit_hit_volume: bool = true
-@export var hit_volume_shape: Shape3D
+@export_range(0.01, 2.0, 0.01) var trail_radius: float = 0.15
+@export_range(1, 256, 1) var max_trail_points: int = 48
+@export_range(0.05, 30.0, 0.05) var trail_lifetime_s: float = 1.2
 @export var hit_volume_color: Color = Color(0.2, 0.9, 1.0, 0.9)
-
-# Make lidar last long
-@export var lidar_lifetime_s: float = 30.0
-
-# Slight push off the surface so it doesn't z-fight / sit inside
-@export var hit_volume_offset_along_normal: float = 0.02
 
 var _mgr: LidarManager = null
 
 var _moving_until_s: float = -1.0
 var _emit_accum: float = 0.0
 var _hits_this_swing: int = 0
+var _had_mouse_movement_this_frame: bool = false
+var sword_range: float = 0.0
 
 # enemy multi-hit control per swing (only stores a handful ids)
 var _already_hit: Dictionary = {} # int -> true
@@ -53,11 +46,14 @@ func _ready() -> void:
 
 	if hit_ray:
 		hit_ray.enabled = true
-		hit_ray.target_position = Vector3(0, 0, -sword_range)
-
-	# (Optional) Ensure trail emitter uses long lifetime too
-	if trail_emitter:
-		trail_emitter.trail_lifetime_s = lidar_lifetime_s
+		var tp := hit_ray.target_position
+		var len := tp.length()
+		if len <= 0.0001:
+			# Sensible default if the ray has no length in the scene.
+			tp = Vector3(0, 0, -1.0)
+			len = 1.0
+			hit_ray.target_position = tp
+		sword_range = len
 
 
 func _physics_process(dt: float) -> void:
@@ -82,16 +78,18 @@ func _physics_process(dt: float) -> void:
 	while _emit_accum >= step:
 		_emit_accum -= step
 
-		# 1) trail (manual) at fixed frequency
-		if emit_trail_while_attacking and trail_emitter:
-			# Emit exactly one lidar sample using long lifetime
-			trail_emitter.emit_now(-1.0, Color(0, 0, 0, 0), lidar_lifetime_s, false)
+		# 1) trail (manual) at fixed frequency, only when there was mouse movement
+		if emit_trail_while_attacking and _had_mouse_movement_this_frame:
+			_emit_trail_sample()
 
-		# 2) hit test at fixed frequency (perf win vs. every frame)
+	# 2) hit test at fixed frequency (perf win vs. every frame)
 		if hit_ray:
 			hit_ray.force_raycast_update()
 			if hit_ray.is_colliding():
 				_handle_hit()
+
+	# Reset movement flag at end of physics frame
+	_had_mouse_movement_this_frame = false
 
 
 func _input(event: InputEvent) -> void:
@@ -101,6 +99,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var vel :float= event.screen_relative.length()
 		if vel > swing_velocity_threshold:
+			_had_mouse_movement_this_frame = true
 			# extend moving window
 			var now_s := Time.get_ticks_msec() * 0.001
 			var new_until := now_s + motion_grace_time
@@ -134,45 +133,44 @@ func _handle_hit() -> void:
 	if col is Enemy:
 		(col as Enemy).take_damage(damage_per_hit)
 
-	if emit_hit_volume:
-		_emit_lidar_hit_volume(hit_ray.get_collision_point(), hit_ray.get_collision_normal())
 
-
-func _emit_lidar_hit_volume(pos: Vector3, normal: Vector3) -> void:
-	if _mgr == null:
+func _emit_trail_sample() -> void:
+	if _mgr == null or hit_ray == null:
 		return
 
-	var n := normal.normalized()
-	var origin := pos + n * hit_volume_offset_along_normal
+	var hz :float= max(emit_hz, 0.001)
 
-	# Build a basis whose +Y points along normal (good for capsule/cylinder "Y axis")
-	var basis := Basis.IDENTITY
-	if n.length() > 0.0001:
-		basis = Basis.looking_at(n, Vector3.UP)
+	# Base lifetime from export, optionally clamped by max_trail_points
+	var trail_life :float= clamp(trail_lifetime_s, 0.05, 10.0)
+	if max_trail_points > 0:
+		var max_life := float(max_trail_points) / hz
+		trail_life = min(trail_life, max_life)
 
-	var xf := Transform3D(basis, origin)
+	var start := hit_ray.global_transform.origin
+	var end := start + hit_ray.global_transform.basis * hit_ray.target_position
 
-	# If no shape provided, fallback sphere
-	if hit_volume_shape == null:
-		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(0.12, 0, 0, 0), hit_volume_color, lidar_lifetime_s)
+	var dir := end - start
+	var len := dir.length()
+
+	if len < 0.0001:
+		var xf_sphere := Transform3D(Basis.IDENTITY, start)
+		_mgr.add_volume(
+			xf_sphere,
+			LidarManager.TYPE_SPHERE,
+			Vector4(trail_radius, 0, 0, 0),
+			hit_volume_color,
+			trail_life
+		)
 		return
 
-	if hit_volume_shape is SphereShape3D:
-		var s := hit_volume_shape as SphereShape3D
-		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(s.radius, 0, 0, 0), hit_volume_color, lidar_lifetime_s)
+	var mid := start + dir * 0.5
+	var basis := Basis.looking_at(dir, Vector3.UP)
+	var xf := Transform3D(basis, mid)
 
-	elif hit_volume_shape is BoxShape3D:
-		var b := hit_volume_shape as BoxShape3D
-		var he := b.size * 0.5
-		_mgr.add_volume(xf, LidarManager.TYPE_BOX, Vector4(he.x, he.y, he.z, 0), hit_volume_color, lidar_lifetime_s)
-
-	elif hit_volume_shape is CapsuleShape3D:
-		var c := hit_volume_shape as CapsuleShape3D
-		_mgr.add_volume(xf, LidarManager.TYPE_CAPSULE, Vector4(c.radius, c.height * 0.5, 0, 0), hit_volume_color, lidar_lifetime_s)
-
-	elif hit_volume_shape is CylinderShape3D:
-		var cy := hit_volume_shape as CylinderShape3D
-		_mgr.add_volume(xf, LidarManager.TYPE_CYLINDER, Vector4(cy.radius, cy.height * 0.5, 0, 0), hit_volume_color, lidar_lifetime_s)
-
-	else:
-		_mgr.add_volume(xf, LidarManager.TYPE_SPHERE, Vector4(0.12, 0, 0, 0), hit_volume_color, lidar_lifetime_s)
+	_mgr.add_volume(
+		xf,
+		LidarManager.TYPE_CAPSULE,
+		Vector4(trail_radius, len * 0.5, 0, 0),
+		hit_volume_color,
+		trail_life
+	)
