@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_rf000"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_ig5q3"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="5_wwo1f"]
-[ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="6_y6yb7"]
+[ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="6_5wak2"]
 [ext_resource type="Resource" uid="uid://c54w4l74g0r0o" path="res://assets/dialogues/mac_pickup.dialogue" id="7_ev3vp"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="8_5wak2"]
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="9_y6yb7"]
@@ -114,7 +114,7 @@ shadow_mesh = SubResource("ArrayMesh_2inma")
 size = Vector3(1, 2.8, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ighb5"]
-size = Vector3(29, 10, 0.1)
+size = Vector3(7.213623, 11.168701, 4.6953125)
 
 [sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
 size = Vector3(10, 0.1, 10)
@@ -125,7 +125,7 @@ next_level = SubResource("PackedScene_y6yb7")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="juraj_level3" type="Node3D" parent="." unique_id=647589136]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, -3, -125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, -125)
 
 [node name="Cube_001" type="MeshInstance3D" parent="juraj_level3" unique_id=936980355 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_7acng")
@@ -133,7 +133,6 @@ mesh = SubResource("ArrayMesh_7acng")
 [node name="StaticBody3D" type="StaticBody3D" parent="juraj_level3/Cube_001" unique_id=59971966]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="juraj_level3/Cube_001/StaticBody3D" unique_id=112097699]
-visible = false
 shape = SubResource("ConcavePolygonShape3D_5wak2")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1360570644]
@@ -142,13 +141,13 @@ environment = SubResource("Environment_tvxio")
 [node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_rf000")]
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("4_ig5q3")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.36050415, 2.3, -118.484764)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.5828605, 2.3, -125.40018)
 
 [node name="Carryable" type="Node3D" parent="." unique_id=189911530 node_paths=PackedStringArray("pickup_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -112.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1577128, 0.8353281, -119.0772)
 script = ExtResource("5_wwo1f")
 pickup_area = NodePath("Area3D")
-pickup_item = ExtResource("6_y6yb7")
+pickup_item = ExtResource("6_5wak2")
 pickup_dialogue = ExtResource("7_ev3vp")
 debug_label = "Sword"
 metadata/_custom_type_script = "uid://d3wnbb0t7d6dr"
@@ -174,13 +173,13 @@ text = "Sword"
 [node name="OmniLight3D" type="OmniLight3D" parent="Carryable" unique_id=1784170956]
 
 [node name="IntroTrigger" type="Area3D" parent="." unique_id=341458773]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, -121)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, -125)
 monitorable = false
 script = ExtResource("9_y6yb7")
-is_active = false
 cutscene_dialogue = ExtResource("10_ev3vp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IntroTrigger" unique_id=710499234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3145752, -5.0843506, -1.2082596)
 shape = SubResource("BoxShape3D_ighb5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="IntroTrigger" unique_id=747779965]
@@ -195,6 +194,7 @@ script = ExtResource("9_y6yb7")
 cutscene_dialogue = ExtResource("11_5wak2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CutsceneTrigger2" unique_id=777908647]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.583862, -1.8786268, -130.47586)
 shape = SubResource("BoxShape3D_ighb5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CutsceneTrigger2" unique_id=1654204121]
@@ -204,3 +204,4 @@ mesh = SubResource("BoxMesh_iyvv7")
 
 [node name="BackgroundMusicPlayer" parent="." unique_id=1022672399 instance=ExtResource("12_5wak2")]
 stream = ExtResource("13_3bc4e")
+parameters/looping = true
