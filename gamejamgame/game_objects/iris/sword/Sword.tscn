@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_ntrel"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar/lidar_trail_emitter.gd" id="3_6hn66"]
 
 [sub_resource type="Curve" id="Curve_7n2bh"]
 _data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -63,11 +64,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2inma")
 
-[node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles")]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6hn66"]
+radius = 0.083984375
+
+[node name="Sword" type="Node3D" unique_id=1003536756 node_paths=PackedStringArray("particles", "hit_ray", "trail_emitter")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9659258, -0.258819, 0, 0.25881904, 0.9659257, 0, 0, -0.2)
 script = ExtResource("1_7n2bh")
 particles = NodePath("GPUParticles3D")
-sword_range = 5
+hit_ray = NodePath("HitRay")
+emit_hz = 5.0
+trail_emitter = NodePath("Area3D/CollisionShape3D")
 damage = 2
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=523648935]
@@ -83,3 +89,16 @@ mesh = SubResource("ArrayMesh_d43g3")
 surface_material_override/0 = ExtResource("2_ntrel")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=978954748]
+
+[node name="HitRay" type="RayCast3D" parent="." unique_id=1850257494]
+transform = Transform3D(0.4829629, 0.2588191, -0.83651626, -0.8660254, -3.7855173e-08, -0.5, -0.12940958, 0.9659258, 0.22414389, -0.10000002, 0, -0.20000003)
+target_position = Vector3(0, -1.5, 0)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1162512423]
+transform = Transform3D(-0.4829629, -0.25881904, -0.83651626, 0.8660254, -3.7855173e-08, -0.5, 0.12940949, -0.9659258, 0.22414389, -0.10000002, 0, -0.20000003)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1821551638]
+transform = Transform3D(0.99999964, 0, 2.1215528e-06, 2.9802322e-08, 0.9999999, 4.3958426e-07, 1.0244548e-07, 7.450581e-09, 0.99999976, -7.4505806e-08, 0.8533324, 3.3527613e-08)
+shape = SubResource("CapsuleShape3D_6hn66")
+script = ExtResource("3_6hn66")
+emission_mode = 1

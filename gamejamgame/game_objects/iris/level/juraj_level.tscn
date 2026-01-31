@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://c2lej3it2g3ld"]
+[gd_scene format=4 uid="uid://bp1lygg8np3pl"]
 
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_nbrci"]
 [ext_resource type="Material" uid="uid://bw0oyoerlxwje" path="res://assets/mats/dark level geometry.tres" id="2_d1tre"]
@@ -13,6 +13,8 @@
 [ext_resource type="Resource" uid="uid://da2580y7lo71q" path="res://assets/dialogues/pozoj_intro.dialogue" id="11_5wak2"]
 [ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="12_5wak2"]
 [ext_resource type="AudioStream" uid="uid://rw510g7fn1ih" path="res://game_objects/aleks/SFX/juraj_level/tunnels_bgm.mp3" id="13_3bc4e"]
+
+[sub_resource type="PackedScene" id="PackedScene_y6yb7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o37a0"]
 
@@ -110,11 +112,12 @@ size = Vector3(10, 0.1, 10)
 
 [node name="Level" type="Node3D" unique_id=1117802177]
 script = ExtResource("1_nbrci")
+next_level = SubResource("PackedScene_y6yb7")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="juraj_level2" type="Node3D" parent="." unique_id=1226275906]
 
-[node name="Cube_001" type="MeshInstance3D" parent="juraj_level2" unique_id=2047150719]
+[node name="Cube_001" type="MeshInstance3D" parent="juraj_level2" unique_id=2047150719 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_otn77")
 surface_material_override/0 = ExtResource("2_d1tre")
 
@@ -129,7 +132,7 @@ environment = SubResource("Environment_tvxio")
 [node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_rf000")]
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("4_ig5q3")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 67, 2.3, 117.6)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.36050415, 2.3, -118.484764)
 
 [node name="Carryable" type="Node3D" parent="." unique_id=189911530 node_paths=PackedStringArray("pickup_area", "pickup_mesh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -112.1)
