@@ -31,6 +31,10 @@ GlobalVFX="*uid://bjp2dfdh2amqn"
 DialogueManager="*uid://c3rodes2l3gxb"
 LidarAccessAPI="*uid://dq3247mrraabp"
 
+[dialogue_manager]
+
+runtime/balloon_path="res://assets/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=1500
