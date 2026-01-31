@@ -485,6 +485,7 @@ mesh = SubResource("BoxMesh_iyvv7")
 
 [node name="BackgroundMusicPlayer" parent="." index="8" unique_id=1845163254 instance=ExtResource("13_ylg6e")]
 stream = ExtResource("14_k36sh")
+parameters/looping = true
 
 [node name="SwordEnemy" parent="." index="9" unique_id=1578922120 instance=ExtResource("15_8gpv6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.636358, 10, -123.002075)
