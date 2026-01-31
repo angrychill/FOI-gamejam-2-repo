@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://l7hjunjmqawd" path="res://game_objects/iris/cutscene_trigger/cutscene_trigger.gd" id="9_y6yb7"]
 [ext_resource type="Resource" uid="uid://d0psfigs2tw6q" path="res://assets/dialogues/juraj_intro.dialogue" id="10_ev3vp"]
 [ext_resource type="Resource" uid="uid://da2580y7lo71q" path="res://assets/dialogues/pozoj_intro.dialogue" id="11_5wak2"]
+[ext_resource type="PackedScene" uid="uid://bkcsjsk2ciff" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="12_5wak2"]
+[ext_resource type="AudioStream" uid="uid://rw510g7fn1ih" path="res://game_objects/aleks/SFX/juraj_level/tunnels_bgm.mp3" id="13_3bc4e"]
 
 [sub_resource type="PackedScene" id="PackedScene_y6yb7"]
 
@@ -189,3 +191,6 @@ shape = SubResource("BoxShape3D_ighb5")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 visible = false
 mesh = SubResource("BoxMesh_iyvv7")
+
+[node name="BackgroundMusicPlayer" parent="." unique_id=1022672399 instance=ExtResource("12_5wak2")]
+stream = ExtResource("13_3bc4e")

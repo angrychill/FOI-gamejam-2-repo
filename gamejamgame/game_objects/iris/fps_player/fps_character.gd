@@ -111,10 +111,6 @@ func _input(event: InputEvent) -> void:
 			if current_weapon != null:
 				current_weapon.attack()
 
-	if event.is_action("scroll_up"):
-		print_debug("Scrolling up!")
-	if event.is_action("scroll_down"):
-		print_debug("Scrolling down!")
 
 
 
@@ -125,8 +121,7 @@ func take_damage(damage : int) -> void:
 
 
 func check_for_item():
-	print("checking for item")
-	
+
 	if not camera:
 		return
 	
@@ -150,6 +145,5 @@ func check_for_item():
 		carryable.remove_pickup()
 		return true
 	else:
-		# if no item, shoot
-		print("no item")
+
 		return false
