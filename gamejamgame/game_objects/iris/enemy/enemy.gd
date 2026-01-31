@@ -62,40 +62,38 @@ func _ready() -> void:
 			shoot_timer.wait_time = 2.0
 		
 		# shoot_timer.start()
+		_on_player_refresh_timeout()
 
 
 func activate() -> void:
 	is_active = true
-	shoot_timer.start()
+	if shoot_timer:
+		shoot_timer.start()
 
 func disable() -> void:
 	is_active = false
-	shoot_timer.stop()
+	if shoot_timer:
+		shoot_timer.stop()
 
 func _physics_process(delta: float) -> void:
 	if enemy_debug_label:
 		enemy_debug_label.text = str(current_enemy_health)
 
-	
+	if not is_active:
+		return
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	if is_active:
 		if not is_dead:
 			if nav_agent.is_navigation_finished():
-				print_debug("Nav finished!")
 				velocity = Vector3.ZERO
-				nav_agent.velocity = Vector3.ZERO
-				return
-			
-			var next_pos : Vector3 = nav_agent.get_next_path_position()
-			var move_dir = (next_pos - global_position).normalized()
-
-			velocity = move_dir * enemy_speed
-			nav_agent.velocity = velocity
-			
+			else:
+				var next_pos: Vector3 = nav_agent.get_next_path_position()
+				var move_dir = (next_pos - global_position).normalized()
+				velocity = move_dir * enemy_speed
+	
 		else:
 			velocity = Vector3.ZERO
-		
 	move_and_slide()
 		
 		

@@ -37,7 +37,8 @@ func disable() -> void:
 	attack_check_timer.stop()
 
 func _physics_process(_delta: float) -> void:
-	enemy_debug_label.text = str(current_enemy_health)
+	if enemy_debug_label:
+		enemy_debug_label.text = str(current_enemy_health)
 	
 	if not is_active:
 		return

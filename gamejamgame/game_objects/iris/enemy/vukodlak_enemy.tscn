@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://clgbtjqaxlp46"]
 
-[ext_resource type="Script" uid="uid://bm81grx7kf22x" path="res://game_objects/iris/enemy/enemy.gd" id="1_5x6dn"]
+[ext_resource type="Script" uid="uid://d1qm7xwmdryyk" path="res://game_objects/iris/enemy/vukodlak_enemy.gd" id="1_5x6dn"]
+[ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ohikj"]
 [ext_resource type="PackedScene" uid="uid://dotyjm87gyx2g" path="res://game_objects/iris/enemy/werewolf_model.tscn" id="2_qmkgk"]
 [ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="9_wbdsh"]
 [ext_resource type="Texture2D" uid="uid://b7qhomfishrme" path="res://assets/visual/glowCircle.png" id="10_y4l25"]
@@ -9,15 +10,22 @@
 [ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="13_rw00t"]
 [ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="14_a8vhq"]
 
+[sub_resource type="Resource" id="Resource_vukodlak_enemy_data"]
+script = ExtResource("2_ohikj")
+health = 100
+move_speed = 1.0
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
 
-[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("nav_agent", "telegraph_light", "damage_light", "audio_player")]
+[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("enemy_model", "nav_agent", "telegraph_light", "damage_light", "audio_player")]
 script = ExtResource("1_5x6dn")
+enemy_model = NodePath("werewolf walking")
+enemy_data = SubResource("Resource_vukodlak_enemy_data")
 nav_agent = NodePath("NavigationAgent3D")
 telegraph_light = NodePath("werewolf walking/SlashIndicator")
 damage_light = NodePath("werewolf walking/DmgIndicator")
 audio_player = NodePath("AudioStreamPlayer3D")
-metadata/_custom_type_script = "uid://bm81grx7kf22x"
+metadata/_custom_type_script = "uid://d1qm7xwmdryyk"
 
 [node name="werewolf walking" parent="." unique_id=608999702 instance=ExtResource("2_qmkgk")]
 
@@ -49,16 +57,16 @@ avoidance_enabled = true
 [node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=1845515016]
 autostart = true
 
-[node name="SwordComponent" type="Node" parent="." unique_id=1245769297]
+[node name="SlashEffect" type="Node3D" parent="." unique_id=1640691426]
+script = ExtResource("13_rw00t")
+slash_texture = ExtResource("14_a8vhq")
+effect_size = Vector2(0.25, 0.25)
+
+[node name="SwordComponent" type="Node" parent="." unique_id=682371934]
 script = ExtResource("11_5n8ti")
 sword_damage = 15
 attack_range = 4.0
 telegraph_duration = 0.4
 swing_duration = 1.0
-cooldown_duration = 10.0
+cooldown_duration = 5.0
 slash_effect_scene = ExtResource("12_w7ts1")
-
-[node name="SlashEffect" type="Node3D" parent="." unique_id=1640691426]
-script = ExtResource("13_rw00t")
-slash_texture = ExtResource("14_a8vhq")
-effect_size = Vector2(0.25, 0.25)

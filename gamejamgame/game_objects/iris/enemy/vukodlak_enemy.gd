@@ -1,2 +1,2 @@
-extends Enemy
+extends SwordEnemy
 class_name VukodlakEnemy

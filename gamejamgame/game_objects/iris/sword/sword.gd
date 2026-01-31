@@ -59,6 +59,24 @@ func _ready() -> void:
 
 
 func _physics_process(dt: float) -> void:
+	# Aim hit ray from the center of the screen (camera center)
+	if hit_ray:
+		var player := GlobalData.get_player()
+		if player and player.camera:
+			var camera: Camera3D = player.camera
+			var viewport := camera.get_viewport()
+			if viewport:
+				var screen_center := viewport.get_visible_rect().size * 0.5
+				var ray_origin := camera.project_ray_origin(screen_center)
+				var ray_dir := camera.project_ray_normal(screen_center)
+
+				var length := sword_range
+				if length <= 0.0001:
+					length = 10.0
+
+				hit_ray.global_transform = Transform3D(Basis.IDENTITY, ray_origin)
+				hit_ray.target_position = ray_dir * length
+
 	# Only run while we're in "moving window"
 	var now_s := Time.get_ticks_msec() * 0.001
 	if now_s > _moving_until_s:

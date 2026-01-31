@@ -30,8 +30,9 @@ func _physics_process(delta: float) -> void:
 	turn_towards_player()
 
 func turn_towards_player() -> void:
-	look_at(player.global_position, Vector3.UP, true)
-	await get_tree().create_timer(0.5).timeout
+	if player:
+		look_at(player.global_position, Vector3.UP, true)
+		await get_tree().create_timer(0.5).timeout
 	
 	
 
