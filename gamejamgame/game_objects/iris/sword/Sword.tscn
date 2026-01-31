@@ -2,10 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_ntrel"]
-[ext_resource type="AudioStream" uid="uid://b42oaa0vm7ey6" path="res://game_objects/aleks/SFX/sword/fire.mp3" id="2_ylv2f"]
-[ext_resource type="AudioStream" uid="uid://blrmfg8qajdjh" path="res://game_objects/aleks/SFX/sword/sword1.mp3" id="3_evwgk"]
-[ext_resource type="AudioStream" uid="uid://b7d88km4rweq1" path="res://game_objects/aleks/SFX/sword/sword2.mp3" id="4_mo7gq"]
-[ext_resource type="AudioStream" uid="uid://4jfnubb4s2ba" path="res://game_objects/aleks/SFX/sword/sword3.mp3" id="5_3oqe1"]
+[ext_resource type="AudioStream" uid="uid://dse1oggrd7vx5" path="res://game_objects/aleks/SFX/sword/fire.mp3" id="2_ylv2f"]
 
 [sub_resource type="Curve" id="Curve_7n2bh"]
 _data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -77,7 +74,6 @@ emit_hz = 10.0
 trail_radius = 2.0
 trail_lifetime_s = 60.0
 carry_sound_effects = Array[AudioStream]([ExtResource("2_ylv2f")])
-attack_sound_effects = Array[AudioStream]([ExtResource("3_evwgk"), ExtResource("4_mo7gq"), ExtResource("5_3oqe1")])
 damage = 20
 audio_player = NodePath("AudioStreamPlayer3D")
 

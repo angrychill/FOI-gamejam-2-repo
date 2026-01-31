@@ -12,8 +12,8 @@
 
 [sub_resource type="Resource" id="Resource_vukodlak_enemy_data"]
 script = ExtResource("2_ohikj")
-health = 100
-move_speed = 1.0
+health = 200
+move_speed = 2.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
 
@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://d1qm7xwmdryyk"
 [node name="werewolf walking" parent="." unique_id=608999702 instance=ExtResource("2_qmkgk")]
 
 [node name="DmgIndicator" type="Sprite3D" parent="werewolf walking" unique_id=1035931012]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.4901161e-08, 1.4000001, 1.1)
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 1.4901161e-08, 1.4000001, 1.1)
 sorting_offset = 10.0
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 billboard = 1
@@ -38,7 +38,7 @@ no_depth_test = true
 texture = ExtResource("9_wbdsh")
 
 [node name="SlashIndicator" type="Sprite3D" parent="werewolf walking" unique_id=434423234]
-transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 1.4901161e-08, 1.4000001, 1.1)
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 1.4901161e-08, 1.4000001, 1.1)
 sorting_offset = 10.0
 modulate = Color(1, 0, 0, 1)
 billboard = 1

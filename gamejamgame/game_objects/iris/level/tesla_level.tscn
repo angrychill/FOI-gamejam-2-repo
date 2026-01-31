@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://ob8x4nel48oq" path="res://assets/leaf_tree_2.tscn" id="14_ltwfk"]
 [ext_resource type="PackedScene" uid="uid://cf57bikwky3y4" path="res://assets/dead_tree_2.tscn" id="15_0agjn"]
 [ext_resource type="PackedScene" uid="uid://clgbtjqaxlp46" path="res://game_objects/iris/enemy/vukodlak_enemy.tscn" id="16_ltwfk"]
+[ext_resource type="AudioStream" uid="uid://or2qob7i7i1d" path="res://game_objects/aleks/SFX/werewolf_disco.mp3" id="17_d48sg"]
 [ext_resource type="Script" uid="uid://cuevike7agkq4" path="res://game_objects/iris/level/tesla_level_logic.gd" id="17_tesla"]
 
 [sub_resource type="Environment" id="Environment_uhqdk"]
@@ -829,7 +830,7 @@ speed = 10.0
 [node name="IntroTrigger" type="Area3D" parent="." unique_id=1227195127 node_paths=PackedStringArray("enemies_to_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
 script = ExtResource("7_hfvkk")
-enemies_to_trigger = [NodePath("../VukodlakEnemy"), NodePath("../VukodlakEnemy2"), NodePath("../VukodlakEnemy3"), NodePath("../VukodlakEnemy4"), NodePath("../VukodlakEnemy5")]
+enemies_to_trigger = [NodePath("../VukodlakEnemy"), NodePath("../VukodlakEnemy2"), NodePath("../VukodlakEnemy3"), NodePath("../VukodlakEnemy4"), NodePath("../VukodlakEnemy5"), NodePath("../VukodlakEnemy6"), NodePath("../VukodlakEnemy7"), NodePath("../VukodlakEnemy8"), NodePath("../VukodlakEnemy9"), NodePath("../VukodlakEnemy10")]
 cutscene_dialogue = ExtResource("8_7pipg")
 metadata/_custom_type_script = "uid://l7hjunjmqawd"
 
@@ -878,7 +879,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.13133, 4.18335, -46.60454
 [node name="VukodlakEnemy5" parent="." unique_id=258645881 instance=ExtResource("16_ltwfk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.57453, 4.18335, -20.88152)
 
+[node name="VukodlakEnemy6" parent="." unique_id=767599315 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.718384, 4.18335, -49.4145)
+
+[node name="VukodlakEnemy7" parent="." unique_id=440137513 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.50518, 4.18335, 47.82581)
+
+[node name="VukodlakEnemy8" parent="." unique_id=1431857581 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.501984, 4.18335, 0.38028336)
+
+[node name="VukodlakEnemy9" parent="." unique_id=1721815754 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.245007, 7.412581, 0.38028336)
+
+[node name="VukodlakEnemy10" parent="." unique_id=1384855791 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -49.187748, 7.412581, -68.89615)
+
 [node name="BackgroundMusicPlayer" parent="." unique_id=1575749014 instance=ExtResource("14_j83l6")]
+stream = ExtResource("17_d48sg")
 
 [node name="Vukodlak" type="Node" parent="." unique_id=1482418554]
 script = ExtResource("17_tesla")
