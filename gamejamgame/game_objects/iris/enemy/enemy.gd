@@ -2,6 +2,7 @@ extends CharacterBody3D
 class_name Enemy
 @onready var enemy_debug_label: Label3D = $EnemyDebugLabel
 @onready var player_refresh_timer: Timer = $PlayerRefreshTimer
+const DEATH_PARTICLES = preload("res://game_objects/iris/enemy/death_particles.tscn")
 
 @onready var shooting_component: ShootingComponent = $ShootingComponent
 
@@ -114,7 +115,11 @@ func take_damage(damage : int) ->void:
 
 func die() -> void:
 	is_dead = true
-	
+	var level : Level = get_tree().get_first_node_in_group("level")
+	var particles : GPUParticles3D = DEATH_PARTICLES.instantiate()
+	level.add_child(particles)
+	particles.global_basis = global_basis
+	particles.emitting = true
 	# dodaj kasnije
 	queue_free()
 	

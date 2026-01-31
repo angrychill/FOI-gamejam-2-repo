@@ -453,10 +453,10 @@ visible = false
 mesh = SubResource("BoxMesh_iyvv7")
 
 [node name="BratEvilTrigger" type="Area3D" parent="." index="6" unique_id=601420191 node_paths=PackedStringArray("enemy_to_trigger")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 17, -123)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 15.7, -123)
 monitorable = false
 script = ExtResource("7_btayy")
-enemy_to_trigger = NodePath("../SwordEnemy")
+enemy_to_trigger = NodePath("../Brat")
 cutscene_dialogue = ExtResource("10_cke48")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BratEvilTrigger" index="0" unique_id=1693387993]
@@ -472,7 +472,7 @@ mesh = SubResource("BoxMesh_iyvv7")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -157, 11, -132)
 monitorable = false
 script = ExtResource("7_btayy")
-enemy_to_trigger = NodePath("../SwordEnemy2")
+enemy_to_trigger = NodePath("../Ban")
 cutscene_dialogue = ExtResource("11_vwr77")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BanGoodTrigger" index="0" unique_id=2096216238]
@@ -488,10 +488,10 @@ mesh = SubResource("BoxMesh_iyvv7")
 stream = ExtResource("14_k36sh")
 parameters/looping = true
 
-[node name="SwordEnemy" parent="." index="9" unique_id=1578922120 instance=ExtResource("15_8gpv6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.636358, 10, -123.002075)
+[node name="Brat" parent="." index="9" unique_id=1578922120 instance=ExtResource("15_8gpv6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.636358, 9.2, -123.002075)
 
-[node name="SwordEnemy2" parent="." index="10" unique_id=958829265 instance=ExtResource("16_5mc43")]
+[node name="Ban" parent="." index="10" unique_id=958829265 instance=ExtResource("16_5mc43")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -173.64029, 4, -136.1897)
 
 [node name="KillPlane" parent="." index="11" unique_id=1020691500 instance=ExtResource("17_5mc43")]
