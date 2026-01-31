@@ -1,10 +1,11 @@
 [gd_scene format=4 uid="uid://ce85nq674ywub"]
 
 [ext_resource type="Script" uid="uid://ds08q8s4pnola" path="res://game_objects/iris/enemy/enemy_model.gd" id="1_7lbke"]
-[ext_resource type="Animation" uid="uid://culcwromoycqc" path="res://assets/blend files/ban_run.anim" id="1_mm5ek"]
+[ext_resource type="Animation" uid="uid://6xo8hk6u865p" path="res://assets/blend files/ban_run.anim" id="1_mm5ek"]
 [ext_resource type="Animation" uid="uid://duld7m340v6dx" path="res://assets/blend files/ban_attack.anim" id="2_4vhfs"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgxpe"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_dkplm"]
 resource_name = "Cube_002"
@@ -132,6 +133,7 @@ bind/33/bone = -1
 bind/33/pose = Transform3D(-97.48994, -17.074814, 14.288555, 17.266058, -98.498085, 0.10010365, 14.056861, 2.5646613, 98.97387, -0.06418131, -0.11945315, 0.13490242)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w7cw4"]
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_n3hgy"]
 resource_name = "Cube_005"
@@ -211,6 +213,7 @@ bind/17/bone = -1
 bind/17/pose = Transform3D(0.9989154, -99.980125, -1.7251395, -99.82467, -0.8964074, -5.8508153, 5.834188, 1.7805595, -99.81379, 0.01994069, -0.107002646, 1.0204084)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a5df2"]
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_eeuao"]
 resource_name = "Cube_004"
@@ -542,17 +545,17 @@ bones/40/position = Vector3(1.0658141e-17, 0.07347445, -2.1316282e-17)
 bones/40/rotation = Quaternion(1.0408341e-17, 8.1965684e-17, -8.531268e-34, 1)
 bones/40/scale = Vector3(1, 1, 1)
 
-[node name="basic body" type="MeshInstance3D" parent="Skeleton3D" unique_id=1197622628]
+[node name="basic body" type="MeshInstance3D" parent="Skeleton3D" unique_id=1197622628 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_dkplm")
 skin = SubResource("Skin_ewq85")
 skeleton = NodePath("..")
 
-[node name="coat" type="MeshInstance3D" parent="Skeleton3D" unique_id=1074288458]
+[node name="coat" type="MeshInstance3D" parent="Skeleton3D" unique_id=1074288458 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_n3hgy")
 skin = SubResource("Skin_7np1o")
 skeleton = NodePath("..")
 
-[node name="basic body_001" type="MeshInstance3D" parent="Skeleton3D" unique_id=1423990310]
+[node name="basic body_001" type="MeshInstance3D" parent="Skeleton3D" unique_id=1423990310 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_eeuao")
 skin = SubResource("Skin_eb5l7")
 skeleton = NodePath("..")

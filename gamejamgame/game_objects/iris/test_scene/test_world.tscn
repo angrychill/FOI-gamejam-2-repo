@@ -3,18 +3,24 @@
 [ext_resource type="PackedScene" uid="uid://6f7y4bc4cxae" path="res://game_objects/iris/level/level.tscn" id="1_543v3"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="1_qio7j"]
 [ext_resource type="PackedScene" uid="uid://dkqaln0oqfjtg" path="res://game_objects/aleks/sword_enemy/ban_enemy.tscn" id="3_fisvw"]
+[ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="5_4ordb"]
 [ext_resource type="PackedScene" uid="uid://d0nkdarb7mtqp" path="res://game_objects/aleks/sword_enemy/sword_enemy.tscn" id="5_e7kjq"]
+[ext_resource type="PackedScene" uid="uid://d3gmgsfi3kd8y" path="res://game_objects/iris/lantern/lantern.tscn" id="6_2mtng"]
+[ext_resource type="PackedScene" uid="uid://cle07qd032bk4" path="res://game_objects/iris/tesla_coil/tesla_coil.tscn" id="7_2mtng"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0io8h"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4ordb"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+ground_curve = 0.040000003
 
-[sub_resource type="Sky" id="Sky_4uu8m"]
-sky_material = SubResource("ProceduralSkyMaterial_0io8h")
+[sub_resource type="Sky" id="Sky_15gtl"]
+sky_material = SubResource("ProceduralSkyMaterial_4ordb")
 
-[sub_resource type="Environment" id="Environment_fisvw"]
+[sub_resource type="Environment" id="Environment_2mtng"]
 background_mode = 2
-sky = SubResource("Sky_4uu8m")
+sky = SubResource("Sky_15gtl")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -43,13 +49,15 @@ albedo_texture = SubResource("NoiseTexture2D_ljjh0")
 material = SubResource("StandardMaterial3D_4ordb")
 size = Vector2(50, 50)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_543v3"]
+
 [node name="TestWorld" type="Node3D" unique_id=1468049234]
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="Level" parent="." unique_id=1627353637 instance=ExtResource("1_543v3")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Level" unique_id=427039732]
-environment = SubResource("Environment_fisvw")
+[node name="WorldEnvironment2" type="WorldEnvironment" parent="Level" unique_id=441120292]
+environment = SubResource("Environment_2mtng")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Level" unique_id=701330889]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -72,8 +80,42 @@ mesh = SubResource("PlaneMesh_2mtng")
 [node name="FpsPlayer" parent="Level" unique_id=301422806 instance=ExtResource("1_qio7j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0820675, 0, 0)
 
-[node name="ban" parent="." unique_id=1578922120 instance=ExtResource("3_fisvw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
-
 [node name="brat" parent="." unique_id=1030774541 instance=ExtResource("5_e7kjq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1959577, 0, -20.095955)
+
+[node name="Carryable" type="Node3D" parent="." unique_id=1929144369 node_paths=PackedStringArray("pickup_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("5_4ordb")
+pickup_area = NodePath("Area3D")
+pickup_item = ExtResource("6_2mtng")
+metadata/_custom_type_script = "uid://d3wnbb0t7d6dr"
+
+[node name="Area3D" type="Area3D" parent="Carryable" unique_id=826929981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29999995, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Carryable/Area3D" unique_id=656745153]
+shape = SubResource("BoxShape3D_543v3")
+
+[node name="Lantern" parent="Carryable" unique_id=385217723 instance=ExtResource("6_2mtng")]
+
+[node name="Carryable2" type="Node3D" parent="." unique_id=785924639 node_paths=PackedStringArray("pickup_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4.5645924)
+script = ExtResource("5_4ordb")
+pickup_area = NodePath("Area3D")
+pickup_item = ExtResource("7_2mtng")
+metadata/_custom_type_script = "uid://d3wnbb0t7d6dr"
+
+[node name="Area3D" type="Area3D" parent="Carryable2" unique_id=353134492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29999995, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Carryable2/Area3D" unique_id=293018036]
+shape = SubResource("BoxShape3D_543v3")
+
+[node name="TeslaCoil" parent="Carryable2" unique_id=1196484093 instance=ExtResource("7_2mtng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5999999)
+debug_draw_query_shape = false
+cooldown_time = 0.1
+
+[node name="SwordEnemy" parent="." unique_id=1578922120 instance=ExtResource("3_fisvw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13)
+is_active = true

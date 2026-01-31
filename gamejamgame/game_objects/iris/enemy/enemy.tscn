@@ -27,7 +27,7 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 script = ExtResource("6_ooti1")
 metadata/_custom_type_script = "uid://yhymsg8fj0ue"
 
-[node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+[node name="Enemy" type="CharacterBody3D" unique_id=778402213 node_paths=PackedStringArray("sprite_3d", "nav_agent") groups=["lidar"]]
 process_mode = 4
 script = ExtResource("1_ru4oe")
 enemy_data = SubResource("Resource_ooti1")

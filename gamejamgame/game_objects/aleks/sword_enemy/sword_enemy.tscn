@@ -17,9 +17,11 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lk1qt"]
 
-[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent")]
+[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "telegraph_light", "damage_light", "sprite_3d", "nav_agent")]
 script = ExtResource("1_lk1qt")
 enemy_model = NodePath("Injured Walk brat 2")
+telegraph_light = NodePath("TelegraphLight")
+damage_light = NodePath("DamageLight")
 enemy_data = SubResource("Resource_tttq3")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
@@ -60,3 +62,16 @@ slash_texture = ExtResource("6_illuv")
 effect_size = Vector2(0.25, 0.25)
 
 [node name="Injured Walk brat 2" parent="." unique_id=1702391947 instance=ExtResource("8_msw54")]
+
+[node name="TelegraphLight" type="OmniLight3D" parent="." unique_id=1061701726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+light_color = Color(1, 0, 0, 1)
+omni_range = 0.5
+omni_attenuation = 10.0
+
+[node name="DamageLight" type="OmniLight3D" parent="." unique_id=783461846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+omni_range = 1.0
+omni_attenuation = 10.0

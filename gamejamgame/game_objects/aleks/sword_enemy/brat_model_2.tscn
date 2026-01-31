@@ -1,10 +1,11 @@
 [gd_scene format=4 uid="uid://cgfe7p2s8g6iv"]
 
-[ext_resource type="Animation" uid="uid://nnotemwcebqe" path="res://assets/blend files/brat_walk_fixed_2.anim" id="1_kr6av"]
+[ext_resource type="Animation" uid="uid://df8dsxtnr2507" path="res://assets/blend files/brat_walk_fixed_2.anim" id="1_kr6av"]
 [ext_resource type="Script" uid="uid://ds08q8s4pnola" path="res://game_objects/iris/enemy/enemy_model.gd" id="1_o20g3"]
-[ext_resource type="Animation" uid="uid://cpfri7e3orrfu" path="res://assets/blend files/brat_attack_fixed_2.anim" id="2_0atn4"]
+[ext_resource type="Animation" uid="uid://co0gmwclyc5qm" path="res://assets/blend files/brat_attack_fixed_2.anim" id="2_0atn4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l560h"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_47qwp"]
 resource_name = "Cube_002"
@@ -96,6 +97,7 @@ bind/21/bone = -1
 bind/21/pose = Transform3D(-97.38905, -18.49122, 13.169919, 18.653175, -98.244896, -0.004010368, 12.939515, 2.4527025, 99.128975, -0.064663984, -0.11866451, 0.13289504)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_018i1"]
+albedo_color = Color(0.2568334, 0.67, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ncw4b"]
 resource_name = "Cube_004"
@@ -312,12 +314,12 @@ bones/24/position = Vector3(0, 0.07399141, 0)
 bones/24/rotation = Quaternion(1.3877788e-16, -8.023096e-17, 1.11342825e-32, 1)
 bones/24/scale = Vector3(1, 1, 1)
 
-[node name="basic body" type="MeshInstance3D" parent="Skeleton3D" unique_id=1807094938]
+[node name="basic body" type="MeshInstance3D" parent="Skeleton3D" unique_id=1807094938 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_47qwp")
 skin = SubResource("Skin_d1nnd")
 skeleton = NodePath("..")
 
-[node name="basic body_001" type="MeshInstance3D" parent="Skeleton3D" unique_id=795879749]
+[node name="basic body_001" type="MeshInstance3D" parent="Skeleton3D" unique_id=795879749 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_ncw4b")
 skin = SubResource("Skin_yp4ia")
 skeleton = NodePath("..")

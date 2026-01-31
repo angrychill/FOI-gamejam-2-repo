@@ -9,9 +9,17 @@ class_name Enemy
 @export var sprite_3d : Sprite3D
 @export var nav_agent : NavigationAgent3D
 
+
+@export var telegraph_light : Node3D
+@export var damage_light : Node3D
+@export var damage_light_duration : float = 0.1
+
+@export var is_active : bool = false
+
 var enemy_speed : float
 var current_enemy_health : int
 var max_enemy_health : int
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var is_dead : bool = false
 
@@ -41,27 +49,39 @@ func _ready() -> void:
 		else:
 			shoot_timer.wait_time = 2.0
 		
-		shoot_timer.start()
+		# shoot_timer.start()
 
 
+func activate() -> void:
+	is_active = true
+	shoot_timer.start()
 
-func _physics_process(_delta: float) -> void:
+func disable() -> void:
+	is_active = false
+	shoot_timer.stop()
+
+func _physics_process(delta: float) -> void:
 	enemy_debug_label.text = str(current_enemy_health)
-	if not is_dead:
-		if nav_agent.is_navigation_finished():
-			print_debug("Nav finished!")
-			velocity = Vector3.ZERO
-			nav_agent.velocity = Vector3.ZERO
-			return
-		
-		var next_pos : Vector3 = nav_agent.get_next_path_position()
-		var move_dir = (next_pos - global_position).normalized()
 
-		velocity = move_dir * enemy_speed
-		nav_agent.velocity = velocity
-		
-	else:
-		velocity = Vector3.ZERO
+	
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	if is_active:
+		if not is_dead:
+			if nav_agent.is_navigation_finished():
+				print_debug("Nav finished!")
+				velocity = Vector3.ZERO
+				nav_agent.velocity = Vector3.ZERO
+				return
+			
+			var next_pos : Vector3 = nav_agent.get_next_path_position()
+			var move_dir = (next_pos - global_position).normalized()
+
+			velocity = move_dir * enemy_speed
+			nav_agent.velocity = velocity
+			
+		else:
+			velocity = Vector3.ZERO
 		
 	move_and_slide()
 		
@@ -71,10 +91,15 @@ func _on_player_refresh_timeout() -> void:
 	nav_agent.target_position = GlobalData.get_player_position()
 
 func take_damage(damage : int) ->void:
-	if not is_dead:
-		current_enemy_health -= damage
-		if current_enemy_health <= 0:
-			die()
+	if is_active:
+		if not is_dead:
+			current_enemy_health -= damage
+			damage_light.show()
+			if current_enemy_health <= 0:
+				die()
+			
+			await get_tree().create_timer(damage_light_duration).timeout
+			damage_light.hide()
 
 func die() -> void:
 	is_dead = true
