@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://ci7f8b86o4ofx" path="res://game_objects/iris/sword/sword.gd" id="1_7n2bh"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_ntrel"]
-[ext_resource type="AudioStream" uid="uid://dse1oggrd7vx5" path="res://game_objects/aleks/SFX/sword/fire.mp3" id="2_ylv2f"]
-[ext_resource type="AudioStream" uid="uid://btkgxp8dnmita" path="res://game_objects/aleks/SFX/sword/sword1.mp3" id="3_evwgk"]
-[ext_resource type="AudioStream" uid="uid://dsj63v6absjm2" path="res://game_objects/aleks/SFX/sword/sword2.mp3" id="4_mo7gq"]
-[ext_resource type="AudioStream" uid="uid://c6jb1nlbqu8mn" path="res://game_objects/aleks/SFX/sword/sword3.mp3" id="5_3oqe1"]
+[ext_resource type="AudioStream" uid="uid://b42oaa0vm7ey6" path="res://game_objects/aleks/SFX/sword/fire.mp3" id="2_ylv2f"]
+[ext_resource type="AudioStream" uid="uid://blrmfg8qajdjh" path="res://game_objects/aleks/SFX/sword/sword1.mp3" id="3_evwgk"]
+[ext_resource type="AudioStream" uid="uid://b7d88km4rweq1" path="res://game_objects/aleks/SFX/sword/sword2.mp3" id="4_mo7gq"]
+[ext_resource type="AudioStream" uid="uid://4jfnubb4s2ba" path="res://game_objects/aleks/SFX/sword/sword3.mp3" id="5_3oqe1"]
 
 [sub_resource type="Curve" id="Curve_7n2bh"]
 _data = [Vector2(0, 0.058823466), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -101,3 +101,4 @@ target_position = Vector3(0, -32, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1663050674]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.9802322e-08, 0, 2.9802322e-08, 1.0000002, -0.15721889, 0.011060711, -0.4901229)
+volume_db = -3.5
