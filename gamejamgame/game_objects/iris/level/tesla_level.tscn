@@ -148,12 +148,11 @@ metadata/_custom_type_script = "uid://l7hjunjmqawd"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="IntroTrigger" unique_id=1821669173]
 shape = SubResource("SphereShape3D_noy7f")
 
-[node name="Carryable" type="Node3D" parent="." unique_id=2086656432 node_paths=PackedStringArray("pickup_area", "pickup_mesh")]
+[node name="Carryable" type="Node3D" parent="." unique_id=2086656432 node_paths=PackedStringArray("pickup_area")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 script = ExtResource("9_my518")
 pickup_area = NodePath("Area3D")
 pickup_item = ExtResource("10_eaqa5")
-pickup_mesh = NodePath("tesla coil")
 pickup_dialogue = ExtResource("11_noy7f")
 debug_label = "Tesla"
 metadata/_custom_type_script = "uid://d3wnbb0t7d6dr"

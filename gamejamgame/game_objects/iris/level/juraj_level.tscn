@@ -127,7 +127,7 @@ next_level = SubResource("PackedScene_y6yb7")
 metadata/_custom_type_script = "uid://81niap6lcxo"
 
 [node name="juraj_level3" type="Node3D" parent="." unique_id=647589136]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -3, -125)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2, -3, -125)
 
 [node name="Cube_001" type="MeshInstance3D" parent="juraj_level3" unique_id=936980355 groups=["lidar"]]
 mesh = SubResource("ArrayMesh_7acng")
@@ -143,10 +143,10 @@ environment = SubResource("Environment_tvxio")
 [node name="LidarAPI" parent="." unique_id=1771151327 instance=ExtResource("2_rf000")]
 
 [node name="FpsPlayer" parent="." unique_id=301422806 instance=ExtResource("4_ig5q3")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 36.0392, 1.805583, -19.460709)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.8392, -0.794417, -75.160706)
 
 [node name="Carryable" type="Node3D" parent="." unique_id=189911530 node_paths=PackedStringArray("pickup_area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.435226, 0.8353281, -13.137733)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.435226, -2.164672, -75.13773)
 script = ExtResource("5_wwo1f")
 pickup_area = NodePath("Area3D")
 pickup_item = ExtResource("6_y6yb7")
@@ -190,7 +190,7 @@ visible = false
 mesh = SubResource("BoxMesh_iyvv7")
 
 [node name="DragonTrigger" type="Area3D" parent="." unique_id=1636665051 node_paths=PackedStringArray("enemy_to_trigger")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.410038, 1.880353, 4.407237)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.749733, 1.880353, -60.937115)
 monitorable = false
 script = ExtResource("9_y6yb7")
 enemy_to_trigger = NodePath("../DragonBoss")
@@ -212,4 +212,4 @@ parameters/looping = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -33.300003, 0)
 
 [node name="DragonBoss" parent="." unique_id=388612048 instance=ExtResource("15_6scko")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 34.483337, 1.6754704, 20.461197)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 18.823032, 1.6754704, -44.883156)
