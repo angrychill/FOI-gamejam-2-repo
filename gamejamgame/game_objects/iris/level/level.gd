@@ -46,3 +46,6 @@ func _on_cutscene_ended() -> void:
 	for enemy : Enemy in enemies:
 		enemy.enemy_speed = 1.0
 		enemy.shooting_component.can_shoot = true
+
+func restart_level() -> void:
+	SceneLoader.reload_current_scene()
