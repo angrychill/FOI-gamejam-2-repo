@@ -16,7 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://pie8f8rjtmeh" path="res://game_objects/aleks/SFX/danica_level/starry_bgm.mp3" id="14_k36sh"]
 [ext_resource type="PackedScene" uid="uid://d0nkdarb7mtqp" path="res://game_objects/aleks/sword_enemy/sword_enemy.tscn" id="15_8gpv6"]
 [ext_resource type="PackedScene" uid="uid://dkqaln0oqfjtg" path="res://game_objects/aleks/sword_enemy/ban_enemy.tscn" id="16_5mc43"]
-[ext_resource type="Script" uid="uid://cst86druh2rah" path="res://game_objects/iris/level/kill_plane.gd" id="17_53pla"]
+[ext_resource type="PackedScene" uid="uid://bqj8k4yewhbdu" path="res://game_objects/iris/level/kill_plane.tscn" id="17_5mc43"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qp0aj"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -331,9 +331,6 @@ size = Vector3(29, 22, 0.1)
 [sub_resource type="BoxMesh" id="BoxMesh_iyvv7"]
 size = Vector3(10, 0.1, 10)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u6b4p"]
-size = Vector3(1000, 1, 1000)
-
 [node name="Level" unique_id=1627353637 instance=ExtResource("1_x3qid")]
 next_level = ExtResource("2_vwr77")
 
@@ -493,9 +490,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.636358, 10, -123.002075)
 [node name="SwordEnemy2" parent="." index="10" unique_id=958829265 instance=ExtResource("16_5mc43")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -173.64029, 4, -136.1897)
 
-[node name="KillPlane" type="Area3D" parent="." index="11" unique_id=333412816]
+[node name="KillPlane" parent="." index="11" unique_id=1020691500 instance=ExtResource("17_5mc43")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75, 0)
-script = ExtResource("17_53pla")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="KillPlane" index="0" unique_id=1345656633]
-shape = SubResource("BoxShape3D_u6b4p")

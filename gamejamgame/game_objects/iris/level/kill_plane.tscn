@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bqj8k4yewhbdu"]
+
+[ext_resource type="Script" uid="uid://cst86druh2rah" path="res://game_objects/iris/level/kill_plane.gd" id="1_2v3f2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u6b4p"]
+size = Vector3(1000, 1, 1000)
+
+[node name="KillPlane" type="Area3D" unique_id=1020691500]
+script = ExtResource("1_2v3f2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=157132635]
+shape = SubResource("BoxShape3D_u6b4p")

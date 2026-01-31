@@ -76,6 +76,12 @@ func _process(_delta: float) -> void:
 			rotation.y += PI
 			rotation.x = 0
 			rotation.z = 0
+	
+	var player_dist : float = GlobalData.get_player().global_position.distance_to(get_parent().global_position)
+	if player_dist >= 5.0:
+		show()
+	else:
+		hide()
 
 func initialize(boss_name: String, boss_max_health: int) -> void:
 	"""Initialize health bar with boss data"""

@@ -127,6 +127,7 @@ copy_path="res://maack_example_scenes/"
 [physics]
 
 3d/physics_engine="Jolt Physics"
+3d/default_gravity=12.0
 common/physics_interpolation=true
 
 [rendering]

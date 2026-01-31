@@ -69,6 +69,9 @@ func _ready() -> void:
 		movement_controller.movement_changed.connect(_on_movement_changed)
 
 func _physics_process(delta: float) -> void:
+	if not is_active:
+		return
+		
 	if is_in_melee_launch:
 		move_and_slide()
 		return
@@ -108,6 +111,8 @@ func _show_attack_warning() -> void:
 		tween.tween_property(sprite_3d, "modulate", Color.WHITE, 0.1)
 
 func take_damage(damage: int) -> void:
+	if not is_active:
+		return
 	if not is_dead:
 		var health_before = current_enemy_health
 		current_enemy_health -= damage
@@ -135,6 +140,8 @@ func die() -> void:
 	super.die()
 
 func update_volley_parameters(new_shots: int, new_delay: float) -> void:
+	if not is_active:
+		return
 	if shooting_component and shooting_component.attack_pattern is BurstAttackPattern:
 		var burst_pattern = shooting_component.attack_pattern as BurstAttackPattern
 		burst_pattern.set_burst_parameters(new_shots, new_delay)
