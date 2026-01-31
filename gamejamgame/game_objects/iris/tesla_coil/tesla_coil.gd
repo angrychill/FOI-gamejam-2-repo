@@ -9,6 +9,9 @@ signal cooldown_finished
 @export var debug_draw_query_shape := true
 
 @export_range(0.0, 10.0, 0.05) var cooldown_time: float = 0.35
+@export_range(0.0, 50.0, 0.1) var camera_adjust_min_distance: float = 2.0
+@export_range(0.0, 10.0, 0.1) var camera_adjust_max_distance: float = 1000.0 # optional clamp
+
 
 var _next_attack_time: float = 0.0
 var _cooldown_active: bool = false
@@ -52,7 +55,10 @@ func _get_query_transform() -> Transform3D:
 		var rq := PhysicsRayQueryParameters3D.create(ray_origin, ray_to)
 		rq.collide_with_bodies = true
 		rq.collide_with_areas = true
-		rq.exclude = [self]
+		rq.exclude = _build_exclude_list()
+		rq.hit_from_inside = true
+		rq.hit_back_faces = true
+
 
 		var hit := space.intersect_ray(rq)
 
@@ -60,15 +66,27 @@ func _get_query_transform() -> Transform3D:
 		if hit.size() > 0:
 			target_point = hit["position"]
 
-		var aim_dir := (target_point - t.origin).normalized()
+		var to_target := target_point - t.origin
+		var dist := to_target.length()
 
-		var current_axis := t.basis.y.normalized()
-		var rot := current_axis.cross(aim_dir)
-		var angle := acos(clamp(current_axis.dot(aim_dir), -1.0, 1.0))
-		if rot.length() > 0.0001:
-			t.basis = Basis(rot.normalized(), angle) * t.basis
+		# Only do camera-based correction after a minimum distance (prevents close-up snapping)
+		if dist >= camera_adjust_min_distance:
+			# Optional clamp so you don't do tiny rotations toward very far rays
+			if camera_adjust_max_distance > 0.0:
+				dist = min(dist, camera_adjust_max_distance)
+				to_target = to_target.normalized() * dist
 
-		t.basis = Basis(t.basis.x.normalized(), PI) * t.basis
+			var aim_dir := to_target.normalized()
+			var current_axis := t.basis.y.normalized()
+
+			var rot := current_axis.cross(aim_dir)
+			var angle := acos(clamp(current_axis.dot(aim_dir), -1.0, 1.0))
+
+			if rot.length() > 0.0001:
+				t.basis = Basis(rot.normalized(), angle) * t.basis
+
+			# keep your existing flip
+			t.basis = Basis(t.basis.x.normalized(), PI) * t.basis
 
 	t.origin += t.basis.y * -5.0
 	return t
@@ -126,10 +144,10 @@ func attack() -> void:
 	query_shape.collide_with_areas = true
 	query_shape.shape = TESLA_COIL_RAY_SHAPE
 	query_shape.transform = _get_query_transform()
-	query_shape.exclude = [self]
+	query_shape.exclude = _build_exclude_list()
 
 	var collision: Array[Dictionary] = space.intersect_shape(query_shape)
-
+	
 	if collision.size() > 0:
 		if holes_vfx:
 			holes_vfx.emit_holes_from_cylinder_query(
@@ -143,6 +161,21 @@ func attack() -> void:
 			if collider is Enemy:
 				shoot_enemy(collider)
 
+func _build_exclude_list() -> Array:
+	var ex: Array = [self]
+
+	var player := GlobalData.get_player()
+	if player:
+		# Exclude the player root node (often enough if it owns the colliders)
+		ex.append(player)
+
+		# If your player has explicit CollisionObject3D children, exclude them too
+		# (safe even if none exist)
+		for child in player.get_children():
+			if child is CollisionObject3D:
+				ex.append(child)
+
+	return ex
 
 
 func shoot_enemy(enemy: Enemy) -> void:
