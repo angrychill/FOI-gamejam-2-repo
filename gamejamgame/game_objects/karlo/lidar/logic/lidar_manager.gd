@@ -80,7 +80,7 @@ func clear() -> void:
 # lifetime_s:
 #  - <= 0 => infinite
 #  - > 0  => fades from 1 -> 0 over that duration
-func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Color, lifetime_s: float = 0.0) -> void:
+func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Color, lifetime_s: float = 0.0) -> int:
 	_ensure_buffers()
 
 	var idx := _count % MAX_SHAPES
@@ -103,6 +103,17 @@ func add_volume(global_xform: Transform3D, type: int, params: Vector4, color: Co
 	# Store lifetime in _fade (repurposed)
 	_fade[idx] = lifetime_s # <=0 => infinite
 
+	_dirty = true
+
+	return idx
+
+
+func clear_volume(idx: int) -> void:
+	if idx < 0 or idx >= MAX_SHAPES:
+		return
+
+	_colors[idx] = Color(0, 0, 0, 0)
+	_fade[idx] = 0.0
 	_dirty = true
 
 

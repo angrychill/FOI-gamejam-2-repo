@@ -2,6 +2,7 @@ extends Node3D
 class_name TeslaCoilShotgunHoles
 
 @export var pellets: int = 3
+@export_range(1, 256, 1) var max_holes: int = 64
 @export_range(0.01, 5.0, 0.01) var pellet_radius: float = 1.0
 
 # How far to push the sphere off the surface along the normal (prevents z-fighting)
@@ -30,6 +31,7 @@ class_name TeslaCoilShotgunHoles
 
 var _rng := RandomNumberGenerator.new()
 var _lidar: LidarManager
+var _hole_ids: Array[int] = []
 
 func _ready() -> void:
 	_rng.randomize()
@@ -79,13 +81,20 @@ func emit_holes_from_cylinder_query(
 		t.origin = spawn_pos
 
 		# LidarManager params: for TYPE_SPHERE we store radius in params.x
-		_lidar.add_volume(
+		var id := _lidar.add_volume(
 			t,
 			LidarManager.TYPE_SPHERE,
 			Vector4(pellet_radius, 0.0, 0.0, 0.0),
 			hole_color,
 			lifetime_s
 		)
+
+		if max_holes > 0:
+			_hole_ids.append(id)
+			if _hole_ids.size() > max_holes:
+				var old_id := _hole_ids[0]
+				_hole_ids.remove_at(0)
+				_lidar.clear_volume(old_id)
 
 func _oriented_normal(hit_normal: Vector3, ray_dir: Vector3) -> Vector3:
 	var n := hit_normal
