@@ -120,6 +120,7 @@ metadata/_custom_type_script = "uid://81niap6lcxo"
 environment = SubResource("Environment_uhqdk")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=12098360]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009021759, -0.029346466, -0.14335823)
 navigation_mesh = SubResource("NavigationMesh_ltwfk")
 
 [node name="Trees" type="Node3D" parent="NavigationRegion3D" unique_id=1454138669]
@@ -828,7 +829,7 @@ speed = 10.0
 [node name="IntroTrigger" type="Area3D" parent="." unique_id=1227195127 node_paths=PackedStringArray("enemies_to_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
 script = ExtResource("7_hfvkk")
-enemies_to_trigger = [NodePath("../VukodlakEnemy")]
+enemies_to_trigger = [NodePath("../VukodlakEnemy"), NodePath("../VukodlakEnemy2"), NodePath("../VukodlakEnemy3"), NodePath("../VukodlakEnemy4"), NodePath("../VukodlakEnemy5")]
 cutscene_dialogue = ExtResource("8_7pipg")
 metadata/_custom_type_script = "uid://l7hjunjmqawd"
 
@@ -863,7 +864,19 @@ shape = SubResource("CylinderShape3D_j83l6")
 [node name="OmniLight3D" type="OmniLight3D" parent="Carryable" unique_id=1488114250]
 
 [node name="VukodlakEnemy" parent="." unique_id=1907426832 instance=ExtResource("16_ltwfk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5538864, -20.509132)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4468741, -35.759365)
+
+[node name="VukodlakEnemy2" parent="." unique_id=1743717024 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.18335, 42.618725)
+
+[node name="VukodlakEnemy3" parent="." unique_id=1526597513 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.13133, 4.18335, 42.618725)
+
+[node name="VukodlakEnemy4" parent="." unique_id=1420711348 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.13133, 4.18335, -46.60454)
+
+[node name="VukodlakEnemy5" parent="." unique_id=258645881 instance=ExtResource("16_ltwfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.57453, 4.18335, -20.88152)
 
 [node name="BackgroundMusicPlayer" parent="." unique_id=1575749014 instance=ExtResource("14_j83l6")]
 
