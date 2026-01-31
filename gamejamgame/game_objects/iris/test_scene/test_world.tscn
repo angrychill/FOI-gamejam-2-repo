@@ -113,7 +113,6 @@ shape = SubResource("BoxShape3D_543v3")
 
 [node name="TeslaCoil" parent="Carryable2" unique_id=1196484093 instance=ExtResource("7_2mtng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5999999)
-debug_draw_query_shape = false
 cooldown_time = 0.1
 
 [node name="SwordEnemy" parent="." unique_id=1578922120 instance=ExtResource("3_fisvw")]

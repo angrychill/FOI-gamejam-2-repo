@@ -43,7 +43,8 @@ func _ready() -> void:
 		push_error("Enemy must be initialized w EnemyData!")
 		return
 	
-	sprite_3d.texture = enemy_data.sprite
+	if sprite_3d:
+		sprite_3d.texture = enemy_data.sprite
 	max_enemy_health = enemy_data.health
 	current_enemy_health = enemy_data.health
 	enemy_speed = enemy_data.move_speed
@@ -72,7 +73,8 @@ func disable() -> void:
 	shoot_timer.stop()
 
 func _physics_process(delta: float) -> void:
-	enemy_debug_label.text = str(current_enemy_health)
+	if enemy_debug_label:
+		enemy_debug_label.text = str(current_enemy_health)
 
 	
 	if not is_on_floor():

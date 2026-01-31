@@ -24,6 +24,8 @@ var _debug_mesh_instance: MeshInstance3D
 func _ready() -> void:
 	if debug_draw_query_shape:
 		_create_debug_shape()
+	
+	play_carry_sound_effect()
 
 
 func _process(_delta: float) -> void:
@@ -131,6 +133,8 @@ func attack() -> void:
 	_next_attack_time = now + cooldown_time
 	_cooldown_active = true
 	emit_signal("fired")
+	
+	play_attack_sound_effect()
 
 	var camera: Camera3D = GlobalData.get_player().camera
 	if not camera:

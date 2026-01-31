@@ -3,7 +3,7 @@ class_name CutsceneTrigger
 
 @export var is_active : bool = true
 
-@export var enemy_to_trigger : Enemy
+@export var enemies_to_trigger : Array[Enemy]
 
 
 @export var cutscene_dialogue : DialogueResource
@@ -43,7 +43,8 @@ func _on_dialogue_ended(res : DialogueResource) -> void:
 		trigger_enemy()
 
 func trigger_enemy() -> void:
-	if enemy_to_trigger:
-		enemy_to_trigger.activate()
+	if enemies_to_trigger:
+		for enemy : Enemy in enemies_to_trigger:
+			enemy.activate()
 		pass
 	

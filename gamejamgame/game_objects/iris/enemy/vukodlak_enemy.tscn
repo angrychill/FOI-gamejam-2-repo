@@ -1,31 +1,21 @@
 [gd_scene format=3 uid="uid://clgbtjqaxlp46"]
 
-[ext_resource type="Script" uid="uid://d1qm7xwmdryyk" path="res://game_objects/iris/enemy/vukodlak_enemy.gd" id="1_qmkgk"]
-[ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ld4cu"]
+[ext_resource type="Script" uid="uid://bm81grx7kf22x" path="res://game_objects/iris/enemy/enemy.gd" id="1_5x6dn"]
 [ext_resource type="PackedScene" uid="uid://dotyjm87gyx2g" path="res://game_objects/iris/enemy/werewolf_model.tscn" id="2_qmkgk"]
-[ext_resource type="AudioStream" uid="uid://byjq3cflhu6kl" path="res://game_objects/aleks/SFX/damage/monster_dmg1.mp3" id="3_5x6dn"]
-[ext_resource type="AudioStream" uid="uid://bgp0u52ox6uts" path="res://game_objects/aleks/SFX/damage/monster_dmg2.mp3" id="4_rpg64"]
-[ext_resource type="AudioStream" uid="uid://x8ydfdxuk4x6" path="res://game_objects/aleks/SFX/damage/monster_dmg3.mp3" id="5_wbdsh"]
-[ext_resource type="AudioStream" uid="uid://cwlc4t8gd2w2r" path="res://game_objects/aleks/SFX/damage/monster_dmg4.mp3" id="6_y4l25"]
-[ext_resource type="AudioStream" uid="uid://bajps6ew66uvx" path="res://game_objects/aleks/SFX/damage/monster_dmg5.mp3" id="7_e0n6n"]
 [ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="9_wbdsh"]
 [ext_resource type="Texture2D" uid="uid://b7qhomfishrme" path="res://assets/visual/glowCircle.png" id="10_y4l25"]
-
-[sub_resource type="Resource" id="Resource_eytqq"]
-script = ExtResource("2_ld4cu")
-health = 50
-move_speed = 2.5
-metadata/_custom_type_script = "uid://bnm48nwrslv5i"
+[ext_resource type="Script" uid="uid://ccoedxkv887xl" path="res://game_objects/aleks/sword_enemy/sword_component.gd" id="11_5n8ti"]
+[ext_resource type="PackedScene" uid="uid://bsl6kk3t2ug2w" path="res://game_objects/aleks/sword_enemy/slash_effect.tscn" id="12_w7ts1"]
+[ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="13_rw00t"]
+[ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="14_a8vhq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
 
 [node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("nav_agent", "telegraph_light", "damage_light", "audio_player")]
-script = ExtResource("1_qmkgk")
-enemy_data = SubResource("Resource_eytqq")
+script = ExtResource("1_5x6dn")
 nav_agent = NodePath("NavigationAgent3D")
 telegraph_light = NodePath("werewolf walking/SlashIndicator")
 damage_light = NodePath("werewolf walking/DmgIndicator")
-damage_sounds = Array[AudioStream]([ExtResource("3_5x6dn"), ExtResource("4_rpg64"), ExtResource("5_wbdsh"), ExtResource("6_y4l25"), ExtResource("7_e0n6n")])
 audio_player = NodePath("AudioStreamPlayer3D")
 metadata/_custom_type_script = "uid://bm81grx7kf22x"
 
@@ -52,5 +42,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_qmkgk")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1983461637]
+avoidance_enabled = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1503762148]
+
+[node name="PlayerRefreshTimer" type="Timer" parent="." unique_id=1845515016]
+autostart = true
+
+[node name="SwordComponent" type="Node" parent="." unique_id=1245769297]
+script = ExtResource("11_5n8ti")
+sword_damage = 15
+attack_range = 4.0
+telegraph_duration = 0.4
+swing_duration = 1.0
+cooldown_duration = 10.0
+slash_effect_scene = ExtResource("12_w7ts1")
+
+[node name="SlashEffect" type="Node3D" parent="." unique_id=1640691426]
+script = ExtResource("13_rw00t")
+slash_texture = ExtResource("14_a8vhq")
+effect_size = Vector2(0.25, 0.25)

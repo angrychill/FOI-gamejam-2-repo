@@ -48,6 +48,7 @@ texture = ExtResource("3_0p8mh")
 
 [node name="EnemyDebugLabel" type="Label3D" parent="." unique_id=193266184]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0731382, 0)
+visible = false
 billboard = 1
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1830872934]

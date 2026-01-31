@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://81niap6lcxo" path="res://game_objects/iris/level/level.gd" id="1_nbrci"]
 [ext_resource type="Texture2D" uid="uid://ch5ysunbdr56t" path="res://assets/blend files/juraj_level3_Brick 5 - 128x128.png" id="2_5wak2"]
 [ext_resource type="PackedScene" uid="uid://cx3t8l6kxqokp" path="res://game_objects/karlo/lidar/logic/lidar_api.tscn" id="2_rf000"]
-[ext_resource type="Script" uid="uid://dt4arhaf7ab81" path="res://game_objects/iris/level/juraj_buff.gd" id="2_vf0g6"]
+[ext_resource type="Script" path="res://game_objects/iris/level/juraj_buff.gd" id="2_vf0g6"]
 [ext_resource type="PackedScene" uid="uid://bilwrabhxf4ot" path="res://game_objects/iris/fps_player/FPSCharacter.tscn" id="4_ig5q3"]
 [ext_resource type="Script" uid="uid://d3wnbb0t7d6dr" path="res://game_objects/iris/carryable/carryable.gd" id="5_wwo1f"]
 [ext_resource type="PackedScene" uid="uid://dq4osdlxothv0" path="res://game_objects/iris/sword/Sword.tscn" id="6_y6yb7"]
@@ -192,11 +192,11 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0
 visible = false
 mesh = SubResource("BoxMesh_iyvv7")
 
-[node name="DragonTrigger" type="Area3D" parent="." unique_id=1636665051 node_paths=PackedStringArray("enemy_to_trigger")]
+[node name="DragonTrigger" type="Area3D" parent="." unique_id=1636665051 node_paths=PackedStringArray("enemies_to_trigger")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.410038, 1.880353, 4.407237)
 monitorable = false
 script = ExtResource("9_y6yb7")
-enemy_to_trigger = NodePath("../DragonBoss")
+enemies_to_trigger = [NodePath("../DragonBoss")]
 cutscene_dialogue = ExtResource("11_5wak2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DragonTrigger" unique_id=777908647]
