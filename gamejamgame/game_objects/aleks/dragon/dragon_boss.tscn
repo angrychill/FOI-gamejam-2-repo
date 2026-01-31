@@ -4,11 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://cs51cj68emgsk" path="res://game_objects/aleks/dragon/pozoj.png" id="2_x1ym3"]
 [ext_resource type="PackedScene" uid="uid://bhayn5ix4omw7" path="res://game_objects/aleks/dragon/fireball.tscn" id="3_hx41l"]
 [ext_resource type="Script" uid="uid://cvsfpxad7g2w0" path="res://game_objects/aleks/dragon/dragon_shooting_component.gd" id="4_7gxyh"]
+[ext_resource type="AudioStream" uid="uid://byjq3cflhu6kl" path="res://game_objects/aleks/SFX/damage/monster_dmg1.mp3" id="4_23wyi"]
 [ext_resource type="PackedScene" uid="uid://6ngm15nm1u4g" path="res://game_objects/aleks/dragon/dragonfuckit_2_model.tscn" id="4_eewml"]
 [ext_resource type="Script" uid="uid://20sg03bimjte" path="res://game_objects/iris/enemy/attack_patterns/burst_attack_pattern.gd" id="5_0qfhw"]
 [ext_resource type="Script" uid="uid://c21tn21vhnyj8" path="res://game_objects/aleks/dragon/melee_attack_component.gd" id="5_ljl2f"]
+[ext_resource type="AudioStream" uid="uid://bgp0u52ox6uts" path="res://game_objects/aleks/SFX/damage/monster_dmg2.mp3" id="5_pno6v"]
 [ext_resource type="Script" uid="uid://cp5ytvyr7ye54" path="res://game_objects/aleks/dragon/boss_ai_controller.gd" id="6_0qfhw"]
+[ext_resource type="AudioStream" uid="uid://x8ydfdxuk4x6" path="res://game_objects/aleks/SFX/damage/monster_dmg3.mp3" id="6_cruhs"]
+[ext_resource type="AudioStream" uid="uid://cwlc4t8gd2w2r" path="res://game_objects/aleks/SFX/damage/monster_dmg4.mp3" id="7_4ffwx"]
 [ext_resource type="Script" uid="uid://byttreyge7avk" path="res://game_objects/aleks/dragon/dragon_boss_data.gd" id="7_v17i5"]
+[ext_resource type="AudioStream" uid="uid://bajps6ew66uvx" path="res://game_objects/aleks/SFX/damage/monster_dmg5.mp3" id="8_si87c"]
 [ext_resource type="Script" uid="uid://duop5oxat752x" path="res://game_objects/aleks/dragon/boss_movement_controller.gd" id="9_v17i5"]
 [ext_resource type="Script" uid="uid://b17228ocn12p0" path="res://game_objects/aleks/dragon/boss_health_bar.gd" id="10_rgi28"]
 
@@ -41,11 +46,13 @@ metadata/_custom_type_script = "uid://20sg03bimjte"
 script = ExtResource("7_v17i5")
 metadata/_custom_type_script = "uid://byttreyge7avk"
 
-[node name="DragonBoss" type="CharacterBody3D" unique_id=388612048 node_paths=PackedStringArray("sprite_3d", "nav_agent")]
+[node name="DragonBoss" type="CharacterBody3D" unique_id=388612048 node_paths=PackedStringArray("sprite_3d", "nav_agent", "audio_player")]
 script = ExtResource("1_mnnxo")
 boss_data_override = SubResource("Resource_0qfhw")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
+damage_sounds = Array[AudioStream]([ExtResource("4_23wyi"), ExtResource("5_pno6v"), ExtResource("6_cruhs"), ExtResource("7_4ffwx"), ExtResource("8_si87c")])
+audio_player = NodePath("AudioStreamPlayer3D")
 
 [node name="dragonfuckit2" parent="." unique_id=681020188 instance=ExtResource("4_eewml")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 2)
@@ -103,3 +110,5 @@ script = ExtResource("10_rgi28")
 bar_height = 0.5
 offset_above_boss = 5.0
 boss_display_name = "Pozoj"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1985711315]

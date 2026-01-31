@@ -16,7 +16,7 @@ func _ready() -> void:
 func _on_body_entered(body : Node3D) ->void:
 	if not is_active:
 		# disabled bitch
-		print("disabled!")
+		print("trigger disabled!")
 		return
 	if body is not FPSPlayer:
 		# do not do shit
@@ -44,5 +44,6 @@ func _on_dialogue_ended(res : DialogueResource) -> void:
 
 func trigger_enemy() -> void:
 	if enemy_to_trigger:
+		enemy_to_trigger.activate()
 		pass
 	

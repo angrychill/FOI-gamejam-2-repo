@@ -74,7 +74,7 @@ effect_size = Vector2(0.25, 0.25)
 [node name="Injured Run ban" parent="." unique_id=664188235 instance=ExtResource("8_xgnpn")]
 
 [node name="DmgIndicator" type="Sprite3D" parent="Injured Run ban" unique_id=65965301]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.4901161e-08, 1, 1.1)
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.4901161e-08, 1, 1)
 sorting_offset = 10.0
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 billboard = 1
@@ -82,7 +82,7 @@ no_depth_test = true
 texture = ExtResource("9_owax2")
 
 [node name="SlashIndicator" type="Sprite3D" parent="Injured Run ban" unique_id=1198300674]
-transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 1.4901161e-08, 1, 1.1)
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 1.4901161e-08, 1, 1)
 sorting_offset = 10.0
 modulate = Color(1, 0, 0, 1)
 billboard = 1

@@ -3,6 +3,13 @@
 [ext_resource type="Script" uid="uid://d1qm7xwmdryyk" path="res://game_objects/iris/enemy/vukodlak_enemy.gd" id="1_qmkgk"]
 [ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_ld4cu"]
 [ext_resource type="PackedScene" uid="uid://dotyjm87gyx2g" path="res://game_objects/iris/enemy/werewolf_model.tscn" id="2_qmkgk"]
+[ext_resource type="AudioStream" uid="uid://byjq3cflhu6kl" path="res://game_objects/aleks/SFX/damage/monster_dmg1.mp3" id="3_5x6dn"]
+[ext_resource type="AudioStream" uid="uid://bgp0u52ox6uts" path="res://game_objects/aleks/SFX/damage/monster_dmg2.mp3" id="4_rpg64"]
+[ext_resource type="AudioStream" uid="uid://x8ydfdxuk4x6" path="res://game_objects/aleks/SFX/damage/monster_dmg3.mp3" id="5_wbdsh"]
+[ext_resource type="AudioStream" uid="uid://cwlc4t8gd2w2r" path="res://game_objects/aleks/SFX/damage/monster_dmg4.mp3" id="6_y4l25"]
+[ext_resource type="AudioStream" uid="uid://bajps6ew66uvx" path="res://game_objects/aleks/SFX/damage/monster_dmg5.mp3" id="7_e0n6n"]
+[ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="9_wbdsh"]
+[ext_resource type="Texture2D" uid="uid://b7qhomfishrme" path="res://assets/visual/glowCircle.png" id="10_y4l25"]
 
 [sub_resource type="Resource" id="Resource_eytqq"]
 script = ExtResource("2_ld4cu")
@@ -12,16 +19,38 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qmkgk"]
 
-[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("nav_agent")]
+[node name="VukodlakEnemy" type="CharacterBody3D" unique_id=1907426832 node_paths=PackedStringArray("nav_agent", "telegraph_light", "damage_light", "audio_player")]
 script = ExtResource("1_qmkgk")
 enemy_data = SubResource("Resource_eytqq")
 nav_agent = NodePath("NavigationAgent3D")
+telegraph_light = NodePath("werewolf walking/SlashIndicator")
+damage_light = NodePath("werewolf walking/DmgIndicator")
+damage_sounds = Array[AudioStream]([ExtResource("3_5x6dn"), ExtResource("4_rpg64"), ExtResource("5_wbdsh"), ExtResource("6_y4l25"), ExtResource("7_e0n6n")])
+audio_player = NodePath("AudioStreamPlayer3D")
 metadata/_custom_type_script = "uid://bm81grx7kf22x"
 
 [node name="werewolf walking" parent="." unique_id=608999702 instance=ExtResource("2_qmkgk")]
+
+[node name="DmgIndicator" type="Sprite3D" parent="werewolf walking" unique_id=1035931012]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.4901161e-08, 1.4000001, 1.1)
+sorting_offset = 10.0
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
+billboard = 1
+no_depth_test = true
+texture = ExtResource("9_wbdsh")
+
+[node name="SlashIndicator" type="Sprite3D" parent="werewolf walking" unique_id=434423234]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 1.4901161e-08, 1.4000001, 1.1)
+sorting_offset = 10.0
+modulate = Color(1, 0, 0, 1)
+billboard = 1
+no_depth_test = true
+texture = ExtResource("10_y4l25")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=337216484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_qmkgk")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1983461637]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1503762148]

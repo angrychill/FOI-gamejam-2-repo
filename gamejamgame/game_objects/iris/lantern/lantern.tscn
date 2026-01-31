@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://0yrhjbmtk07x" path="res://game_objects/iris/lantern/lantern.gd" id="1_4m0mg"]
 [ext_resource type="Material" uid="uid://cwwkl2tyu5sr0" path="res://assets/mats/danica_mat.tres" id="2_avpwt"]
 [ext_resource type="AudioStream" uid="uid://rdgaxj4nbn31" path="res://game_objects/aleks/SFX/star/star_chime1.mp3" id="2_vi1qh"]
-[ext_resource type="PackedScene" uid="uid://dfd65w5piul8w" path="res://game_objects/iris/lantern/lidar_emitter_collision.tscn" id="3_avpwt"]
+[ext_resource type="Script" uid="uid://brpkuji53ie88" path="res://game_objects/karlo/lidar/lidar_trail_emitter.gd" id="4_h4g1u"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_686yb"]
 
@@ -39,6 +39,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h8wvv")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_4m0mg"]
+radius = 3.0
+
 [node name="Lantern" type="Node3D" unique_id=385217723 node_paths=PackedStringArray("lantern_area", "shooting_decay_timer", "audio_player")]
 script = ExtResource("1_4m0mg")
 lantern_area = NodePath("LanternArea")
@@ -67,8 +70,11 @@ surface_material_override/0 = ExtResource("2_avpwt")
 [node name="LanternArea" type="Area3D" parent="." unique_id=911193770]
 collision_layer = 16
 
-[node name="LidarEmitterCollision" parent="LanternArea" unique_id=978801536 instance=ExtResource("3_avpwt")]
+[node name="LidarEmitterCollision" type="CollisionShape3D" parent="LanternArea" unique_id=978801536]
+shape = SubResource("SphereShape3D_4m0mg")
+script = ExtResource("4_h4g1u")
 emission_mode = 1
+override_radius_enabled = true
 trail_lifetime_s = 2.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2018274816]

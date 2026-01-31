@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bvh24j0l3v221"]
+
+[ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="1_sal1f"]
+
+[sub_resource type="Curve" id="Curve_mokgm"]
+_data = [Vector2(0, 0.49411768), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xbkry"]
+curve = SubResource("Curve_mokgm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bpo7k"]
+spread = 180.0
+initial_velocity_min = 2.5
+initial_velocity_max = 5.0
+gravity = Vector3(0, -2.5, 0)
+damping_min = 2.0
+damping_max = 5.0
+scale_curve = SubResource("CurveTexture_xbkry")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rionm"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1.5720325, 1.5720325, 1.5720325, 1)
+albedo_texture = ExtResource("1_sal1f")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_4wa5r"]
+material = SubResource("StandardMaterial3D_rionm")
+
+[node name="DeathParticles" type="GPUParticles3D" unique_id=267232329]
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_bpo7k")
+draw_pass_1 = SubResource("QuadMesh_4wa5r")
