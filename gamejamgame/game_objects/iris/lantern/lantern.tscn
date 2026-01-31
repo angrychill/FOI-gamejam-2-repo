@@ -52,6 +52,7 @@ audio_player = NodePath("AudioStreamPlayer3D")
 autostart = true
 
 [node name="LanternDebugLabel" type="Label" parent="." unique_id=526355081]
+visible = false
 offset_right = 40.0
 offset_bottom = 29.0
 

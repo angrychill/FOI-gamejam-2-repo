@@ -3,9 +3,14 @@
 [ext_resource type="Script" uid="uid://c86ke2yeprx6h" path="res://game_objects/aleks/sword_enemy/sword_enemy.gd" id="1_ia0xi"]
 [ext_resource type="Script" uid="uid://bnm48nwrslv5i" path="res://game_objects/iris/enemy/enemy_data.gd" id="2_xgnpn"]
 [ext_resource type="Texture2D" uid="uid://ch2h02o4188go" path="res://game_objects/aleks/sword_enemy/knight.png" id="3_0p8mh"]
+[ext_resource type="AudioStream" uid="uid://byjq3cflhu6kl" path="res://game_objects/aleks/SFX/damage/monster_dmg1.mp3" id="3_n4k2w"]
+[ext_resource type="AudioStream" uid="uid://bgp0u52ox6uts" path="res://game_objects/aleks/SFX/damage/monster_dmg2.mp3" id="4_iuk3m"]
 [ext_resource type="Script" uid="uid://ccoedxkv887xl" path="res://game_objects/aleks/sword_enemy/sword_component.gd" id="4_owax2"]
+[ext_resource type="AudioStream" uid="uid://x8ydfdxuk4x6" path="res://game_objects/aleks/SFX/damage/monster_dmg3.mp3" id="5_apgjn"]
 [ext_resource type="PackedScene" uid="uid://bsl6kk3t2ug2w" path="res://game_objects/aleks/sword_enemy/slash_effect.tscn" id="5_mbo3c"]
 [ext_resource type="Script" uid="uid://dvwipc8mdfdm0" path="res://game_objects/aleks/sword_enemy/slash_effect.gd" id="6_dyeyj"]
+[ext_resource type="AudioStream" uid="uid://cwlc4t8gd2w2r" path="res://game_objects/aleks/SFX/damage/monster_dmg4.mp3" id="6_ytp0u"]
+[ext_resource type="AudioStream" uid="uid://bajps6ew66uvx" path="res://game_objects/aleks/SFX/damage/monster_dmg5.mp3" id="7_573ip"]
 [ext_resource type="Texture2D" uid="uid://dcss57v7qonjm" path="res://game_objects/aleks/sword_enemy/slash.png" id="7_faa2o"]
 [ext_resource type="PackedScene" uid="uid://ce85nq674ywub" path="res://game_objects/aleks/sword_enemy/ban_model.tscn" id="8_xgnpn"]
 [ext_resource type="Texture2D" uid="uid://b3lwyuwxoskcx" path="res://assets/visual/Blue Star.png" id="9_owax2"]
@@ -19,15 +24,17 @@ metadata/_custom_type_script = "uid://bnm48nwrslv5i"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lk1qt"]
 
-[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent", "telegraph_light", "damage_light")]
+[node name="SwordEnemy" type="CharacterBody3D" unique_id=1578922120 node_paths=PackedStringArray("enemy_model", "sprite_3d", "nav_agent", "telegraph_light", "damage_light", "audio_player")]
 script = ExtResource("1_ia0xi")
 sword_attack_range = 10.0
 enemy_model = NodePath("Injured Run ban")
 enemy_data = SubResource("Resource_xgnpn")
 sprite_3d = NodePath("Sprite3D")
 nav_agent = NodePath("NavigationAgent3D")
-telegraph_light = NodePath("SlashIndicator")
-damage_light = NodePath("DmgIndicator")
+telegraph_light = NodePath("Injured Run ban/SlashIndicator")
+damage_light = NodePath("Injured Run ban/DmgIndicator")
+damage_sounds = Array[AudioStream]([ExtResource("3_n4k2w"), ExtResource("4_iuk3m"), ExtResource("5_apgjn"), ExtResource("6_ytp0u"), ExtResource("7_573ip")])
+audio_player = NodePath("AudioStreamPlayer3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1250803623]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -66,18 +73,20 @@ effect_size = Vector2(0.25, 0.25)
 
 [node name="Injured Run ban" parent="." unique_id=664188235 instance=ExtResource("8_xgnpn")]
 
-[node name="DmgIndicator" type="Sprite3D" parent="." unique_id=65965301]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0.8, 0)
-visible = false
+[node name="DmgIndicator" type="Sprite3D" parent="Injured Run ban" unique_id=65965301]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 1.4901161e-08, 1, 1.1)
+sorting_offset = 10.0
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 billboard = 1
 no_depth_test = true
 texture = ExtResource("9_owax2")
 
-[node name="SlashIndicator" type="Sprite3D" parent="." unique_id=1198300674]
-transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0.8, 0)
-visible = false
+[node name="SlashIndicator" type="Sprite3D" parent="Injured Run ban" unique_id=1198300674]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 1.4901161e-08, 1, 1.1)
+sorting_offset = 10.0
 modulate = Color(1, 0, 0, 1)
 billboard = 1
 no_depth_test = true
 texture = ExtResource("10_mbo3c")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1957606168]

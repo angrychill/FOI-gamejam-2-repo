@@ -30,6 +30,8 @@ func _ready() -> void:
 	current_health = max_health
 	add_to_group("player")
 	
+	current_health = max_health
+	
 	if not camera:
 		camera = get_node_or_null("Camera3D")
 		if not camera:
